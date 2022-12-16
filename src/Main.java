@@ -18,7 +18,7 @@ public class Main {
 
 		char funcao = args[0].charAt(0);		
 		float h = Float.parseFloat(args[1]);	
-		int N = Integer.parseInt(args[2]);		
+		int n = Integer.parseInt(args[2]);		
 		int dias = Integer.parseInt(args[3]);
 		
 		// matrix para colocar os valores 
