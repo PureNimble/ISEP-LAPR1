@@ -14,26 +14,70 @@ public class Main {
 		 * 
 		 * teste para os parametros -> java Main.java "1" "0.1" "1000" "10"  
 		 */
-	
+		
 
-		char funcao = args[0].charAt(0);	//1 e 2
-		float h = Float.parseFloat(args[1]);
-		int N = Integer.parseInt(args[2]);	//num de população
-		int dias = Integer.parseInt(args[3]);	//num de dias
+		char funcao = args[0].charAt(0);		
+		float h = Float.parseFloat(args[1]);	
+		int N = Integer.parseInt(args[2]);		
+		int dias = Integer.parseInt(args[3]);
+		
+		// matrix para colocar os valores 
+		float[][] matrix = new float[dias][5];
+	
+		// Chamar a função PrintFile
+		try{
+		 matrix = readFile("caminho/do/ficheiro.csv",dias,matrix);	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		// Chamar a função PrintFile
 		try {
-			usingPrintWriter(funcao, h, N, dias);
+			printFile("teste.csv",matrix,dias);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	public static void usingPrintWriter(char m, float p, int t, int d) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(new File("teste.csv"));
-		StringBuffer csvHeader = new StringBuffer("");
-		csvHeader.append("Dia;S;I;R;N\n");
+	
+	/*************************************************************************
+	 * Função para ler os valores dos dados no ficheiroSIR.csv *		     *
+	 *************************************************************************
+	 * @param string caminho_ficheiro 										 *	
+	 * 									 									 *				
+	 * @return matrix[][]	= matriz com os dados 						     *
+	 *************************************************************************/
+
+	public static float[][] readFile(String caminho_ficheiro,int dias,float[][] matrix)throws FileNotFoundException {
+		
+
+		return matrix;
+	}
+
+	/*************************************************************************
+	 *Função para escrever os dados do sistema em ficheiroResultado.csv      *
+	 *************************************************************************
+	 * @param string caminho_ficheiro = onde está o ficheiro final           *
+	 * @param int dados [dias][5] = matriz com a informação final       	 *
+	 * @param int dias = limite de dias                                      *
+	 *************************************************************************/
+
+	public static void printFile(String caminho_ficheiro,float resultados[][],int dias) throws FileNotFoundException {
+
+		PrintWriter pw = new PrintWriter(new File("teste.csv"));		// Criar o ficheiro tests.csv
+
+		StringBuffer csvHeader = new StringBuffer("");						// Criar uma string para dar print ao cabeçalho
+
+		csvHeader.append("Dia;S;I;R;N\n");									// Escrever o cabeçalho das colunas
 		StringBuffer csvData = new StringBuffer("");
+
 		pw.write(csvHeader.toString());
-		csvData.append(m + ';'+ p +';'+ t + ';' + d + '\n');
+
+		for(int i =0;i<dias;i++){
+			for(int j=0;j<5;j++){
+		csvData.append(resultados [i][j] + ';');
+		}
 		pw.write(csvData.toString());
 		pw.close();
 		}
+	}
 }
