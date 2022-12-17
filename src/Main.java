@@ -1,5 +1,9 @@
+
+//Podemos usar
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Formatter;
+import java.util.Scanner;
 import java.io.PrintWriter;
 
 public class Main {
@@ -14,28 +18,29 @@ public class Main {
 		 * 
 		 * teste para os parametros -> java Main.java "1" "0.1" "1000" "10"  
 		 */
-		
-		char funcao = args[0].charAt(0);		
-		float h = Float.parseFloat(args[1]);	
-		int n = Integer.parseInt(args[2]);		
-		int dias = Integer.parseInt(args[3]);
-
+	
+		//char funcao = args[0].charAt(0);		
+		//float h = Float.parseFloat(args[1]);	
+		//int n = Integer.parseInt(args[2]);		
+		//int dias = Integer.parseInt(args[3]);
+		int dias = 5;
 		// matrix para colocar os valores 
 		float[][] matrix = new float[dias][5];
-	
+		
 		// Chamar a função PrintFile
 		try{
-		 matrix = readFile("caminho/do/ficheiro.csv",dias,matrix);	
+		 matrix = readFile("exemplo_paramentros_modelo.csv",matrix);	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		/* 
 		// Chamar a função PrintFile
 		try {
 			printFile("teste.csv",matrix,dias);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	/*************************************************************************
@@ -46,9 +51,17 @@ public class Main {
 	 * @return matrix[][]	= matriz com os dados 						     *
 	 *************************************************************************/
 
-	public static float[][] readFile(String caminho_ficheiro,int dias,float[][] matrix)throws FileNotFoundException {
-		
+	public static float[][] readFile(String caminho_ficheiro,float[][] matrix)throws FileNotFoundException {
 
+		
+			Scanner scanner = new Scanner(new File(caminho_ficheiro));
+			scanner.useDelimiter(";");
+
+			while (scanner.hasNext()) {
+				System.out.println(scanner.next());
+			}
+			scanner.close();
+		
 		return matrix;
 	}
 
@@ -88,14 +101,6 @@ public class Main {
 			i++;	
 		}
 		return yn;
-	}
-
-	f(x, y) = (x + y + xy);
-
-	public static void f(float x, float y){
-		float resultado;
-		resultado = x + y + x*y;
-		return resultado;
 	}
 	*/
 }
