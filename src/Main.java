@@ -29,7 +29,7 @@ public class Main {
 		
 		// Chamar a função PrintFile
 		try{
-		 matrix = readFile("exemplo_paramentros_modelo.csv",matrix);	
+		 matrix = readFile("exemplo_parametros_modelo.csv",matrix);	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
