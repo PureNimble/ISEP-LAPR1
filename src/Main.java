@@ -15,12 +15,11 @@ public class Main {
 		 * teste para os parametros -> java Main.java "1" "0.1" "1000" "10"  
 		 */
 		
-
 		char funcao = args[0].charAt(0);		
 		float h = Float.parseFloat(args[1]);	
 		int n = Integer.parseInt(args[2]);		
 		int dias = Integer.parseInt(args[3]);
-		
+
 		// matrix para colocar os valores 
 		float[][] matrix = new float[dias][5];
 	
@@ -74,10 +73,29 @@ public class Main {
 
 		for(int i =0;i<dias;i++){
 			for(int j=0;j<5;j++){
-		csvData.append(resultados [i][j] + ';');
-		}
+				csvData.append(resultados [i][j] + ';');
+			}
 		pw.write(csvData.toString());
 		pw.close();
 		}
 	}
+	/*
+	public static void Euler(float x, float y, int n (num de dias), float h){
+		int i = 0;
+		while(i < n){
+			yn = y0 + h ∗ f(x0 + i ∗ h, y0);
+			yo = yn
+			i++;	
+		}
+		return yn;
+	}
+
+	f(x, y) = (x + y + xy);
+
+	public static void f(float x, float y){
+		float resultado;
+		resultado = x + y + x*y;
+		return resultado;
+	}
+	*/
 }
