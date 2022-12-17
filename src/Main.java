@@ -6,7 +6,9 @@ import java.util.Formatter;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
+
 public class Main {
+
     public static void main(String[] args){
 		/*
 		 * Estrutura do modo não interativo ->			java -jar nome_programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K ficheiroResultado.csv
@@ -23,15 +25,30 @@ public class Main {
 		//float h = Float.parseFloat(args[1]);	
 		//int n = Integer.parseInt(args[2]);		
 		//int dias = Integer.parseInt(args[3]);
+
 		int dias = 5;
+
+		int linhas=0;
+		try{
+		linhas = checkNumberOfLines("exemplo_parametros_modelo.csv");
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
 		// matrix para colocar os valores 
-		float[][] matrix = new float[dias][5];
+		String[][] matrix = new String[linhas-1][4];
 		
 		// Chamar a função PrintFile
 		try{
 		 matrix = readFile("exemplo_parametros_modelo.csv",matrix);	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}
+	
+		for (int i = 0; i < linhas-1; i++) {
+			for (int j = 0; j < 4; j++) {
+				System.out.print("["+matrix[i][j]+"]" + " ");
+			}
+			System.out.println("\n");
 		}
 		/* 
 		// Chamar a função PrintFile
@@ -42,6 +59,25 @@ public class Main {
 		}
 		*/
 	}
+
+
+
+	public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
+
+		Scanner scanner = new Scanner(new File(caminho_ficheiro));
+
+        int linhas = 0;
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			if (line.trim().length() > 0) {
+				linhas++;
+			}
+		}
+        scanner.close();
+
+        return linhas;
+
+	}
 	
 	/*************************************************************************
 	 * Função para ler os valores dos dados no ficheiroSIR.csv *		     *
@@ -51,14 +87,22 @@ public class Main {
 	 * @return matrix[][]	= matriz com os dados 						     *
 	 *************************************************************************/
 
-	public static float[][] readFile(String caminho_ficheiro,float[][] matrix)throws FileNotFoundException {
+	public static String[][] readFile(String caminho_ficheiro,String[][] matrix)throws FileNotFoundException {
 
 		
 			Scanner scanner = new Scanner(new File(caminho_ficheiro));
-			scanner.useDelimiter(";");
 
-			while (scanner.hasNext()) {
-				System.out.println(scanner.next());
+			int lineNumber = 0;
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String[] values = line.split(";");
+				if (lineNumber != 0) {
+					for (int j = 1; j < 5; j++) {
+						matrix[lineNumber - 1][j - 1] = values[j];
+					}
+					
+				}
+				lineNumber++;
 			}
 			scanner.close();
 		
