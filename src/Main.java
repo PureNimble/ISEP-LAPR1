@@ -165,7 +165,10 @@ public class Main {
 		for(int i = 0;i < dias;i++){
 			pw.print((int)(resultados[i][0]) + ";");
 			for(int j = 1;j < 5;j++){
-				pw.print(String.valueOf(resultados [i][j]).replace(".",",") + ";");
+				pw.print(String.valueOf(resultados [i][j]).replace(".",","));
+				if(j<4){
+                    pw.print(";");
+                }
 			}
 		pw.println();
 		}
@@ -176,7 +179,7 @@ public class Main {
 	 *Função Sistema EDOs      												 *
 	 *************************************************************************
 	 * @param float T dias          										 *
-	 * @param float sucestíveis        										 *
+	 * @param float suscetíveis        										 *
 	 *************************************************************************/
 	public static float functionS(float T, float S){
 		return -taxaProp * S * I;
@@ -213,7 +216,7 @@ public class Main {
 	System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 	System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 	System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-	System.out.println("Valor de N: " + (Sn + In + Rn));
+	System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 	while(i < n){
 		Sn = S + h * functionS((T + i * h), S);
 		S = Sn;
