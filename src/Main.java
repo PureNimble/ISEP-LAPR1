@@ -95,7 +95,8 @@ public class Main {
 		} catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
-		// matrix para colocar os valores 
+
+		// Matrix para colocar os valores 
 		String[][] matrix = new String[linhas-1][4];
 		
 		// Chamar a função readFile
@@ -118,7 +119,6 @@ public class Main {
 	 * Função para abrir o ficheiro .jar                                     *
 	 *************************************************************************
 	 * @param String[] caminho_ficheiro                                      *
-	 *                                                                       *
 	 * @return linhas = número de linhas                                     *
 	 *************************************************************************/
 	public static void getJarFile(String[] caminho_ficheiro) throws FileNotFoundException {
@@ -145,7 +145,6 @@ public class Main {
 	 * Função para verificar o número de linhas do ficheiro csv              *
 	 *************************************************************************
 	 * @param String caminho_ficheiro                                        *
-	 *                                                                       *
 	 * @return linhas = numero de linhas                                     *
 	 *************************************************************************/
 	public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
@@ -228,7 +227,7 @@ public class Main {
 	}
 	
 	/*************************************************************************
-	 *Função Sistema EDOs       										 *
+	 *Função Sistema EDOs       										     *
 	 *************************************************************************
 	 * @param float T dias          										 *
 	 * @param float I número de Infetados       							 *
@@ -238,7 +237,7 @@ public class Main {
 	}
 	
 	/*************************************************************************
-	 *Função Sistema EDOs       										 *
+	 *Função Sistema EDOs       										     *
 	 *************************************************************************
 	 * @param float T dias          										 *
 	 * @param float R número de recuperados        							 *
@@ -251,7 +250,7 @@ public class Main {
 	 *Função de Euler     													 *
 	 *************************************************************************/
 	public static void Euler(){
-		
+
 		DecimalFormat frmt = new DecimalFormat();
 		int i = 0;
 		int n = 30;
