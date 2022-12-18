@@ -12,48 +12,44 @@ import java.text.DecimalFormat;
 public class Main {
 
 	//Variaveis globais
-    public static float t = 0;
-	public static int dias;
-    public static float populacao;
-	public static int metodo;
-	public static String ficheiroInicial = "ficheiroSIR.csv";
-	public static String ficheiroFinal = "ficheiroResultado.csv";
-	public static float h;
-    public static float s = populacao - 1;
-    public static float i = 1;
-    public static float r = 0;
-    public static float sn = populacao - 1;
-    public static float in = 1;
-    public static float rn = 0;
+    public static float T = 0;
+    public static float N = 1000;
+    public static float S = N - 1;
+    public static float I = 1;
+    public static float R = 0;
+    public static float Sn = N - 1;
+    public static float In = 1;
+    public static float Rn = 0;
     public static float taxaProp = 0.002f;              //β
     public static float taxaRej = 0.01f;                //γ
     public static float taxaPop = 0.6f;                 //ρ
     public static float taxaReI = 0;                    //α
-    
     public static void main(String[] args){
+		float h = 0.1f;
+		int n = 30;
+		String caminhoFinal = "src/ficheiroResultado.csv";
+		String caminhoFicheiro = "src/ficheiroSIR.csv";
 		Scanner scanner = new Scanner(System.in);
-	
-
+		System.out.println(" Valor de h?");
+		h = scanner.nextFloat();
+		System.out.println(" Valor da população?");
+		N = scanner.nextFloat();
+		System.out.println(" Número de dias?");
+		n = scanner.nextInt();
 		if(args.length == 0){
 			//modo iterativo
-			System.out.println(" Valor de h?");
-			h = scanner.nextFloat();
-			System.out.println(" Valor da população?");
-			populacao = scanner.nextFloat();
-			System.out.println(" Número de dias?");
-			dias = scanner.nextInt();
 			System.out.println(" -----------------------MENU-----------------------");
 			System.out.println("| 1 - Método de Euler				   |");
 			System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
 			System.out.println("| 3 - Sair					   |");
 			System.out.println(" --------------------------------------------------");
-			 metodo = scanner.nextInt();
-			switch (metodo) {
+			int option = scanner.nextInt();
+			switch (option) {
 				case 1:
-					Euler();
+					Euler(n, h, caminhoFinal);
 					break;
 				case 2:
-					Runge_Kutta();
+					Runge_Kutta(n, h, caminhoFinal);
 					break;
 				case 3:
 					System.exit(0);
@@ -64,6 +60,10 @@ public class Main {
 			scanner.close();
 		}
 		//modo não iterativo
+		for (int i = 0; i < args.length; i++) {
+			System.out.println("Argument " + i + ": " + args[i]);
+		}
+		
 		/*
 		 * Estrutura do modo não interativo ->
 		 * 
@@ -73,45 +73,87 @@ public class Main {
 		 * args[3] -> -p
 		 * args[4] -> h (0<h<1)
 		 * args[5] -> -t
-		 * args[6] -> N (N~=1000)
+		 * args[6] -> N (N~=1000) 
 		 * args[7] -> -d
 		 * args[8] -> dias (0<dias)
 		 * args[9] -> caminho do ficheiroResultado.csv
 		 * 
-		 * teste para os parametros -> java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
+		 * teste para os parametros ->
+		 * ->aqui
 		 */
+         
+         
+		//char funcao = args[0].charAt(0);		
+		//float h = Float.parseFloat(args[1]);	
+		//int n = Integer.parseInt(args[2]);		
+		//int dias = Integer.parseInt(args[3]);
 
-		ficheiroInicial = args[0];
-		metodo = Integer.valueOf(args[2]);
-		h = Float.valueOf(args[4]);
-		populacao = Float.valueOf(args[6]);
-		dias = Integer.valueOf(args[8]);
-        ficheiroFinal = args[9];
-		
 		int linhas = 0;
-
-		// Chamar a função checkNumberOfLines
-		try{
-		linhas = checkNumberOfLines(ficheiroInicial);
-		} catch(FileNotFoundException e1){
+		
+		// Chamar a função para ir buscar o ficheiro.jar
+		try {
+			getJarFile(args);
+		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
 
-		// Matrix para colocar os valores 
+		// Chamar a função checkNumberOfLines
+		try{
+		linhas = checkNumberOfLines(caminhoFicheiro);
+		} catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		// matrix para colocar os valores 
 		String[][] matrix = new String[linhas-1][4];
 		
 		// Chamar a função readFile
 		try{
-		 matrix = readFile(ficheiroInicial,matrix);	
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+		 matrix = readFile(caminhoFicheiro, matrix);	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 		
+		// Print da matrix
+		for (int i = 0; i < linhas-1; i++) {
+			for (int j = 0; j < 4; j++) {
+				System.out.print("["+matrix[i][j]+"]" + " ");
+			}
+			System.out.println("\n");
+		}
+	}
+
+	/*************************************************************************
+	 * Função para abrir o ficheiro .jar                                     *
+	 *************************************************************************
+	 * @param String[] caminho_ficheiro                                      *
+	 *                                                                       *
+	 * @return linhas = número de linhas                                     *
+	 *************************************************************************/
+	public static void getJarFile(String[] caminho_ficheiro) throws FileNotFoundException {
+
+		if (caminho_ficheiro.length < 1) {
+			System.out.println("Error: No .jar file specified.");
+			return;
+		}
+		String jarFileName = caminho_ficheiro[0];
+
+		File jarFile = new File(jarFileName);
+		if (!jarFile.exists()) {
+			System.out.println("Error: .jar file does not exist.");
+			return;
+		}
+		if (!jarFile.canRead()) {
+			System.out.println("Error: .jar file is not readable.");
+			return;
+		}
+
+		String jarFilePath = jarFile.getAbsolutePath();
 	}
 	/*************************************************************************
 	 * Função para verificar o número de linhas do ficheiro csv              *
 	 *************************************************************************
 	 * @param String caminho_ficheiro                                        *
+	 *                                                                       *
 	 * @return linhas = numero de linhas                                     *
 	 *************************************************************************/
 	public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
@@ -189,65 +231,65 @@ public class Main {
 	 * @param float T dias          										 *
 	 * @param float suscetíveis        										 *
 	 *************************************************************************/
-	public static float functionS(float t, float s){
-		return -taxaProp * s * i;
+	public static float functionS(float T, float S){
+		return -taxaProp * S * I;
 	}
 	
 	/*************************************************************************
-	 *Função Sistema EDOs       										     *
+	 *Função Sistema EDOs       										 *
 	 *************************************************************************
 	 * @param float T dias          										 *
 	 * @param float I número de Infetados       							 *
 	 *************************************************************************/
-	public static float functionI(float t, float i){
-		return taxaPop * taxaProp * s * i - taxaRej * i + taxaReI * r;
+	public static float functionI(float T, float I){
+		return taxaPop * taxaProp * S * I - taxaRej * I + taxaReI * R;
 	}
 	
 	/*************************************************************************
-	 *Função Sistema EDOs       										     *
+	 *Função Sistema EDOs       										 *
 	 *************************************************************************
 	 * @param float T dias          										 *
 	 * @param float R número de recuperados        							 *
 	 *************************************************************************/
-	public static float functionR(float t, float r){
-		return taxaRej * i - taxaReI * r + (1 - taxaPop) * taxaProp * s * i;
+	public static float functionR(float T, float R){
+		return taxaRej * I - taxaReI * R + (1 - taxaPop) * taxaProp * S * I;
 	}
 	
 	/*************************************************************************
 	 *Função de Euler     													 *
 	 *************************************************************************/
-	public static void Euler(){
+	public static void Euler(int n, float h, String caminhoFinal){
+		
+		DecimalFormat frmt = new DecimalFormat("#.###");
+		int i = 0;
+		float[][] resultados = new float[n][5];
+		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
-		DecimalFormat frmt = new DecimalFormat();
-		int index = 0;
-		float[][] resultados = new float[dias][5];
-		System.out.println("Valor de S" + (index) + ": " + frmt.format(sn));
-		System.out.println("Valor de I" + (index) + ": " + frmt.format(in));
-		System.out.println("Valor de R" + (index) + ": " + frmt.format(rn));
-		System.out.println("Valor de N: " + frmt.format(sn + in + rn));
+		while(i < n){
+			Sn = S + h * functionS((T + i * h), S);
+			S = Sn;
+			In = I + h * functionI((T + i * h), I);
+			I = In;
+			Rn = R + h * functionR((T + i * h), R);
+			R = Rn;
+			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
-		while(index < dias){
-			sn = s + h * functionS((t + index * h), s);
-			s = sn;
-			in = i + h * functionI((t + index * h), i);
-			i = in;
-			rn = r + h * functionR((t + index * h), r);
-			r = rn;
-			System.out.println("Valor de S" + (index) + ": " + frmt.format(sn));
-			System.out.println("Valor de I" + (index) + ": " + frmt.format(in));
-			System.out.println("Valor de R" + (index) + ": " + frmt.format(rn));
-			System.out.println("Valor de N: " + frmt.format(sn + in + rn));
-
-			resultados[index][0] = i;
-			resultados[index][1] = sn;
-			resultados[index][2] = in;
-			resultados[index][3] = rn;
-			resultados[index][4] = sn+in+rn;
-			index++;
+			resultados[i][0] = i;
+			resultados[i][1] = Sn;
+			resultados[i][2] = In;
+			resultados[i][3] = Rn;
+			resultados[i][4] = Sn+In+Rn;
+			i++;
 		}
 
 		try {
-			printFile("src/ficheiroResultado.csv", resultados, dias);
+			printFile(caminhoFinal, resultados, n);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -256,57 +298,57 @@ public class Main {
 	/*************************************************************************
 	 *Função de Runger_Kutta     											 *
 	 *************************************************************************/
-	public static void Runge_Kutta(){
+	public static void Runge_Kutta(int n, float h, String caminhoFinal){
 
-		DecimalFormat frmt = new DecimalFormat();
-		int index = 0;
-		float[][] resultados = new float[dias][5];
-		System.out.println("Valor de S" + (index) + ": " + frmt.format(sn));
-		System.out.println("Valor de I" + (index) + ": " + frmt.format(in));
-		System.out.println("Valor de R" + (index) + ": " + frmt.format(rn));
-		System.out.println("Valor de N: " + frmt.format(sn + in + rn));
+		DecimalFormat frmt = new DecimalFormat("#.###");
+		int i = 0;
+		float[][] resultados = new float[n][5];
+		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 		
-		while(index < dias){
-			float sk1 = h * functionS(t,s);
-			float sk2 = h * functionS((t + h/2), (s + sk1/2));
-			float sk3 = h * functionS((t + h/2), (s + sk2/2));
-			float sk4 = h * functionS((t + h), (s + sk3));
-			float sk = (sk1 + 2 * sk2 + 2 * sk3 + sk4)/6;
-			sn = s + sk;
-			s = sn;
+		while(i < n){
+			float Sk1 = h * functionS(T,S);
+			float Sk2 = h * functionS((T + h/2), (S + Sk1/2));
+			float Sk3 = h * functionS((T + h/2), (S + Sk2/2));
+			float Sk4 = h * functionS((T + h), (S + Sk3));
+			float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
+			Sn = S + Sk;
+			S = Sn;
 
-			float ik1 = h * functionI(t,i);
-			float ik2 = h * functionI((t + h/2), (i + ik1/2));
-			float ik3 = h * functionI((t + h/2), (i + ik2/2));
-			float ik4 = h * functionI((t + h), (i + ik3));
-			float ik = (ik1 + 2 * ik2 + 2 * ik3 + ik4)/6;
-			in = i + ik;
-			i = in;
+			float Ik1 = h * functionI(T,I);
+			float Ik2 = h * functionI((T + h/2), (I + Ik1/2));
+			float Ik3 = h * functionI((T + h/2), (I + Ik2/2));
+			float Ik4 = h * functionI((T + h), (I + Ik3));
+			float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
+			In = I + Ik;
+			I = In;
 
-			float rk1 = h * functionR(t,r);
-			float rk2 = h * functionR((t + h/2), (r + rk1/2));
-			float rk3 = h * functionR((t + h/2), (r + rk2/2));
-			float rk4 = h * functionR((t + h), (r + rk3));
-			float rk = (rk1 + 2 * rk2 + 2 * rk3 + rk4)/6;
-			rn = r + rk;
-			r = rn;
-			t += h;
+			float Rk1 = h * functionR(T,R);
+			float Rk2 = h * functionR((T + h/2), (R + Rk1/2));
+			float Rk3 = h * functionR((T + h/2), (R + Rk2/2));
+			float Rk4 = h * functionR((T + h), (R + Rk3));
+			float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
+			Rn = R + Rk;
+			R = Rn;
+			T += h;
 
-			System.out.println("Valor de S" + (i) + ": " + frmt.format(sn));
-			System.out.println("Valor de I" + (i) + ": " + frmt.format(in));
-			System.out.println("Valor de R" + (i) + ": " + frmt.format(rn));
-			System.out.println("Valor de N: " + frmt.format(sn + in + rn));
+			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
-			resultados[index][0] = index;
-			resultados[index][1] = sn;
-			resultados[index][2] = in;
-			resultados[index][3] = rn;
-			resultados[index][4] = sn+in+rn;
-			index++;
+			resultados[i][0] = i;
+			resultados[i][1] = Sn;
+			resultados[i][2] = In;
+			resultados[i][3] = Rn;
+			resultados[i][4] = Sn+In+Rn;
+			i++;
 			}
 
 		try {
-			printFile("src/ficheiroResultado.csv", resultados, dias);
+			printFile(caminhoFinal, resultados, n);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
