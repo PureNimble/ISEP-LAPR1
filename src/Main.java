@@ -38,7 +38,7 @@ public class Main {
 		//int n = Integer.parseInt(args[2]);		
 		//int dias = Integer.parseInt(args[3]);
 
-		int linhas=0;
+		int linhas = 0;
 		
 		// Chamar a função para ir buscar o ficheiro.jar
 		try {
@@ -49,7 +49,7 @@ public class Main {
 
 		// Chamar a função checkNumberOfLines
 		try{
-		linhas = checkNumberOfLines("exemplo_parametros_modelo.csv");
+		linhas = checkNumberOfLines("src/exemplo_parametros_modelo.csv");
 		} catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
@@ -58,7 +58,7 @@ public class Main {
 		
 		// Chamar a função readFile
 		try{
-		 matrix = readFile("exemplo_parametros_modelo.csv",matrix);	
+		 matrix = readFile("src/exemplo_parametros_modelo.csv",matrix);	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -70,15 +70,6 @@ public class Main {
 			}
 			System.out.println("\n");
 		}
-
-		// Chamar a função printFile
-		/* 
-		try {
-			printFile("teste.csv",matrix,dias);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 
 	/*************************************************************************
@@ -165,24 +156,20 @@ public class Main {
 	 * @param float[][] resultados [dias][4] = matriz com a informação final *
 	 * @param int dias = limite de dias                                      *
 	 *************************************************************************/
-	public static void printFile(String caminho_ficheiro,float resultados[][],int dias) throws FileNotFoundException {
+	public static void printFile(String caminho_ficheiro,float resultados[][], int dias) throws FileNotFoundException {
 
-		PrintWriter pw = new PrintWriter(new File("teste.csv"));		// Criar o ficheiro tests.csv
+		PrintWriter pw = new PrintWriter(new File(caminho_ficheiro));	// Criar o ficheiro tests.csv
 
-		StringBuffer csvHeader = new StringBuffer("");						// Criar uma string para dar print ao cabeçalho
+		pw.print("Dia;S;I;R;N\n");	// Print do cabeçalho
 
-		csvHeader.append("Dia;S;I;R;N\n");									// Escrever o cabeçalho das colunas
-		StringBuffer csvData = new StringBuffer("");
-
-		pw.write(csvHeader.toString());
-
-		for(int i =0;i<dias;i++){
-			for(int j=0;j<5;j++){
-				csvData.append(resultados [i][j] + ';');
+		for(int i = 0;i < dias;i++){
+			pw.print((int)(resultados[i][0]) + ";");
+			for(int j = 1;j < 5;j++){
+				pw.print(String.valueOf(resultados [i][j]).replace(".",",") + ";");
 			}
-		pw.write(csvData.toString());
-		pw.close();
+		pw.println();
 		}
+		pw.close();
 	}
 
 	/*************************************************************************
@@ -222,6 +209,7 @@ public class Main {
 	DecimalFormat frmt = new DecimalFormat();
 	int i = 0;
 	int n = 3;
+	float[][] resultados = new float[n][5];
 	System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 	System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 	System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
@@ -233,12 +221,23 @@ public class Main {
 			I = In;
 			Rn = R + h * functionR(T + i * h, R);
 			R = Rn;
-			i++;
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
 			System.out.println("Valor de N: " + (Sn + In + Rn));
-		} 
+			resultados[i][0] = i;
+			resultados[i][1] = Sn;
+			resultados[i][2] = In;
+			resultados[i][3] = Rn;
+			resultados[i][4] = Sn+In+Rn;
+			i++;
+		}
+
+		try {
+			printFile("src/teste.csv", resultados, n);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*************************************************************************
@@ -248,6 +247,7 @@ public class Main {
 	DecimalFormat frmt = new DecimalFormat();
 	int i = 0;
 	int n = 3;
+	float[][] resultados = new float[n][5];
 	System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 	System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 	System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
@@ -276,14 +276,25 @@ public class Main {
 			float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
 			Rn = R + Rk;
 			R = Rn;
-	
-			i++;
+
 			T = T + h;
 	
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
 			System.out.println("Valor de N: " + (Sn + In + Rn));
+			resultados[i][0] = i;
+			resultados[i][1] = Sn;
+			resultados[i][2] = In;
+			resultados[i][3] = Rn;
+			resultados[i][4] = Sn+In+Rn;
+			i++;
+		}
+		
+		try {
+			printFile("src/teste.csv", resultados, n);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 }
