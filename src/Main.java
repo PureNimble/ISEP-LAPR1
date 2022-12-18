@@ -26,9 +26,17 @@ public class Main {
 		//int n = Integer.parseInt(args[2]);		
 		//int dias = Integer.parseInt(args[3]);
 
-		int dias = 5;
-
+		//Função para ir buscar o ficheiro.jar
 		int linhas=0;
+		
+		try {
+			getJarFile(args);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+
 		try{
 		linhas = checkNumberOfLines("exemplo_parametros_modelo.csv");
 		} catch(FileNotFoundException e){
@@ -60,8 +68,40 @@ public class Main {
 		*/
 	}
 
+	/*************************************************************************
+	 * Função para abrir o ficheiro .jar                                     *
+	 *************************************************************************
+	 * @param string caminho_ficheiro                                        *
+	 *                                                                       *
+	 * @return linhas = numero de linhas                                     *
+	 *************************************************************************/
+	public static void getJarFile(String[] caminho_ficheiro) throws FileNotFoundException {
+		if (caminho_ficheiro.length < 1) {
+			System.out.println("Error: No .jar file specified.");
+			return;
+		}
+		String jarFileName = caminho_ficheiro[0];
 
+		File jarFile = new File(jarFileName);
+		if (!jarFile.exists()) {
+			System.out.println("Error: .jar file does not exist.");
+			return;
+		}
+		if (!jarFile.canRead()) {
+			System.out.println("Error: .jar file is not readable.");
+			return;
+		}
 
+		String jarFilePath = jarFile.getAbsolutePath();
+
+	}
+	/*************************************************************************
+	 * Função para verificar o número de linhas do ficheiro csv              *
+	 *************************************************************************
+	 * @param string caminho_ficheiro                                        *
+	 *                                                                       *
+	 * @return linhas = numero de linhas                                     *
+	 *************************************************************************/
 	public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
 
 		Scanner scanner = new Scanner(new File(caminho_ficheiro));
@@ -80,7 +120,7 @@ public class Main {
 	}
 	
 	/*************************************************************************
-	 * Função para ler os valores dos dados no ficheiroSIR.csv *		     *
+	 * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
 	 *************************************************************************
 	 * @param string caminho_ficheiro 										 *	
 	 * 									 									 *				
