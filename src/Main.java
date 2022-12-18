@@ -24,7 +24,7 @@ public class Main {
 		float taxaProp = 0.002f;              //β
     	float taxaRej = 0.01f;                //γ
     	float taxaPop = 0.6f;                 //ρ
-    	float taxaReI = 0;                    //α
+    	float taxaReI = 0f;                    //α
 		float h = 0.1f;
 		int n = 30;
 		String caminhoFinal = "src/ficheiroResultado.csv";
@@ -263,8 +263,7 @@ public class Main {
 	}
 	
 	/*************************************************************************
-	 *Função de Euler     													 *
-	 *************************************************************************
+	 *Função de Euler     											float	 *************************************************************************
 	 * @param int n dias          										     *
 	 * @param float h espaçamento        							         *
 	 * @param float taxaProp β       							             *
@@ -275,7 +274,7 @@ public class Main {
 	 *************************************************************************/
 	public static void Euler(int n, float h, float taxaProp, float taxaRej, float taxaPop, float taxaReI, String caminhoFinal){
 		
-		DecimalFormat frmt = new DecimalFormat("#.###");
+		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
 		float[][] resultados = new float[n][5];
 		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
@@ -284,12 +283,14 @@ public class Main {
 		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
 		while(i < n){
-			Sn = S + h * functionS((T + i * h), S, taxaProp);
-			S = Sn;
-			In = I + h * functionI((T + i * h), I, taxaPop, taxaProp, taxaRej, taxaReI);
-			I = In;
-			Rn = R + h * functionR((T + i * h), R, taxaRej, taxaReI, taxaPop, taxaProp);
-			R = Rn;
+			for (float j = 0; j < 1; j+=h){
+				Sn = S + h * functionS((T + i * h), S, taxaProp);
+				In = I + h * functionI((T + i * h), I, taxaPop, taxaProp, taxaRej, taxaReI);
+				Rn = R + h * functionR((T + i * h), R, taxaRej, taxaReI, taxaPop, taxaProp);
+				S = Sn;
+				I = In;
+				R = Rn;
+			}
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
@@ -323,7 +324,7 @@ public class Main {
 	 *************************************************************************/
 	public static void Runge_Kutta(int n, float h, float taxaProp, float taxaRej, float taxaPop, float taxaReI, String caminhoFinal){
 
-		DecimalFormat frmt = new DecimalFormat("#.###");
+		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
 		float[][] resultados = new float[n][5];
 		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
@@ -332,31 +333,33 @@ public class Main {
 		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 		
 		while(i < n){
-			float Sk1 = h * functionS(T, S, taxaProp);
-			float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp);
-			float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp);
-			float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp);
-			float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
-			Sn = S + Sk;
-			S = Sn;
+			for (float j = 0; j < 1; j+=h){
+				float Sk1 = h * functionS(T, S, taxaProp);
+				float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp);
+				float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp);
+				float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp);
+				float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
+				
 
-			float Ik1 = h * functionI(T,I, taxaPop, taxaProp, taxaRej, taxaReI);
-			float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI);
-			float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI);
-			float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI);
-			float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
-			In = I + Ik;
-			I = In;
+				float Ik1 = h * functionI(T,I, taxaPop, taxaProp, taxaRej, taxaReI);
+				float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI);
+				float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI);
+				float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI);
+				float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
 
-			float Rk1 = h * functionR(T,R, taxaRej, taxaReI, taxaPop, taxaProp);
-			float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp);
-			float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp);
-			float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp);
-			float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
-			Rn = R + Rk;
-			R = Rn;
-			T += h;
-
+				float Rk1 = h * functionR(T,R, taxaRej, taxaReI, taxaPop, taxaProp);
+				float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp);
+				float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp);
+				float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp);
+				float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
+				Sn = S + Sk;
+				In = I + Ik;
+				Rn = R + Rk;
+				T += h;
+				S = Sn;
+				I = In;
+				R = Rn;
+			}
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
