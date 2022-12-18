@@ -21,7 +21,27 @@ public class Main {
     public static float taxaReI = 0;                    //α
     public static float h = 0.1f;
     public static void main(String[] args){
-        Euler();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("-----------------------MENU-----------------------");
+		System.out.println("1 - Método de Euler");
+		System.out.println("2 - Método de Runge-Kutta de 4ª ordem");
+		System.out.println("3 - Sair");
+		int option = scanner.nextInt();
+		switch (option){
+			case 1:
+					Euler();
+					break;
+			case 2: 
+					Runge_Kutta();
+					break;
+			case 3:
+					System.exit(0);
+			default:
+					System.out.print("Opção inválida/inexistente");
+					break;
+		}
+		scanner.close();
+		
 		/*
 		 * Estrutura do modo não interativo ->			java -jar nome_programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K ficheiroResultado.csv
 		 * 
