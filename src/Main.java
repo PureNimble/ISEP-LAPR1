@@ -211,7 +211,7 @@ public class Main {
 	public static void Euler(){
 	DecimalFormat frmt = new DecimalFormat();
 	int i = 0;
-	int n = 29;
+	int n = 30;
 	float[][] resultados = new float[n][5];
 	System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 	System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
@@ -250,7 +250,7 @@ public class Main {
 	public static void Runge_Kutta(){
 	DecimalFormat frmt = new DecimalFormat();
 	int i = 0;
-	int n = 29;
+	int n = 30;
 	float[][] resultados = new float[n][5];
 	System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 	System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
