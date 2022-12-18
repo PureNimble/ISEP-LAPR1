@@ -5,7 +5,14 @@ import java.util.Scanner;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
+/*	2 Modos disponíveis:
+	-> Modo interativo     -> (java -jar lapr1_1dm_grupo02.jar)
+	-> Modo não interativo -> (java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m X -p Y -t Z -d K ficheiroResultado.csv)
+ * 
+ */
 public class Main {
+
+	
 	//Variaveis globais
     public static float T = 0;
     public static float N = 1000;
@@ -22,37 +29,53 @@ public class Main {
     public static float h = 0.1f;
     public static void main(String[] args){
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("-----------------------MENU-----------------------");
-		System.out.println("1 - Método de Euler");
-		System.out.println("2 - Método de Runge-Kutta de 4ª ordem");
-		System.out.println("3 - Sair");
-		int option = scanner.nextInt();
-		switch (option){
-			case 1:
+
+		if(args.length == 0){
+			//modo iterativo
+			System.out.println("-----------------------MENU-----------------------");
+			System.out.println("1 - Método de Euler");
+			System.out.println("2 - Método de Runge-Kutta de 4ª ordem");
+			System.out.println("3 - Sair");
+			int option = scanner.nextInt();
+			switch (option) {
+				case 1:
 					Euler();
 					break;
-			case 2: 
+				case 2:
 					Runge_Kutta();
 					break;
-			case 3:
+				case 3:
 					System.exit(0);
-			default:
+				default:
 					System.out.print("Opção inválida/inexistente");
 					break;
+			}
+			scanner.close();
 		}
-		scanner.close();
+		//modo não iterativo
+		for (int i = 0; i < args.length; i++) {
+			System.out.println("Argument " + i + ": " + args[i]);
+		}
 		
 		/*
-		 * Estrutura do modo não interativo ->			java -jar nome_programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K ficheiroResultado.csv
+		 * Estrutura do modo não interativo ->
 		 * 
-		 *	-m -> Função         | (1-Euler,2-RK4)
-		 *  -p -> h              |condição (0<h<1)    
-         *  -t -> população(N)   | 0 <  N
-		 *  -d -> Número de dias | 0 < dias 
+		 * args[0] -> caminho do ficheiro.csv
+		 * args[1] -> -m
+		 * args[2] -> metodo a usar (1-Euler, 2-RK4)
+		 * args[3] -> -p
+		 * args[4] -> h (0<h<1)
+		 * args[5] -> -t
+		 * args[6] -> N (N~=1000) 
+		 * args[7] -> -d
+		 * args[8] -> dias (0<dias)
+		 * args[9] -> caminho do ficheiroResultado.csv
 		 * 
-		 * teste para os parametros -> java Main.java "1" "0.1" "1000" "10"  
+		 * teste para os parametros ->
+		 * ->aqui
 		 */
-	
+         
+         
 		//char funcao = args[0].charAt(0);		
 		//float h = Float.parseFloat(args[1]);	
 		//int n = Integer.parseInt(args[2]);		
@@ -90,6 +113,7 @@ public class Main {
 			}
 			System.out.println("\n");
 		}
+		
 	}
 
 	/*************************************************************************
