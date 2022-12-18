@@ -23,30 +23,35 @@ public class Main {
 		float T = 0;
 		float In = 1;
 		float Rn = 0;
+		float S;
+		float Sn;
 		int n;
+		int option;
 		String caminhoFinal = "src/ficheiroResultado.csv";
 		String caminhoInicial = "src/ficheiroSIR.csv";
 
-		Scanner scanner = new Scanner(System.in);
-		System.out.println(" Valor de h?");
-		h = scanner.nextFloat();
 
-		System.out.println(" Valor da população?");
-		N = scanner.nextFloat();
-		float S = N - 1;
-		float Sn = N - 1;
+		if (args.length == 0) {
 
-		System.out.println(" Número de dias?");
-		n = scanner.nextInt();
+			Scanner scanner = new Scanner(System.in);
+			System.out.println(" Valor de h?");
+			h = scanner.nextFloat();
 
-		if(args.length == 0){
+			System.out.println(" Valor da população?");
+			N = scanner.nextFloat();
+			S = N - 1;
+			Sn = N - 1;
+
+			System.out.println(" Número de dias?");
+			n = scanner.nextInt();
+
 			//modo iterativo
 			System.out.println(" -----------------------MENU-----------------------");
 			System.out.println("| 1 - Método de Euler				   |");
 			System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
 			System.out.println("| 3 - Sair					   |");
 			System.out.println(" --------------------------------------------------");
-			int option = scanner.nextInt();
+			option = scanner.nextInt();
 			switch (option) {
 				case 1:
 					Euler(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
@@ -61,12 +66,28 @@ public class Main {
 					break;
 			}
 			scanner.close();
+		}else{
+			caminhoInicial = "src/"+args[0];
+			caminhoFinal = "src/"+args[9];
+			option =Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
+			h = Float.valueOf(args[4]);
+			N = Float.valueOf(args[6]);
+			n = Integer.valueOf(args[8]);
+			S  = N - 1;
+			Sn = N - 1;
+			switch (option) {
+				case 1:
+					Euler(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
+					break;
+				case 2:
+					Runge_Kutta(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
+					break;
+				default:
+					System.out.print("Opção inválida/inexistente");
+					break;
+			}
 		}
 		//modo não iterativo
-		for (int i = 0; i < args.length; i++) {
-			System.out.println("Argument " + i + ": " + args[i]);
-		}
-		
 		/*
 		 * Estrutura do modo não interativo ->
 		 * 
@@ -81,25 +102,11 @@ public class Main {
 		 * args[8] -> dias (0<dias)
 		 * args[9] -> caminho do ficheiroResultado.csv
 		 * 
-		 * teste para os parametros ->
-		 * ->aqui
+		 * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
 		 */
-         
-         
-		//char funcao = args[0].charAt(0);		
-		//float h = Float.parseFloat(args[1]);	
-		//int n = Integer.parseInt(args[2]);		
-		//int dias = Integer.parseInt(args[3]);
 
-		int linhas = 0;
 		
-		// Chamar a função para ir buscar o ficheiro.jar
-		try {
-			getJarFile(args);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-
+		int linhas = 0;
 		// Chamar a função checkNumberOfLines
 		try{
 		linhas = checkNumberOfLines(caminhoInicial);
@@ -115,41 +122,7 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		// Print da matrix
-		for (int i = 0; i < linhas-1; i++) {
-			for (int j = 0; j < 4; j++) {
-				System.out.print("["+matrix[i][j]+"]" + " ");
-			}
-			System.out.println("\n");
-		}
-	}
-
-	/*************************************************************************
-	 * Função para abrir o ficheiro .jar                                     *
-	 *************************************************************************
-	 * @param String[] caminho_ficheiro                                      *
-	 * @return linhas = número de linhas                                     *
-	 *************************************************************************/
-	public static void getJarFile(String[] caminho_ficheiro) throws FileNotFoundException {
-
-		if (caminho_ficheiro.length < 1) {
-			System.out.println("Error: No .jar file specified.");
-			return;
-		}
-		String jarFileName = caminho_ficheiro[0];
-
-		File jarFile = new File(jarFileName);
-		if (!jarFile.exists()) {
-			System.out.println("Error: .jar file does not exist.");
-			return;
-		}
-		if (!jarFile.canRead()) {
-			System.out.println("Error: .jar file is not readable.");
-			return;
-		}
-
-		String jarFilePath = jarFile.getAbsolutePath();
+	
 	}
 	/*************************************************************************
 	 * Função para verificar o número de linhas do ficheiro csv              *
