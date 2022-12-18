@@ -267,28 +267,28 @@ public class Main {
 		System.out.println("Valor de N: " + frmt.format(sn + in + rn));
 		
 		while(index < dias){
-			float Sk1 = h * functionS(t,s);
-			float Sk2 = h * functionS((t + h/2), (s + Sk1/2));
-			float Sk3 = h * functionS((t + h/2), (s + Sk2/2));
-			float Sk4 = h * functionS((t + h), (s + Sk3));
-			float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
-			sn = s + Sk;
+			float sk1 = h * functionS(t,s);
+			float sk2 = h * functionS((t + h/2), (s + sk1/2));
+			float sk3 = h * functionS((t + h/2), (s + sk2/2));
+			float sk4 = h * functionS((t + h), (s + sk3));
+			float sk = (sk1 + 2 * sk2 + 2 * sk3 + sk4)/6;
+			sn = s + sk;
 			s = sn;
 
-			float Ik1 = h * functionI(t,i);
-			float Ik2 = h * functionI((t + h/2), (i + Ik1/2));
-			float Ik3 = h * functionI((t + h/2), (i + Ik2/2));
-			float Ik4 = h * functionI((t + h), (i + Ik3));
-			float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
-			in = i + Ik;
+			float ik1 = h * functionI(t,i);
+			float ik2 = h * functionI((t + h/2), (i + ik1/2));
+			float ik3 = h * functionI((t + h/2), (i + ik2/2));
+			float ik4 = h * functionI((t + h), (i + ik3));
+			float ik = (ik1 + 2 * ik2 + 2 * ik3 + ik4)/6;
+			in = i + ik;
 			i = in;
 
-			float Rk1 = h * functionR(t,r);
-			float Rk2 = h * functionR((t + h/2), (r + Rk1/2));
-			float Rk3 = h * functionR((t + h/2), (r + Rk2/2));
-			float Rk4 = h * functionR((t + h), (r + Rk3));
-			float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
-			rn = r + Rk;
+			float rk1 = h * functionR(t,r);
+			float rk2 = h * functionR((t + h/2), (r + rk1/2));
+			float rk3 = h * functionR((t + h/2), (r + rk2/2));
+			float rk4 = h * functionR((t + h), (r + rk3));
+			float rk = (rk1 + 2 * rk2 + 2 * rk3 + rk4)/6;
+			rn = r + rk;
 			r = rn;
 			t += h;
 
