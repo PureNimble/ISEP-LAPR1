@@ -20,11 +20,11 @@ public class Main {
     public static float Sn = N - 1;
     public static float In = 1;
     public static float Rn = 0;
-    public static float taxaProp = 0.002f;              //β
-    public static float taxaRej = 0.01f;                //γ
-    public static float taxaPop = 0.6f;                 //ρ
-    public static float taxaReI = 0;                    //α
     public static void main(String[] args){
+		float taxaProp = 0.002f;              //β
+    	float taxaRej = 0.01f;                //γ
+    	float taxaPop = 0.6f;                 //ρ
+    	float taxaReI = 0;                    //α
 		float h = 0.1f;
 		int n = 30;
 		String caminhoFinal = "src/ficheiroResultado.csv";
@@ -46,10 +46,10 @@ public class Main {
 			int option = scanner.nextInt();
 			switch (option) {
 				case 1:
-					Euler(n, h, caminhoFinal);
+					Euler(n, h, taxaProp, taxaRej, taxaPop, taxaReI, caminhoFinal);
 					break;
 				case 2:
-					Runge_Kutta(n, h, caminhoFinal);
+					Runge_Kutta(n, h, taxaProp, taxaRej, taxaPop, taxaReI, caminhoFinal);
 					break;
 				case 3:
 					System.exit(0);
@@ -126,7 +126,6 @@ public class Main {
 	 * Função para abrir o ficheiro .jar                                     *
 	 *************************************************************************
 	 * @param String[] caminho_ficheiro                                      *
-	 *                                                                       *
 	 * @return linhas = número de linhas                                     *
 	 *************************************************************************/
 	public static void getJarFile(String[] caminho_ficheiro) throws FileNotFoundException {
@@ -153,7 +152,6 @@ public class Main {
 	 * Função para verificar o número de linhas do ficheiro csv              *
 	 *************************************************************************
 	 * @param String caminho_ficheiro                                        *
-	 *                                                                       *
 	 * @return linhas = numero de linhas                                     *
 	 *************************************************************************/
 	public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
@@ -229,36 +227,53 @@ public class Main {
 	 *Função Sistema EDOs      												 *
 	 *************************************************************************
 	 * @param float T dias          										 *
-	 * @param float suscetíveis        										 *
+	 * @param float S suscetíveis        									 *
+	 * @param float taxaProp β        										 *
 	 *************************************************************************/
-	public static float functionS(float T, float S){
+	public static float functionS(float T, float S, float taxaProp){
 		return -taxaProp * S * I;
 	}
 	
 	/*************************************************************************
-	 *Função Sistema EDOs       										 *
+	 *Função Sistema EDOs       										     *
 	 *************************************************************************
 	 * @param float T dias          										 *
 	 * @param float I número de Infetados       							 *
+	 * @param float taxaPop ρ       							             *
+	 * @param float taxaProp β       							             *
+	 * @param float taxaRej γ     							                 *
+	 * @param float taxaReI α                                                *
 	 *************************************************************************/
-	public static float functionI(float T, float I){
+	public static float functionI(float T, float I, float taxaPop, float taxaProp,float taxaRej, float taxaReI){
 		return taxaPop * taxaProp * S * I - taxaRej * I + taxaReI * R;
 	}
 	
 	/*************************************************************************
-	 *Função Sistema EDOs       										 *
+	 *Função Sistema EDOs       										     *
 	 *************************************************************************
 	 * @param float T dias          										 *
 	 * @param float R número de recuperados        							 *
+	 * @param float taxaRej γ     							                 *
+	 * @param float taxaReI α                                                *
+	 * @param float taxaPop ρ       							             *
+	 * @param float taxaProp β       							             *
 	 *************************************************************************/
-	public static float functionR(float T, float R){
+	public static float functionR(float T, float R, float taxaRej, float taxaReI, float taxaPop, float taxaProp){
 		return taxaRej * I - taxaReI * R + (1 - taxaPop) * taxaProp * S * I;
 	}
 	
 	/*************************************************************************
 	 *Função de Euler     													 *
+	 *************************************************************************
+	 * @param int n dias          										     *
+	 * @param float h espaçamento        							         *
+	 * @param float taxaProp β       							             *
+	 * @param float taxaRej γ      							            	 *
+	 * @param float taxaPop ρ        							         	 *
+	 * @param float taxaReI α                                                *
+	 * @param String caminhoFinal ficheiro de resultados finais              *
 	 *************************************************************************/
-	public static void Euler(int n, float h, String caminhoFinal){
+	public static void Euler(int n, float h, float taxaProp, float taxaRej, float taxaPop, float taxaReI, String caminhoFinal){
 		
 		DecimalFormat frmt = new DecimalFormat("#.###");
 		int i = 0;
@@ -269,11 +284,11 @@ public class Main {
 		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
 		while(i < n){
-			Sn = S + h * functionS((T + i * h), S);
+			Sn = S + h * functionS((T + i * h), S, taxaProp);
 			S = Sn;
-			In = I + h * functionI((T + i * h), I);
+			In = I + h * functionI((T + i * h), I, taxaPop, taxaProp, taxaRej, taxaReI);
 			I = In;
-			Rn = R + h * functionR((T + i * h), R);
+			Rn = R + h * functionR((T + i * h), R, taxaRej, taxaReI, taxaPop, taxaProp);
 			R = Rn;
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
@@ -296,9 +311,17 @@ public class Main {
 	}
 
 	/*************************************************************************
-	 *Função de Runger_Kutta     											 *
+	 *Função de Runge_kutta     											 *
+	 *************************************************************************
+	 * @param int n dias          										     *
+	 * @param float h espaçamento        							         *
+	 * @param float taxaProp β       							             *
+	 * @param float taxaRej γ      							            	 *
+	 * @param float taxaPop ρ        							         	 *
+	 * @param float taxaReI α        							         	 *
+	 * @param String caminhoFinal ficheiro de resultados finais      		 *
 	 *************************************************************************/
-	public static void Runge_Kutta(int n, float h, String caminhoFinal){
+	public static void Runge_Kutta(int n, float h, float taxaProp, float taxaRej, float taxaPop, float taxaReI, String caminhoFinal){
 
 		DecimalFormat frmt = new DecimalFormat("#.###");
 		int i = 0;
@@ -309,26 +332,26 @@ public class Main {
 		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 		
 		while(i < n){
-			float Sk1 = h * functionS(T,S);
-			float Sk2 = h * functionS((T + h/2), (S + Sk1/2));
-			float Sk3 = h * functionS((T + h/2), (S + Sk2/2));
-			float Sk4 = h * functionS((T + h), (S + Sk3));
+			float Sk1 = h * functionS(T, S, taxaProp);
+			float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp);
+			float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp);
+			float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp);
 			float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
 			Sn = S + Sk;
 			S = Sn;
 
-			float Ik1 = h * functionI(T,I);
-			float Ik2 = h * functionI((T + h/2), (I + Ik1/2));
-			float Ik3 = h * functionI((T + h/2), (I + Ik2/2));
-			float Ik4 = h * functionI((T + h), (I + Ik3));
+			float Ik1 = h * functionI(T,I, taxaPop, taxaProp, taxaRej, taxaReI);
+			float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI);
+			float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI);
+			float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI);
 			float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
 			In = I + Ik;
 			I = In;
 
-			float Rk1 = h * functionR(T,R);
-			float Rk2 = h * functionR((T + h/2), (R + Rk1/2));
-			float Rk3 = h * functionR((T + h/2), (R + Rk2/2));
-			float Rk4 = h * functionR((T + h), (R + Rk3));
+			float Rk1 = h * functionR(T,R, taxaRej, taxaReI, taxaPop, taxaProp);
+			float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp);
+			float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp);
+			float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp);
 			float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
 			Rn = R + Rk;
 			R = Rn;
