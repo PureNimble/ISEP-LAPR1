@@ -1,4 +1,3 @@
-
 //Podemos usar
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,9 +5,8 @@ import java.util.Scanner;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
-
 public class Main {
-
+	//Variaveis globais
     public static float T = 1;
     public static float N = 1000;
     public static float S = N - 1;
@@ -17,10 +15,10 @@ public class Main {
 	public static float Sn = N - 1;
     public static float In = 1;
     public static float Rn = 0;
-    public static float taxaProp = 0.002f;              //β
-    public static float taxaPop = 0.6f;               //ρ
-    public static float taxaRej = 0.01f;               //γ
-    public static float taxaReI = 0.009f;               //α
+    public static float taxaProp = 0.002f;           //β
+    public static float taxaPop = 0.6f;             //ρ
+    public static float taxaRej = 0.01f;           //γ
+    public static float taxaReI = 0.009f;         //α
     public static float h = 0.1f;
     public static void main(String[] args){
 		Euler();
@@ -40,17 +38,16 @@ public class Main {
 		//int n = Integer.parseInt(args[2]);		
 		//int dias = Integer.parseInt(args[3]);
 
-		//Função para ir buscar o ficheiro.jar
 		int linhas=0;
 		
+		// Chamar a função para ir buscar o ficheiro.jar
 		try {
 			getJarFile(args);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		
-		
 
+		// Chamar a função checkNumberOfLines
 		try{
 		linhas = checkNumberOfLines("exemplo_parametros_modelo.csv");
 		} catch(FileNotFoundException e){
@@ -59,21 +56,23 @@ public class Main {
 		// matrix para colocar os valores 
 		String[][] matrix = new String[linhas-1][4];
 		
-		// Chamar a função PrintFile
+		// Chamar a função readFile
 		try{
 		 matrix = readFile("exemplo_parametros_modelo.csv",matrix);	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	
+		
+		// Print da matrix
 		for (int i = 0; i < linhas-1; i++) {
 			for (int j = 0; j < 4; j++) {
 				System.out.print("["+matrix[i][j]+"]" + " ");
 			}
 			System.out.println("\n");
 		}
+
+		// Chamar a função printFile
 		/* 
-		// Chamar a função PrintFile
 		try {
 			printFile("teste.csv",matrix,dias);
 		} catch (FileNotFoundException e) {
@@ -85,9 +84,9 @@ public class Main {
 	/*************************************************************************
 	 * Função para abrir o ficheiro .jar                                     *
 	 *************************************************************************
-	 * @param string caminho_ficheiro                                        *
+	 * @param String[] caminho_ficheiro                                      *
 	 *                                                                       *
-	 * @return linhas = numero de linhas                                     *
+	 * @return linhas = número de linhas                                     *
 	 *************************************************************************/
 	public static void getJarFile(String[] caminho_ficheiro) throws FileNotFoundException {
 		if (caminho_ficheiro.length < 1) {
@@ -112,7 +111,7 @@ public class Main {
 	/*************************************************************************
 	 * Função para verificar o número de linhas do ficheiro csv              *
 	 *************************************************************************
-	 * @param string caminho_ficheiro                                        *
+	 * @param String caminho_ficheiro                                        *
 	 *                                                                       *
 	 * @return linhas = numero de linhas                                     *
 	 *************************************************************************/
@@ -130,20 +129,17 @@ public class Main {
         scanner.close();
 
         return linhas;
-
 	}
 	
 	/*************************************************************************
 	 * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
 	 *************************************************************************
-	 * @param string caminho_ficheiro 										 *	
-	 * 									 									 *				
-	 * @return matrix[][]	= matriz com os dados 						     *
+	 * @param String caminho_ficheiro 										 *	
+	 * @param String[][] matrix						 						 *				
+	 * @return matrix[][]	= matriz com os dados 				     		 *
 	 *************************************************************************/
-
 	public static String[][] readFile(String caminho_ficheiro,String[][] matrix)throws FileNotFoundException {
 
-		
 			Scanner scanner = new Scanner(new File(caminho_ficheiro));
 
 			int lineNumber = 0;
@@ -154,7 +150,6 @@ public class Main {
 					for (int j = 1; j < 5; j++) {
 						matrix[lineNumber - 1][j - 1] = values[j];
 					}
-					
 				}
 				lineNumber++;
 			}
@@ -166,11 +161,10 @@ public class Main {
 	/*************************************************************************
 	 *Função para escrever os dados do sistema em ficheiroResultado.csv      *
 	 *************************************************************************
-	 * @param string caminho_ficheiro = onde está o ficheiro final           *
-	 * @param int dados [dias][5] = matriz com a informação final       	 *
+	 * @param String caminho_ficheiro = onde está o ficheiro final           *
+	 * @param float[][] resultados [dias][4] = matriz com a informação final *
 	 * @param int dias = limite de dias                                      *
 	 *************************************************************************/
-
 	public static void printFile(String caminho_ficheiro,float resultados[][],int dias) throws FileNotFoundException {
 
 		PrintWriter pw = new PrintWriter(new File("teste.csv"));		// Criar o ficheiro tests.csv
@@ -190,18 +184,40 @@ public class Main {
 		pw.close();
 		}
 	}
+
+	/*************************************************************************
+	 *Função Sistema EDOs      												 *
+	 *************************************************************************
+	 * @param float T dias          										 *
+	 * @param float sucestíveis        										 *
+	 *************************************************************************/
 	public static float functionS(float T, float S){
 		return (-taxaProp * S * I);
 	}
 	
+	/*************************************************************************
+	 *Função Função Sistema EDOs       										 *
+	 *************************************************************************
+	 * @param float T dias          										 *
+	 * @param float I número de Infetados       							 *
+	 *************************************************************************/
 	public static float functionI(float T, float I){
 		return ((taxaPop * taxaProp * S * I) - (taxaRej * I) + (taxaReI * R));
 	}
 	
+	/*************************************************************************
+	 *Função Função Sistema EDOs       										 *
+	 *************************************************************************
+	 * @param float T dias          										 *
+	 * @param float R número de recuperados        							 *
+	 *************************************************************************/
 	public static float functionR(float T, float R){
 		return ((taxaRej * I) - (taxaReI * R) + (1 - taxaPop) * (taxaProp * S * I));
 	}
 	
+	/*************************************************************************
+	 *Função de Euler     													 *
+	 *************************************************************************/
 	public static void Euler(){
 	DecimalFormat frmt = new DecimalFormat();
 	int i = 0;
@@ -224,6 +240,10 @@ public class Main {
 			System.out.println("Valor de N: " + (Sn + In + Rn));
 		} 
 	}
+
+	/*************************************************************************
+	 *Função de Runger_Kutta     											 *
+	 *************************************************************************/
 	public static void Runge_Kutta(){
 	DecimalFormat frmt = new DecimalFormat();
 	int i = 0;
