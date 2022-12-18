@@ -5,10 +5,25 @@ import java.io.FileNotFoundException;
 import java.util.Formatter;
 import java.util.Scanner;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 
 
 public class Main {
 
+	public static float Sn = 0;
+    public static float In = 0;
+    public static float Rn = 0;
+    public static float T = 1;
+    public static float N = 1000;
+    public static float S = N - 1;
+    public static float I = 1;
+    public static float R = 0;
+    public static float taxaProp = 0.02f;              //β
+    public static float taxaPop = 0.7f;               //ρ
+    public static float taxaRej = 0.001f;               //γ
+    public static float taxaReI = 0.009f;               //α
+    public static float h = 0.1f;
+    public static float n = 3;
     public static void main(String[] args){
 		/*
 		 * Estrutura do modo não interativo ->			java -jar nome_programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K ficheiroResultado.csv
@@ -176,15 +191,68 @@ public class Main {
 		pw.close();
 		}
 	}
-	/*
-	public static void Euler(float x, float y, int n (num de dias), float h){
-		int i = 0;
-		while(i < n){
-			yn = y0 + h ∗ f(x0 + i ∗ h, y0);
-			yo = yn
-			i++;	
-		}
-		return yn;
+	public static float functionS(float T, float S){
+		return (-taxaProp * S * I);
 	}
-	*/
+	
+	public static float functionI(float T, float S){
+		return ((taxaPop * taxaProp * S * I) - (taxaRej * I) + (taxaReI * R));
+	}
+	
+	public static float functionR(float T, float S){
+		return ((taxaRej * I) - (taxaReI * R) + (1 - taxaPop) * (taxaProp * S * I));
+	}
+	
+	public static void Euler(){
+	DecimalFormat frmt = new DecimalFormat();
+	int i = 0;
+	while(i < n){
+			Sn = S + h * functionS(T + i * h, S);
+			S = Sn;
+			In = I + h * functionI(T + i * h, I);
+			I = In;
+			Rn = R + h * functionR(T + i * h, R);
+			R = Rn;
+			i++;
+			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+		} 
+	}
+	public static void Runge_Kutta(){
+	DecimalFormat frmt = new DecimalFormat();
+	int i = 0;
+	while(i < n){
+			float Sk1 = h * functionS(T,S);
+			float Sk2 = h * functionS(T + h/2, S + Sk1/2);
+			float Sk3 = h * functionS(T + h/2, S + Sk2/2);
+			float Sk4 = h * functionS(T + h, S + Sk3);
+			float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;~
+			Sn = S + Sk;
+			S = Sn;
+	
+			float Ik1 = h * functionI(T,I);
+			float Ik2 = h * functionI(T + h/2, I + Ik1/2);
+			float Ik3 = h * functionI(T + h/2, I + Ik2/2);
+			float Ik4 = h * functionI(T + h, I + Ik3);
+			float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
+			In = I + Ik;
+			I = In;
+	
+			float Rk1 = h * functionR(T,R);
+			float Rk2 = h * functionR(T + h/2, R + Rk1/2);
+			float Rk3 = h * functionR(T + h/2, R + Rk2/2);
+			float Rk4 = h * functionR(T + h, R + Rk3);
+			float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
+			Rn = R + Rk;
+			R = Rn;
+	
+			i++;
+			T = T + h;
+	
+			System.out.println("Valor de S" + (i) + ": " + frmt.format(Rn));
+			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+		}
+	}
 }
