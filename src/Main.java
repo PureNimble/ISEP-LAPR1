@@ -47,17 +47,7 @@ public class Main {
 				System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
 				System.out.println(" --------------------------------------------------");
 				option = scanner.nextInt();
-				switch (option) {
-					case 1:
-						Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-						break;
-					case 2:
-						Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-						break;
-					default:
-						System.out.print("Opção inválida/inexistente");
-						break;
-				}
+				mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 				a++;
 			}
 			scanner.close();
@@ -78,17 +68,7 @@ public class Main {
 			
 			int a = 0;
 			while(a < linhas-1){
-				switch (option) {
-					case 1:
-						Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-						break;
-					case 2:
-						Runge_Kutta(dias, h, matrix, linhas, n, sDias, s, caminhoFinal, nomes, a);
-						break;
-					default:
-						System.out.print("Opção inválida/inexistente");
-						break;
-				}
+				mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 				a++;
 			}
 		}
@@ -404,5 +384,19 @@ public class Main {
 			e.printStackTrace();
 		}
 		return nomes;
+	}
+	public static int mSwitch(int option, int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a){
+		switch (option) {
+			case 1:
+				Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+				break;
+			case 2:
+				Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+				break;
+			default:
+				System.out.print("Opção inválida/inexistente");
+				break;
+		}
+		return a;
 	}
 }
