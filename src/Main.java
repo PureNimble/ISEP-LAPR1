@@ -13,11 +13,6 @@ public class Main {
     public static void main(String[] args){
 		float h;
 		float N;
-		float I = 1;
-		float R = 0;
-		float T = 0;
-		float In = 1;
-		float Rn = 0;
 		float S;
 		float Sn;
 		int n;
@@ -74,10 +69,10 @@ public class Main {
 				option = scanner.nextInt();
 				switch (option) {
 					case 1:
-						Euler(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes, a);
+						Euler(n, h, matrix, linhas, N, S, Sn, caminhoFinal, nomes, a);
 						break;
 					case 2:
-						Runge_Kutta(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes, a);
+						Runge_Kutta(n, h, matrix, linhas, N, S, Sn, caminhoFinal, nomes, a);
 						break;
 					case 3:
 						System.exit(0);
@@ -89,11 +84,8 @@ public class Main {
 			}
 			scanner.close();
 		}else{
-			caminhoInicial = "src/"+args[0];
-			caminhoFinal = "src/"+args[9];
-			for(int i = 0; i < 4; i++){
-				caminhoFinal.substring(0, caminhoFinal.length()-1);
-			}
+			caminhoInicial = "src/"+ args[0];
+			caminhoFinal = "src/"+ args[9].substring(0, args[9].length()-4);
 			option = Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
 			h = Float.valueOf(args[4]);
 			N = Float.valueOf(args[6]);
@@ -127,10 +119,10 @@ public class Main {
 			while(a < linhas-1){
 				switch (option) {
 					case 1:
-						Euler(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes, a);
+						Euler(n, h, matrix, linhas, N, S, Sn, caminhoFinal, nomes, a);
 						break;
 					case 2:
-						Runge_Kutta(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes, a);
+						Runge_Kutta(n, h, matrix, linhas, N, Sn, S, caminhoFinal, nomes, a);
 						break;
 					default:
 						System.out.print("Opção inválida/inexistente");
@@ -279,11 +271,16 @@ public class Main {
 	 * @param float[][] matrix
 	 * @param String caminhoFinal ficheiro de resultados finais              *
 	 *************************************************************************/
-	public static void Euler(int n, float h, float[][] matrix, int linhas, float I, float N, float S, float Sn, float R, float T, float In, float Rn, String caminhoFinal, String[] nomes, int a){
+	public static void Euler(int n, float h, float[][] matrix, int linhas, float N, float S, float Sn, String caminhoFinal, String[] nomes, int a){
 		float taxaProp = matrix[a][0];
 		float taxaRej = matrix[a][1];
 		float taxaPop = matrix[a][2];
 		float taxaReI = matrix[a][3];
+		float In = 1;
+		float Rn = 0;
+		float I = 1;
+		float R = 0;
+		float T = 0;
 		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
 		float[][] resultados = new float[n+1][5];
@@ -334,11 +331,16 @@ public class Main {
 	 * @param float[][] matrix 												 *
 	 * @param String caminhoFinal ficheiro de resultados finais      		 *
 	 *************************************************************************/
-	public static void Runge_Kutta(int n, float h, float[][] matrix, int linhas, float I, float N, float S, float Sn, float R, float T, float In, float Rn, String caminhoFinal, String[] nomes, int a){
+	public static void Runge_Kutta(int n, float h, float[][] matrix, int linhas, float N, float S, float Sn, String caminhoFinal, String[] nomes, int a){
 		float taxaProp = matrix[a][0];
 		float taxaRej = matrix[a][1];
 		float taxaPop = matrix[a][2];
 		float taxaReI = matrix[a][3];
+		float In = 1;
+		float Rn = 0;
+		float I = 1;
+		float R = 0;
+		float T = 0;
 		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
 		float[][] resultados = new float[n+1][5];
