@@ -22,31 +22,12 @@ public class Main {
 
 		if (args.length == 0) {
 
-			int linhas = 0;
-			// Chamar a função checkNumberOfLines
-			try{
-			linhas = checkNumberOfLines(caminhoInicial);
-			} catch(FileNotFoundException e){
-				e.printStackTrace();
-			}
+			int linhas = repeated(caminhoInicial);
 			// Matrix para colocar os valores 
 			float[][] matrix = new float[linhas-1][4];
-			String[] nomes = new String[linhas-1];
-			
-			// Chamar a função readFile
-			try{
-			matrix = readFile(caminhoInicial, matrix, nomes);	
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < linhas-1; i++) {
-				for (int j = 0; j < 4; j++) {
-					System.out.print("["+matrix[i][j]+"]" + " ");
-				}
-				System.out.println("\n");
-			}
+			String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
 
-			//modo iterativo
+			//Modo iterativo
 			int a = 0;
 			Scanner scanner = new Scanner(System.in);
 			while(a < linhas-1){
@@ -64,7 +45,6 @@ public class Main {
 				System.out.println(" -----------------------MENU-----------------------");
 				System.out.println("| 1 - Método de Euler				   |");
 				System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
-				System.out.println("| 3 - Sair					   |");
 				System.out.println(" --------------------------------------------------");
 				option = scanner.nextInt();
 				switch (option) {
@@ -74,8 +54,6 @@ public class Main {
 					case 2:
 						Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 						break;
-					case 3:
-						System.exit(0);
 					default:
 						System.out.print("Opção inválida/inexistente");
 						break;
@@ -93,28 +71,11 @@ public class Main {
 			s  = n - 1;
 			sDias = n - 1;
 
-			int linhas = 0;
-			// Chamar a função checkNumberOfLines
-			try{
-			linhas = checkNumberOfLines(caminhoInicial);
-			} catch(FileNotFoundException e){
-				e.printStackTrace();
-			}
-			// matrix para colocar os valores 
+			int linhas = repeated(caminhoInicial);
+			// Matrix para colocar os valores 
 			float[][] matrix = new float[linhas-1][4];
-			String[] nomes = new String[linhas-1];
-			// Chamar a função readFile
-			try{
-			matrix = readFile(caminhoInicial, matrix, nomes);	
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < linhas-1; i++) {
-				for (int j = 0; j < 4; j++) {
-					System.out.print("["+matrix[i][j]+"]" + " ");
-				}
-				System.out.println("\n");
-			}
+			String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
+			
 			int a = 0;
 			while(a < linhas-1){
 				switch (option) {
@@ -421,5 +382,27 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	public static int repeated(String caminhoInicial){
+		int linhas = 0;
+		// Chamar a função checkNumberOfLines
+		try{
+			linhas = checkNumberOfLines(caminhoInicial);
+			} catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+	    return linhas;
+    }
+	public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial){
+
+		String[] nomes = new String[linhas-1];
+			
+		// Chamar a função readFile
+		try{
+		matrix = readFile(caminhoInicial, matrix, nomes);	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return nomes;
 	}
 }
