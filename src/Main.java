@@ -286,7 +286,12 @@ public class Main {
 		float taxaReI = matrix[a][3];
 		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
-		float[][] resultados = new float[n][5];
+		float[][] resultados = new float[n+1][5];
+		resultados[i][0] = i;
+		resultados[i][1] = S;
+		resultados[i][2] = I;
+		resultados[i][3] = R;
+		resultados[i][4] = N;
 		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
@@ -305,13 +310,13 @@ public class Main {
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
 			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
-
+			i++;
+			
 			resultados[i][0] = i;
 			resultados[i][1] = Sn;
 			resultados[i][2] = In;
 			resultados[i][3] = Rn;
 			resultados[i][4] = Sn+In+Rn;
-			i++;
 		}
 
 		try {
@@ -336,7 +341,12 @@ public class Main {
 		float taxaReI = matrix[a][3];
 		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
-		float[][] resultados = new float[n][5];
+		float[][] resultados = new float[n+1][5];
+		resultados[i][0] = i;
+		resultados[i][1] = S;
+		resultados[i][2] = I;
+		resultados[i][3] = R;
+		resultados[i][4] = N;
 		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
@@ -344,23 +354,28 @@ public class Main {
 		
 		while(i < n){
 			for (float j = 0; j < 1; j+=h){
+
 				float Sk1 = h * functionS(T, S, taxaProp, I);
-				float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp, I);
-				float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp, I);
-				float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp, I);
-				float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;			
-
 				float Ik1 = h * functionI(T, I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
-
 				float Rk1 = h * functionR(T, R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+
+				float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp, (I + Ik1/2));
+				float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI, (S + Sk1/2), (R + Rk1/2));
+				float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp, (I + Ik1/2), (S + Sk1/2));
+
+				float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp, (I + Ik2/2));
+				float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI, (S + Sk2/2), (R + Rk2/2));
+				float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp, (I + Ik2/2), (S + Sk2/2));
+
+				float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp, (I + Ik3));
+				float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, (S + Sk3), (R + Rk3));
+				float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, (I + Ik3), (S + Sk3));
+				
+				float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;	
+				float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;		
 				float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
+				
+				
 				Sn = S + Sk;
 				In = I + Ik;
 				Rn = R + Rk;
@@ -373,13 +388,12 @@ public class Main {
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
 			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
-
+			i++;
 			resultados[i][0] = i;
 			resultados[i][1] = Sn;
 			resultados[i][2] = In;
 			resultados[i][3] = Rn;
 			resultados[i][4] = Sn+In+Rn;
-			i++;
 			}
 
 		try {
