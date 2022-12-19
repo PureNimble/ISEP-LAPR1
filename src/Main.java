@@ -12,10 +12,10 @@ import java.text.DecimalFormat;
 public class Main {
     public static void main(String[] args){
 		float h;
-		float N;
-		float S;
-		float Sn;
-		int n;
+		float n;
+		float s;
+		float sDias;
+		int dias;
 		int option;
 		String caminhoFinal = "src/ficheiroResultado";
 		String caminhoInicial = "src/ficheiroSIR.csv";
@@ -55,12 +55,12 @@ public class Main {
 				h = scanner.nextFloat();
 
 				System.out.println(" Valor da população?");
-				N = scanner.nextFloat();
-				S = N - 1;
-				Sn = N - 1;
+				n = scanner.nextFloat();
+				s = n - 1;
+				sDias = n - 1;
 
 				System.out.println(" Número de dias?");
-				n = scanner.nextInt();
+				dias = scanner.nextInt();
 				System.out.println(" -----------------------MENU-----------------------");
 				System.out.println("| 1 - Método de Euler				   |");
 				System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
@@ -69,10 +69,10 @@ public class Main {
 				option = scanner.nextInt();
 				switch (option) {
 					case 1:
-						Euler(n, h, matrix, linhas, N, S, Sn, caminhoFinal, nomes, a);
+						Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 						break;
 					case 2:
-						Runge_Kutta(n, h, matrix, linhas, N, S, Sn, caminhoFinal, nomes, a);
+						Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 						break;
 					case 3:
 						System.exit(0);
@@ -88,10 +88,10 @@ public class Main {
 			caminhoFinal = "src/"+ args[9].substring(0, args[9].length()-4);
 			option = Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
 			h = Float.valueOf(args[4]);
-			N = Float.valueOf(args[6]);
-			n = Integer.valueOf(args[8]);
-			S  = N - 1;
-			Sn = N - 1;
+			n = Float.valueOf(args[6]);
+			dias = Integer.valueOf(args[8]);
+			s  = n - 1;
+			sDias = n - 1;
 
 			int linhas = 0;
 			// Chamar a função checkNumberOfLines
@@ -119,10 +119,10 @@ public class Main {
 			while(a < linhas-1){
 				switch (option) {
 					case 1:
-						Euler(n, h, matrix, linhas, N, S, Sn, caminhoFinal, nomes, a);
+						Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 						break;
 					case 2:
-						Runge_Kutta(n, h, matrix, linhas, N, Sn, S, caminhoFinal, nomes, a);
+						Runge_Kutta(dias, h, matrix, linhas, n, sDias, s, caminhoFinal, nomes, a);
 						break;
 					default:
 						System.out.print("Opção inválida/inexistente");
@@ -232,8 +232,8 @@ public class Main {
 	 * @param float S suscetíveis        									 *
 	 * @param float taxaProp β        										 *
 	 *************************************************************************/
-	public static float functionS(float T, float S, float taxaProp, float I){
-		return -taxaProp * S * I;
+	public static float functionS(float T, float s, float taxaProp, float inf){
+		return -taxaProp * s * inf;
 	}
 	
 	/*************************************************************************
@@ -246,8 +246,8 @@ public class Main {
 	 * @param float taxaRej γ     							                 *
 	 * @param float taxaReI α                                                *
 	 *************************************************************************/
-	public static float functionI(float T, float I, float taxaPop, float taxaProp,float taxaRej, float taxaReI, float S, float R){
-		return taxaPop * taxaProp * S * I - taxaRej * I + taxaReI * R;
+	public static float functionI(float t, float inf, float taxaPop, float taxaProp,float taxaRej, float taxaReI, float s, float rec){
+		return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
 	}
 	
 	/*************************************************************************
@@ -260,8 +260,8 @@ public class Main {
 	 * @param float taxaPop ρ       							             *
 	 * @param float taxaProp β       							             *
 	 *************************************************************************/
-	public static float functionR(float T, float R, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float I, float S){
-		return taxaRej * I - taxaReI * R + (1 - taxaPop) * taxaProp * S * I;
+	public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s){
+		return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
 	}
 	
 	/*************************************************************************
@@ -271,53 +271,53 @@ public class Main {
 	 * @param float[][] matrix
 	 * @param String caminhoFinal ficheiro de resultados finais              *
 	 *************************************************************************/
-	public static void Euler(int n, float h, float[][] matrix, int linhas, float N, float S, float Sn, String caminhoFinal, String[] nomes, int a){
+	public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a){
 		float taxaProp = matrix[a][0];
 		float taxaRej = matrix[a][1];
 		float taxaPop = matrix[a][2];
 		float taxaReI = matrix[a][3];
-		float In = 1;
-		float Rn = 0;
-		float I = 1;
-		float R = 0;
-		float T = 0;
+		float iDias = 1;
+		float rDias = 0;
+		float inf = 1;
+		float rec = 0;
+		float t = 0;
 		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
-		float[][] resultados = new float[n+1][5];
+		float[][] resultados = new float[dias+1][5];
 		resultados[i][0] = i;
-		resultados[i][1] = S;
-		resultados[i][2] = I;
-		resultados[i][3] = R;
-		resultados[i][4] = N;
-		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
-		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
-		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
+		resultados[i][1] = s;
+		resultados[i][2] = inf;
+		resultados[i][3] = rec;
+		resultados[i][4] = n;
+		System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
+		System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
+		System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
+		System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
 
-		while(i < n){
+		while(i < dias){
 			for (float j = 0; j < 1; j+=h){
-				Sn = S + h * functionS((T + i * h), S, taxaProp, I);
-				In = I + h * functionI((T + i * h), I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				Rn = R + h * functionR((T + i * h), R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				S = Sn;
-				I = In;
-				R = Rn;
+				sDias = s + h * functionS((t + i * h), s, taxaProp, inf);
+				iDias = inf + h * functionI((t + i * h), inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
+				rDias = rec + h * functionR((t + i * h), rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
+				s = sDias;
+				inf = iDias;
+				rec = rDias;
 			}
-			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
-			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
-			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
+			System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
+			System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
+			System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
+			System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
 			i++;
 			
 			resultados[i][0] = i;
-			resultados[i][1] = Sn;
-			resultados[i][2] = In;
-			resultados[i][3] = Rn;
-			resultados[i][4] = Sn+In+Rn;
+			resultados[i][1] = sDias;
+			resultados[i][2] = iDias;
+			resultados[i][3] = rDias;
+			resultados[i][4] = sDias+iDias+rDias;
 		}
 
 		try {
-			printFile(caminhoFinal + nomes[a] + ".csv", resultados, n);
+			printFile(caminhoFinal + nomes[a] + ".csv", resultados, dias);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -331,75 +331,75 @@ public class Main {
 	 * @param float[][] matrix 												 *
 	 * @param String caminhoFinal ficheiro de resultados finais      		 *
 	 *************************************************************************/
-	public static void Runge_Kutta(int n, float h, float[][] matrix, int linhas, float N, float S, float Sn, String caminhoFinal, String[] nomes, int a){
+	public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a){
 		float taxaProp = matrix[a][0];
 		float taxaRej = matrix[a][1];
 		float taxaPop = matrix[a][2];
 		float taxaReI = matrix[a][3];
-		float In = 1;
-		float Rn = 0;
-		float I = 1;
-		float R = 0;
-		float T = 0;
+		float iDias = 1;
+		float rDias = 0;
+		float inf = 1;
+		float rec = 0;
+		float t = 0;
 		DecimalFormat frmt = new DecimalFormat("#.##");
 		int i = 0;
-		float[][] resultados = new float[n+1][5];
+		float[][] resultados = new float[dias+1][5];
 		resultados[i][0] = i;
-		resultados[i][1] = S;
-		resultados[i][2] = I;
-		resultados[i][3] = R;
-		resultados[i][4] = N;
-		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
-		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
-		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
+		resultados[i][1] = s;
+		resultados[i][2] = inf;
+		resultados[i][3] = rec;
+		resultados[i][4] = n;
+		System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
+		System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
+		System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
+		System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
 		
-		while(i < n){
+		while(i < dias){
 			for (float j = 0; j < 1; j+=h){
 
-				float Sk1 = h * functionS(T, S, taxaProp, I);
-				float Ik1 = h * functionI(T, I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Rk1 = h * functionR(T, R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+				float Sk1 = h * functionS(t, s, taxaProp, inf);
+				float Ik1 = h * functionI(t, inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
+				float Rk1 = h * functionR(t, rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
 
-				float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp, (I + Ik1/2));
-				float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI, (S + Sk1/2), (R + Rk1/2));
-				float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp, (I + Ik1/2), (S + Sk1/2));
+				float Sk2 = h * functionS((t + h/2), (s + Sk1/2), taxaProp, (inf + Ik1/2));
+				float Ik2 = h * functionI((t + h/2), (inf + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk1/2), (rec + Rk1/2));
+				float Rk2 = h * functionR((t + h/2), (rec + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik1/2), (s + Sk1/2));
 
-				float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp, (I + Ik2/2));
-				float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI, (S + Sk2/2), (R + Rk2/2));
-				float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp, (I + Ik2/2), (S + Sk2/2));
+				float Sk3 = h * functionS((t + h/2), (s + Sk2/2), taxaProp, (inf + Ik2/2));
+				float Ik3 = h * functionI((t + h/2), (inf + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk2/2), (rec + Rk2/2));
+				float Rk3 = h * functionR((t + h/2), (rec + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik2/2), (s + Sk2/2));
 
-				float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp, (I + Ik3));
-				float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, (S + Sk3), (R + Rk3));
-				float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, (I + Ik3), (S + Sk3));
+				float Sk4 = h * functionS((t + h), (s + Sk3), taxaProp, (inf + Ik3));
+				float Ik4 = h * functionI((t + h), (inf + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk3), (rec + Rk3));
+				float Rk4 = h * functionR((t + h), (rec + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik3), (s + Sk3));
 				
 				float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;	
 				float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;		
 				float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
 				
 				
-				Sn = S + Sk;
-				In = I + Ik;
-				Rn = R + Rk;
-				T += h;
-				S = Sn;
-				I = In;
-				R = Rn;
+				sDias = s + Sk;
+				iDias = inf + Ik;
+				rDias = rec + Rk;
+				t += h;
+				s = sDias;
+				inf = iDias;
+				rec = rDias;
 			}
-			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
-			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
-			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
+			System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
+			System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
+			System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
+			System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
 			i++;
 			resultados[i][0] = i;
-			resultados[i][1] = Sn;
-			resultados[i][2] = In;
-			resultados[i][3] = Rn;
-			resultados[i][4] = Sn+In+Rn;
+			resultados[i][1] = sDias;
+			resultados[i][2] = iDias;
+			resultados[i][3] = rDias;
+			resultados[i][4] = sDias+iDias+rDias;
 			}
 
 		try {
-			printFile(caminhoFinal + nomes[a] + ".csv", resultados, n);
+			printFile(caminhoFinal + nomes[a] + ".csv", resultados, dias);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
