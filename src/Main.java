@@ -11,11 +11,6 @@ import java.text.DecimalFormat;
  */
 public class Main {
     public static void main(String[] args){
-
-		float taxaProp = 0.002f;              //β
-    	float taxaRej = 0.01f;                //γ
-    	float taxaPop = 0.6f;                 //ρ
-    	float taxaReI = 0f;                    //α
 		float h;
 		float N;
 		float I = 1;
@@ -27,9 +22,8 @@ public class Main {
 		float Sn;
 		int n;
 		int option;
-		String caminhoFinal = "src/ficheiroResultado.csv";
+		String caminhoFinal = "src/ficheiroResultado";
 		String caminhoInicial = "src/ficheiroSIR.csv";
-
 
 		if (args.length == 0) {
 
@@ -45,6 +39,30 @@ public class Main {
 			System.out.println(" Número de dias?");
 			n = scanner.nextInt();
 
+			int linhas = 0;
+			// Chamar a função checkNumberOfLines
+			try{
+			linhas = checkNumberOfLines(caminhoInicial);
+			} catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+			// Matrix para colocar os valores 
+			float[][] matrix = new float[linhas-1][4];
+			String[] nomes = new String[linhas-1];
+			
+			// Chamar a função readFile
+			try{
+			matrix = readFile(caminhoInicial, matrix, nomes);	
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			for (int i = 0; i < linhas-1; i++) {
+				for (int j = 0; j < 4; j++) {
+					System.out.print("["+matrix[i][j]+"]" + " ");
+				}
+				System.out.println("\n");
+			}
+
 			//modo iterativo
 			System.out.println(" -----------------------MENU-----------------------");
 			System.out.println("| 1 - Método de Euler				   |");
@@ -54,10 +72,10 @@ public class Main {
 			option = scanner.nextInt();
 			switch (option) {
 				case 1:
-					Euler(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
+					Euler(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes);
 					break;
 				case 2:
-					Runge_Kutta(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
+					Runge_Kutta(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes);
 					break;
 				case 3:
 					System.exit(0);
@@ -75,12 +93,36 @@ public class Main {
 			n = Integer.valueOf(args[8]);
 			S  = N - 1;
 			Sn = N - 1;
+
+			int linhas = 0;
+			// Chamar a função checkNumberOfLines
+			try{
+			linhas = checkNumberOfLines(caminhoInicial);
+			} catch(FileNotFoundException e){
+				e.printStackTrace();
+			}
+			// matrix para colocar os valores 
+			float[][] matrix = new float[linhas-1][4];
+			String[] nomes = new String[linhas-1];
+			// Chamar a função readFile
+			try{
+			matrix = readFile(caminhoInicial, matrix, nomes);	
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			for (int i = 0; i < linhas-1; i++) {
+				for (int j = 0; j < 4; j++) {
+					System.out.print("["+matrix[i][j]+"]" + " ");
+				}
+				System.out.println("\n");
+			}
+
 			switch (option) {
 				case 1:
-					Euler(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
+					Euler(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes);
 					break;
 				case 2:
-					Runge_Kutta(n, h, taxaProp, taxaRej, taxaPop, taxaReI, I, N, S, Sn, R, T, In, Rn, caminhoFinal);
+					Runge_Kutta(n, h, matrix, linhas, I, N, S, Sn, R, T, In, Rn, caminhoFinal, nomes);
 					break;
 				default:
 					System.out.print("Opção inválida/inexistente");
@@ -103,26 +145,7 @@ public class Main {
 		 * args[9] -> caminho do ficheiroResultado.csv
 		 * 
 		 * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
-		 */
-
-		
-		int linhas = 0;
-		// Chamar a função checkNumberOfLines
-		try{
-		linhas = checkNumberOfLines(caminhoInicial);
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-		}
-		// matrix para colocar os valores 
-		String[][] matrix = new String[linhas-1][4];
-		
-		// Chamar a função readFile
-		try{
-		 matrix = readFile(caminhoInicial, matrix);	
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	
+		 */	
 	}
 	/*************************************************************************
 	 * Função para verificar o número de linhas do ficheiro csv              *
@@ -153,7 +176,7 @@ public class Main {
 	 * @param String[][] matrix						 						 *				
 	 * @return matrix[][]	= matriz com os dados 				     		 *
 	 *************************************************************************/
-	public static String[][] readFile(String caminho_ficheiro,String[][] matrix)throws FileNotFoundException {
+	public static float[][] readFile(String caminho_ficheiro,float[][] matrix, String[] nomes)throws FileNotFoundException {
 
 		Scanner scanner = new Scanner(new File(caminho_ficheiro));
 
@@ -162,8 +185,9 @@ public class Main {
 			String line = scanner.nextLine();
 			String[] values = line.split(";");
 			if (lineNumber != 0) {
+				nomes[lineNumber-1] = values[0];
 				for (int j = 1; j < 5; j++) {
-					matrix[lineNumber - 1][j - 1] = values[j];
+					matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",","."));
 				}
 			}
 			lineNumber++;
@@ -248,42 +272,47 @@ public class Main {
 	 * @param float taxaReI α                                                *
 	 * @param String caminhoFinal ficheiro de resultados finais              *
 	 *************************************************************************/
-	public static void Euler(int n, float h, float taxaProp, float taxaRej, float taxaPop, float taxaReI, float I, float N, float S, float Sn, float R, float T, float In, float Rn, String caminhoFinal){
-		
-		DecimalFormat frmt = new DecimalFormat("#.##");
-		int i = 0;
-		float[][] resultados = new float[n][5];
-		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
-		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
-		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
-
-		while(i < n){
-			for (float j = 0; j < 1; j+=h){
-				Sn = S + h * functionS((T + i * h), S, taxaProp, I);
-				In = I + h * functionI((T + i * h), I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				Rn = R + h * functionR((T + i * h), R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				S = Sn;
-				I = In;
-				R = Rn;
-			}
+	public static void Euler(int n, float h, float[][] matrix, int linhas, float I, float N, float S, float Sn, float R, float T, float In, float Rn, String caminhoFinal, String[] nomes){
+		for(int index = 0; index < linhas-1; index++){
+			float taxaProp = matrix[index][0];
+			float taxaRej = matrix[index][1];
+			float taxaPop = matrix[index][2];
+			float taxaReI = matrix[index][3];
+			DecimalFormat frmt = new DecimalFormat("#.##");
+			int i = 0;
+			float[][] resultados = new float[n][5];
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
 			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
-			resultados[i][0] = i;
-			resultados[i][1] = Sn;
-			resultados[i][2] = In;
-			resultados[i][3] = Rn;
-			resultados[i][4] = Sn+In+Rn;
-			i++;
-		}
+			while(i < n){
+				for (float j = 0; j < 1; j+=h){
+					Sn = S + h * functionS((T + i * h), S, taxaProp, I);
+					In = I + h * functionI((T + i * h), I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
+					Rn = R + h * functionR((T + i * h), R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+					S = Sn;
+					I = In;
+					R = Rn;
+				}
+				System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+				System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+				System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+				System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
 
-		try {
-			printFile(caminhoFinal, resultados, n);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+				resultados[i][0] = i;
+				resultados[i][1] = Sn;
+				resultados[i][2] = In;
+				resultados[i][3] = Rn;
+				resultados[i][4] = Sn+In+Rn;
+				i++;
+			}
+
+			try {
+				printFile(caminhoFinal + nomes[index] + ".csv", resultados, n);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -298,61 +327,66 @@ public class Main {
 	 * @param float taxaReI α        							         	 *
 	 * @param String caminhoFinal ficheiro de resultados finais      		 *
 	 *************************************************************************/
-	public static void Runge_Kutta(int n, float h, float taxaProp, float taxaRej, float taxaPop, float taxaReI, float I, float N, float S, float Sn, float R, float T, float In, float Rn, String caminhoFinal){
-
-		DecimalFormat frmt = new DecimalFormat("#.##");
-		int i = 0;
-		float[][] resultados = new float[n][5];
-		System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
-		System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
-		System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
-		System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
-		
-		while(i < n){
-			for (float j = 0; j < 1; j+=h){
-				float Sk1 = h * functionS(T, S, taxaProp, I);
-				float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp, I);
-				float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp, I);
-				float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp, I);
-				float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
-				
-
-				float Ik1 = h * functionI(T, I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
-				float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
-
-				float Rk1 = h * functionR(T, R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
-				float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
-				Sn = S + Sk;
-				In = I + Ik;
-				Rn = R + Rk;
-				T += h;
-				S = Sn;
-				I = In;
-				R = Rn;
-			}
+	public static void Runge_Kutta(int n, float h, float[][] matrix, int linhas, float I, float N, float S, float Sn, float R, float T, float In, float Rn, String caminhoFinal, String[] nomes){
+		for(int index = 0; index < linhas-1; index++){
+			float taxaProp = matrix[index][0];
+			float taxaRej = matrix[index][1];
+			float taxaPop = matrix[index][2];
+			float taxaReI = matrix[index][3];
+			DecimalFormat frmt = new DecimalFormat("#.##");
+			int i = 0;
+			float[][] resultados = new float[n][5];
 			System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
 			System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
 			System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
 			System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
+			
+			while(i < n){
+				for (float j = 0; j < 1; j+=h){
+					float Sk1 = h * functionS(T, S, taxaProp, I);
+					float Sk2 = h * functionS((T + h/2), (S + Sk1/2), taxaProp, I);
+					float Sk3 = h * functionS((T + h/2), (S + Sk2/2), taxaProp, I);
+					float Sk4 = h * functionS((T + h), (S + Sk3), taxaProp, I);
+					float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4)/6;
+					
 
-			resultados[i][0] = i;
-			resultados[i][1] = Sn;
-			resultados[i][2] = In;
-			resultados[i][3] = Rn;
-			resultados[i][4] = Sn+In+Rn;
-			i++;
+					float Ik1 = h * functionI(T, I, taxaPop, taxaProp, taxaRej, taxaReI, S, R);
+					float Ik2 = h * functionI((T + h/2), (I + Ik1/2), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
+					float Ik3 = h * functionI((T + h/2), (I + Ik2/2), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
+					float Ik4 = h * functionI((T + h), (I + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, S, R);
+					float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4)/6;
+
+					float Rk1 = h * functionR(T, R, taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+					float Rk2 = h * functionR((T + h/2), (R + Rk1/2), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+					float Rk3 = h * functionR((T + h/2), (R + Rk2/2), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+					float Rk4 = h * functionR((T + h), (R + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, I, S);
+					float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4)/6;
+					Sn = S + Sk;
+					In = I + Ik;
+					Rn = R + Rk;
+					T += h;
+					S = Sn;
+					I = In;
+					R = Rn;
+				}
+				System.out.println("Valor de S" + (i) + ": " + frmt.format(Sn));
+				System.out.println("Valor de I" + (i) + ": " + frmt.format(In));
+				System.out.println("Valor de R" + (i) + ": " + frmt.format(Rn));
+				System.out.println("Valor de N: " + frmt.format(Sn + In + Rn));
+
+				resultados[i][0] = i;
+				resultados[i][1] = Sn;
+				resultados[i][2] = In;
+				resultados[i][3] = Rn;
+				resultados[i][4] = Sn+In+Rn;
+				i++;
+				}
+
+			try {
+				printFile(caminhoFinal + nomes[index] + ".csv", resultados, n);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
-
-		try {
-			printFile(caminhoFinal, resultados, n);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		}	
 	}
 }
