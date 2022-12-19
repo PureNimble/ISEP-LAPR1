@@ -17,7 +17,7 @@ public class Main {
 		float s;
 		float sDias;
 		int dias;
-		int option;
+		int option = 1;
 		String caminhoFinal = "ficheiroResultado";
 		String caminhoInicial = "ficheiroSIR.csv";
 
@@ -27,12 +27,27 @@ public class Main {
 			// Matrix para colocar os valores 
 			float[][] matrix = new float[linhas-1][4];
 			String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
-
+			int[] indices = new int[linhas-1];
 			//Modo iterativo
-			int a = 0;
+			int counter = 0;
 			Scanner scanner = new Scanner(System.in);
-			while(a < linhas-1){
-				System.out.println("|" + nomes[a] +"|");
+			while(counter < linhas-1 && option != 0){
+				System.out.println("Selecione uma pessoa");
+				for(int i = 0; i < linhas-1;i++){
+					System.out.println(i+1 + " - |" + nomes[i] +"|");
+				}
+				int a = scanner.nextInt() - 1;
+				while(indices[a] == 1){
+					if(a < 0 || a > linhas-1){
+						System.out.println("Opção inválida");
+					}
+					else{
+						System.out.println(nomes[a] + " já foi selecionado/a");
+						System.out.println("Escolha uma pessoa diferente");
+					}
+					a = scanner.nextInt() - 1;
+				}
+				indices[a]++;
 				System.out.println(" Valor de h?");
 				h = scanner.nextFloat();
 
@@ -43,13 +58,25 @@ public class Main {
 
 				System.out.println(" Número de dias?");
 				dias = scanner.nextInt();
-				System.out.println(" -----------------------MENU-----------------------");
+
+				/*System.out.println(" -----------------------MENU-----------------------");
 				System.out.println("| 1 - Método de Euler				   |");
 				System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
 				System.out.println(" --------------------------------------------------");
+				option = scanner.nextInt();*/
+
+				Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+				Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+				counter++;
+				System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
 				option = scanner.nextInt();
-				mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-				a++;
+				while(option != 1 && option != 0){
+					System.out.println("Opção inválida. |1-Sim| |0-Não|");
+                    option = scanner.nextInt();
+				}
+			}
+			if(counter == linhas-1){
+				System.out.println("Já percorreu todas as pessoas");
 			}
 			scanner.close();
 		}else{
@@ -271,7 +298,7 @@ public class Main {
 		}
 
 		try {
-			printFile(caminhoFinal + nomes[a] + ".csv", resultados, dias);
+			printFile(caminhoFinal + nomes[a] + "Euler.csv", resultados, dias);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -359,7 +386,7 @@ public class Main {
 			}
 
 		try {
-			printFile(caminhoFinal + nomes[a] + ".csv", resultados, dias);
+			printFile(caminhoFinal + nomes[a] + "Kutta.csv", resultados, dias);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
