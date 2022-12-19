@@ -18,8 +18,8 @@ public class Main {
 		float sDias;
 		int dias;
 		int option;
-		String caminhoFinal = "src/ficheiroResultado";
-		String caminhoInicial = "src/ficheiroSIR.csv";
+		String caminhoFinal = "ficheiroResultado";
+		String caminhoInicial = "ficheiroSIR.csv";
 
 		if (args.length == 0) {
 
@@ -53,8 +53,8 @@ public class Main {
 			}
 			scanner.close();
 		}else{
-			caminhoInicial = "src/"+ args[0];
-			caminhoFinal = "src/"+ args[9].substring(0, args[9].length()-4);
+			caminhoInicial = args[0];
+			caminhoFinal = args[9].substring(0, args[9].length()-4);
 			option = Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
 			h = Float.valueOf(args[4]);
 			n = Float.valueOf(args[6]);
