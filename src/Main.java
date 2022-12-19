@@ -228,23 +228,26 @@ public class Main {
 	/*************************************************************************
 	 *Função Sistema EDOs      												 *
 	 *************************************************************************
-	 * @param float T dias          										 *
-	 * @param float S suscetíveis        									 *
+	 * @param float t dias          										 *
+	 * @param float s suscetíveis        									 *
 	 * @param float taxaProp β        										 *
+	 * @param float inf infetados        									 *
 	 *************************************************************************/
-	public static float functionS(float T, float s, float taxaProp, float inf){
+	public static float functionS(float t, float s, float taxaProp, float inf){
 		return -taxaProp * s * inf;
 	}
 	
 	/*************************************************************************
 	 *Função Sistema EDOs       										     *
 	 *************************************************************************
-	 * @param float T dias          										 *
-	 * @param float I número de Infetados       							 *
+	 * @param float t dias          										 *
+	 * @param float inf número de Infetados       							 *
 	 * @param float taxaPop ρ       							             *
 	 * @param float taxaProp β       							             *
 	 * @param float taxaRej γ     							                 *
 	 * @param float taxaReI α                                                *
+	 * @param float s                                                        *
+	 * @param float rec número recuperados                                   *
 	 *************************************************************************/
 	public static float functionI(float t, float inf, float taxaPop, float taxaProp,float taxaRej, float taxaReI, float s, float rec){
 		return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
@@ -259,6 +262,8 @@ public class Main {
 	 * @param float taxaReI α                                                *
 	 * @param float taxaPop ρ       							             *
 	 * @param float taxaProp β       							             *
+	 * @param float inf número de Infetados       							 *
+	 * @param float s                                                        *
 	 *************************************************************************/
 	public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s){
 		return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
@@ -266,10 +271,17 @@ public class Main {
 	
 	/*************************************************************************
 	 *Função de Euler     											         *
-	 * @param int n dias          										     *
-	 * @param float h espaçamento        							         *
-	 * @param float[][] matrix
-	 * @param String caminhoFinal ficheiro de resultados finais              *
+	 *************************************************************************
+	 * @param int dias número de dias          								 *
+	 * @param float h step        							         		 *
+	 * @param float[][] matrix 												 *
+	 * @param linhas número de linhas 										 *
+	 * @param n valor da população  										 *
+	 * @param s n-1 												 		 *
+	 * @param sDias num de dias 											 *
+	 * @param String caminhoFinal ficheiro de resultados finais      		 *
+	 * @param String[] nomes												 *
+	 * @param int a															 *
 	 *************************************************************************/
 	public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a){
 		float taxaProp = matrix[a][0];
@@ -326,10 +338,16 @@ public class Main {
 	/*************************************************************************
 	 *Função de Runge_kutta     											 *
 	 *************************************************************************
-	 * @param int n dias          										     *
-	 * @param float h espaçamento        							         *
+	 * @param int dias número de dias          								 *
+	 * @param float h step        							         		 *
 	 * @param float[][] matrix 												 *
+	 * @param linhas número de linhas 										 *
+	 * @param n valor da população  										 *
+	 * @param s n-1 												 		 *
+	 * @param sDias num de dias 											 *
 	 * @param String caminhoFinal ficheiro de resultados finais      		 *
+	 * @param String[] nomes												 *
+	 * @param int a															 *
 	 *************************************************************************/
 	public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a){
 		float taxaProp = matrix[a][0];
