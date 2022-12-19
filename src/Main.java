@@ -37,8 +37,8 @@ public class Main {
 					System.out.println(i+1 + " - |" + nomes[i] +"|");
 				}
 				int a = scanner.nextInt() - 1;
-				while(indices[a] == 1){
-					if(a < 0 || a > linhas-1){
+				while(((a < 0) || (a > linhas-1) || (indices[a] == 1))){
+					if((a < 0) || (a > linhas-1)){
 						System.out.println("Opção inválida");
 					}
 					else{
