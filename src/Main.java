@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.lang.Runtime;
 
 /*	2 Modos disponíveis:
 	-> Modo interativo     -> (java -jar lapr1_1dm_grupo02.jar)
