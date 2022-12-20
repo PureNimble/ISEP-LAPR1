@@ -41,6 +41,7 @@ public class Main {
 
         if (args.length == 0) {
 			modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            gnuplot();
 
         } else {
 			modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
