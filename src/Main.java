@@ -461,6 +461,11 @@ public class Main {
             }
         }
 
+		if(!((args[9].substring(args[9].length() - 4, args[9].length())).equals(".csv") && ((args[0].substring(args[0].length() - 4, args[0].length())).equals(".csv")))){
+			mensagemErro(2);
+            System.exit(0);
+		}
+
 		caminhoInicial = args[0];
         caminhoFinal = args[9].substring(0, args[9].length() - 4);
         s = n - 1;
@@ -492,8 +497,7 @@ public class Main {
                 System.out.println(
                         "\n*********************************************************************************************");
                 System.out.println(
-                        "\n->  Os valores introduzidos no ficheiro de input têm um numero inválido de casas decimais. <-");
-                System.out.println("\n                     Numero de casas decimais permitidas: 0 ou 2\n");
+                        "\n					-> Tipo de ficheiro inválido (deveria ser do tipo .csv) <-					");
                 System.out.println(
                         "**********************************************************************************************");
                 break;
