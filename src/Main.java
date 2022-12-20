@@ -9,7 +9,20 @@ import java.lang.Runtime;
 
 /*	2 Modos disponíveis:
 	-> Modo interativo     -> (java -jar lapr1_1dm_grupo02.jar)
-	-> Modo não interativo -> (java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m X -p Y -t Z -d K ficheiroResultado.csv)
+
+	-> Modo não interativo
+         * args[0] -> caminho do ficheiro.csv
+         * args[1] -> -m
+         * args[2] -> metodo a usar (1-Euler, 2-RK4)
+         * args[3] -> -p
+         * args[4] -> h (0<h<1)
+         * args[5] -> -t
+         * args[6] -> N (N~=1000)
+         * args[7] -> -d
+         * args[8] -> dias (0<dias)
+         * args[9] -> caminho do ficheiroResultado.csv
+         *
+         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
  */
 public class Main {
     public static void main(String[] args) {
@@ -29,23 +42,6 @@ public class Main {
         } else {
 			modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
         }
-        //modo não iterativo
-        /*
-         * Estrutura do modo não interativo ->
-         *
-         * args[0] -> caminho do ficheiro.csv
-         * args[1] -> -m
-         * args[2] -> metodo a usar (1-Euler, 2-RK4)
-         * args[3] -> -p
-         * args[4] -> h (0<h<1)
-         * args[5] -> -t
-         * args[6] -> N (N~=1000)
-         * args[7] -> -d
-         * args[8] -> dias (0<dias)
-         * args[9] -> caminho do ficheiroResultado.csv
-         *
-         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
-         */
     }
 
     /*************************************************************************
@@ -74,8 +70,9 @@ public class Main {
      * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
      *************************************************************************
      * @param String caminho_ficheiro 										 *
-     * @param String[][] matrix						 						 *
-     * @return matrix[][]    = matriz com os dados 				     		 *
+     * @param float[][] matrix = matrix com os dados 				     	 *
+	 * @param String[] nomes = vetor com os nomes 				     	 	 *
+	 * @return matrix = matrix com os dados 				     	 		 *
      *************************************************************************/
     public static float[][] readFile(String caminho_ficheiro, float[][] matrix, String[] nomes) throws FileNotFoundException {
 
