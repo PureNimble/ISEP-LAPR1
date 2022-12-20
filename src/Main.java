@@ -525,6 +525,7 @@ public class Main {
                 System.out.println("\n     Opções disponíveis |1-Sim| |0-Não|                   ");
                 System.out.println("\n********************************************************");
                 break;
+            }
         }
         public static void gnuplot(){
             String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
