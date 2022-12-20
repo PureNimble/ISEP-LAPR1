@@ -440,12 +440,29 @@ public class Main {
         scanner.close();
 	}
 	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
+        
+        if(args.length != 10){
+            System.out.println("Opção inválida");
+            System.exit(0);
+        }
+
+        for(int b = 1; b<=8; b+=2) {
+            if (args[b].equals("-m")) {
+                option = Integer.valueOf(args[b+1]);
+            }
+            if (args[b].equals("-p")) {
+                h = Float.valueOf(args[b+1]);
+            }
+            if (args[b].equals("-t")) {
+                n = Float.valueOf(args[b+1]);
+            }
+            if (args[b].equals("-d")) {
+                dias = Integer.valueOf(args[b+1]);
+            }
+        }
+
 		caminhoInicial = args[0];
         caminhoFinal = args[9].substring(0, args[9].length() - 4);
-        option = Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
-        h = Float.valueOf(args[4]);
-        n = Float.valueOf(args[6]);
-        dias = Integer.valueOf(args[8]);
         s = n - 1;
         sDias = n - 1;
 
