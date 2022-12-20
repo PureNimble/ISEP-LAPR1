@@ -1,7 +1,10 @@
 //Podemos usar
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -522,6 +525,36 @@ public class Main {
                 System.out.println("\n     Opções disponíveis |1-Sim| |0-Não|                   ");
                 System.out.println("\n********************************************************");
                 break;
+        }
+        public static void gnuplot(){
+            String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
+                "-e",
+                "set datafile separator ';'",
+                "plot 'ficheiroResultadoDinaEuler.csv' u 1:2 w l title 'S', 'ficheiroResultadoDinaEuler.csv' u 1:3 w l title 'I', 'ficheiroResultadoDinaEuler.csv' u 1:4 w l title 'R'",
+                "set xlabel 'Dias'",
+                "set ylabel 'N'",
+                "set grid",
+                "set term png size 1200, 700",
+                "set output 'SRI.png'",
+                "plot 'ficheiroResultadoDinaEuler.csv' u 1:2 w l title 'S', 'ficheiroResultadoDinaEuler.csv' u 1:3 w l title 'I', 'ficheiroResultadoDinaEuler.csv' u 1:4 w l title 'R'"
+                 };
+            try {
+                Runtime rt = Runtime.getRuntime();
+                Process proc = rt.exec(s);
+                InputStream stdin = proc.getErrorStream();
+                InputStreamReader isr = new InputStreamReader(stdin);
+                BufferedReader br = new BufferedReader(isr);
+                String line = null;
+                while ((line = br.readLine()) != null)
+                    System.err.println("gnuplot:"+line);
+                int exitVal = proc.waitFor();
+                if (exitVal != 0)
+                    System.out.println("gnuplot Process exitValue: " + exitVal);
+                proc.getInputStream().close();
+                proc.getOutputStream().close();
+                proc.getErrorStream().close();
+            } catch (Exception e) {
+                System.err.println("Fail: " + e);
         }
     }
 }
