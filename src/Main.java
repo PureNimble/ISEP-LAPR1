@@ -363,7 +363,7 @@ public class Main {
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
                 break;
             default:
-                System.out.print("Opção inválida/inexistente");
+                mensagemErro(3);
                 break;
         }
         return a;
@@ -394,10 +394,10 @@ public class Main {
             while (((a < 0) || (a >= linhas - 1) || (indices[a] == 1))) {
 
                 if ((a < 0) || (a >= linhas - 1)) {
-        	        System.out.println("Opção inválida");
+        	        mensagemErro(4);;
                 } else {
                     System.out.println(nomes[a] + " já foi selecionado/a");
-                    System.out.println("Escolha uma pessoa diferente");
+                    mensagemErro(5);
                 }
                 a = scanner.nextInt() - 1;
             }
@@ -428,7 +428,7 @@ public class Main {
 
             while (option != 1 && option != 0) {
 
-                System.out.println("Opção inválida. |1-Sim| |0-Não|");
+                mensagemErro(6);
                 option = scanner.nextInt();
             }
         }
@@ -440,13 +440,13 @@ public class Main {
         scanner.close();
 	}
 	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
-        
+
         if(args.length != 10){
-            System.out.println("Opção inválida");
+            mensagemErro(1);
             System.exit(0);
         }
 
-        for(int b = 1; b<=8; b+=2) {
+        for(int b = 1; b<8; b+=2) {
             if (args[b].equals("-m")) {
                 option = Integer.valueOf(args[b+1]);
             }
@@ -477,4 +477,47 @@ public class Main {
             a++;
         }
 	}
+    public static void mensagemErro(int valor) {
+        // 0 = tudo bem
+        // 1 = erro na estrutura do ficheiro
+        // 2 = tem demasiadas casas decimais
+        switch (valor) {
+            case 1:
+                System.out.println("\n***************************************************************************************");
+                System.out.println("\n           -> Erro na estrutura do ficheiro de input. Verifique se está correto <-     ");
+                System.out.println("\n***************************************************************************************");
+                break;
+
+            case 2:
+                System.out.println(
+                        "\n*********************************************************************************************");
+                System.out.println(
+                        "\n->  Os valores introduzidos no ficheiro de input têm um numero inválido de casas decimais. <-");
+                System.out.println("\n                     Numero de casas decimais permitidas: 0 ou 2\n");
+                System.out.println(
+                        "**********************************************************************************************");
+                break;
+            case 3:
+                System.out.println("\n********************************************************");
+                System.out.println("\n           -> Método inválido/inexistente <-          ");
+                System.out.println("\n********************************************************");
+                break;
+            case 4:
+                System.out.println("\n********************************************************");
+                System.out.println("\n           -> Opção inválida/inexistente <-            ");
+                System.out.println("\n********************************************************");
+                break;
+            case 5:
+                System.out.println("\n********************************************************");
+                System.out.println("\n           -> Escolha uma pessoa diferente <-            ");
+                System.out.println("\n********************************************************");
+                break;
+            case 6:
+                System.out.println("\n********************************************************");
+                System.out.println("\n           -> Opção inválida <-                           ");
+                System.out.println("\n     Opções disponíveis |1-Sim| |0-Não|                   ");
+                System.out.println("\n********************************************************");
+                break;
+        }
+    }
 }
