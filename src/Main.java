@@ -14,106 +14,20 @@ import java.lang.Runtime;
 public class Main {
     public static void main(String[] args) {
 
-        float h;
-        float n;
-        float s;
-        float sDias;
-        int dias;
+        float h = 0;
+        float n = 0;
+        float s = 0;
+        float sDias = 0;
+        int dias = 0;
         int option = 1;
         String caminhoFinal = "ficheiroResultado";
         String caminhoInicial = "ficheiroSIR.csv";
 
         if (args.length == 0) {
-
-            int linhas = repeated(caminhoInicial);
-            // Matrix para colocar os valores
-            float[][] matrix = new float[linhas - 1][4];
-            String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
-            int[] indices = new int[linhas - 1];
-
-            //Modo iterativo
-            int counter = 0;
-
-            Scanner scanner = new Scanner(System.in);
-
-            while (counter < linhas - 1 && option != 0) {
-
-                System.out.println("Selecione uma pessoa");
-
-                for (int i = 0; i < linhas - 1; i++) {
-                    System.out.println(i + 1 + " - |" + nomes[i] + "|");
-                }
-
-                int a = scanner.nextInt() - 1;
-
-                while (((a < 0) || (a >= linhas - 1) || (indices[a] == 1))) {
-
-                    if ((a < 0) || (a >= linhas - 1)) {
-                        System.out.println("Opção inválida");
-                    } else {
-                        System.out.println(nomes[a] + " já foi selecionado/a");
-                        System.out.println("Escolha uma pessoa diferente");
-                    }
-                    a = scanner.nextInt() - 1;
-                }
-
-                indices[a]++;
-                System.out.println(" Valor de h?");
-                h = scanner.nextFloat();
-
-                System.out.println(" Valor da população?");
-                n = scanner.nextFloat();
-                s = n - 1;
-                sDias = n - 1;
-
-                System.out.println(" Número de dias?");
-                dias = scanner.nextInt();
-
-				/*System.out.println(" -----------------------MENU-----------------------");
-				System.out.println("| 1 - Método de Euler				   |");
-				System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
-				System.out.println(" --------------------------------------------------");
-				option = scanner.nextInt();*/
-
-                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                counter++;
-                System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
-                option = scanner.nextInt();
-
-                while (option != 1 && option != 0) {
-
-                    System.out.println("Opção inválida. |1-Sim| |0-Não|");
-                    option = scanner.nextInt();
-                }
-            }
-
-            if (counter == linhas - 1) {
-
-                System.out.println("Já percorreu todas as pessoas");
-            }
-            scanner.close();
+			modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
 
         } else {
-            caminhoInicial = args[0];
-            caminhoFinal = args[9].substring(0, args[9].length() - 4);
-            option = Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
-            h = Float.valueOf(args[4]);
-            n = Float.valueOf(args[6]);
-            dias = Integer.valueOf(args[8]);
-            s = n - 1;
-            sDias = n - 1;
-
-            int linhas = repeated(caminhoInicial);
-            // Matrix para colocar os valores
-            float[][] matrix = new float[linhas - 1][4];
-            String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
-
-            int a = 0;
-            while (a < linhas - 1) {
-                mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                a++;
-            }
+			modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
         }
         //modo não iterativo
         /*
@@ -457,4 +371,96 @@ public class Main {
         }
         return a;
     }
+	
+	public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
+		int linhas = repeated(caminhoInicial);
+         // Matrix para colocar os valores
+        float[][] matrix = new float[linhas - 1][4];
+        String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
+        int[] indices = new int[linhas - 1];
+
+        //Modo iterativo
+        int counter = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (counter < linhas - 1 && option != 0) {
+
+        	System.out.println("Selecione uma pessoa");
+
+            for (int i = 0; i < linhas - 1; i++) {
+                System.out.println(i + 1 + " - |" + nomes[i] + "|");
+            }
+
+            int a = scanner.nextInt() - 1;
+
+            while (((a < 0) || (a >= linhas - 1) || (indices[a] == 1))) {
+
+                if ((a < 0) || (a >= linhas - 1)) {
+        	        System.out.println("Opção inválida");
+                } else {
+                    System.out.println(nomes[a] + " já foi selecionado/a");
+                    System.out.println("Escolha uma pessoa diferente");
+                }
+                a = scanner.nextInt() - 1;
+            }
+
+            indices[a]++;
+            System.out.println(" Valor de h?");
+            h = scanner.nextFloat();
+
+            System.out.println(" Valor da população?");
+            n = scanner.nextFloat();
+            s = n - 1;
+            sDias = n - 1;
+
+            System.out.println(" Número de dias?");
+            dias = scanner.nextInt();
+
+			/*System.out.println(" -----------------------MENU-----------------------");
+			System.out.println("| 1 - Método de Euler				   |");
+			System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
+			System.out.println(" --------------------------------------------------");
+			option = scanner.nextInt();*/
+
+            Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+            Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+            counter++;
+            System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
+            option = scanner.nextInt();
+
+            while (option != 1 && option != 0) {
+
+                System.out.println("Opção inválida. |1-Sim| |0-Não|");
+                option = scanner.nextInt();
+            }
+        }
+
+        if (counter == linhas - 1) {
+
+            System.out.println("Já percorreu todas as pessoas");
+        }
+        scanner.close();
+	}
+	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
+		caminhoInicial = args[0];
+        caminhoFinal = args[9].substring(0, args[9].length() - 4);
+        option = Integer.valueOf(args[2]); // metdo a usar (1-Euler, 2-RK4)
+        h = Float.valueOf(args[4]);
+        n = Float.valueOf(args[6]);
+        dias = Integer.valueOf(args[8]);
+        s = n - 1;
+        sDias = n - 1;
+
+        int linhas = repeated(caminhoInicial);
+        // Matrix para colocar os valores
+        float[][] matrix = new float[linhas - 1][4];
+        String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
+
+        int a = 0;
+        while (a < linhas - 1) {
+            mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+            a++;
+        }
+	}
 }
