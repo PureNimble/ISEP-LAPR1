@@ -588,16 +588,23 @@ public class Main {
         }
     public static void gnuplot(String caminhoFinalGnu){
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length()-4);
+        Scanner scanner = new Scanner(System.in);
+        String[] g = {"C:/Program Files/gnuplot/bin/gnuplot",
+        "-e", "set datafile separator ';'",
+        "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S','" + caminhoFinalGnu + "' u 1:3 w l title 'I','" + caminhoFinalGnu + "' u 1:4 w l title 'R'",
+        "-e", "set xlabel 'Dias'",
+        "-e", "set ylabel 'N'",
+        "-e", "set grid",
+        "-e", "set term png size 1200, 700",
+        "-e", "set output '" + caminhoPng + ".png'",
+        "-e", "replot"
+        };
 
         String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
             "-e", "set datafile separator ';'",
             "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S','" + caminhoFinalGnu + "' u 1:3 w l title 'I','" + caminhoFinalGnu + "' u 1:4 w l title 'R'",
             "-e", "set xlabel 'Dias'",
-            "-e", "set ylabel 'N'",
-            "-e", "set grid",
-            "-e", "set term png size 1200, 700",
-            "-e", "set output '" + caminhoPng + ".png'",
-            "-e", "replot"
+            "-e", "set ylabel 'N'"
         };
         try {
             Runtime rt = Runtime.getRuntime();
@@ -615,8 +622,14 @@ public class Main {
             proc.getInputStream().close();
             proc.getOutputStream().close();
             proc.getErrorStream().close();
+            System.out.println("Deseja guardar");
+            int i = scanner.nextInt();
+            if(i == 1){
+                rt.exec(g);
+            }
         } catch (Exception e) {
             System.err.println("Fail: " + e);
         }
+        scanner.close();
     }
 }
