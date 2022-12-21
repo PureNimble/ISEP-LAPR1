@@ -429,30 +429,29 @@ public class Main {
             Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
 
             counter++;
-            System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
-            option = scanner.nextInt();
-
-            while (option != 1 && option != 0) {
-
-                mensagemErro(6);
+            if(counter != linhas-1){
+                System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
+    
+                while (option != 1 && option != 0) {
+    
+                    mensagemErro(6);
+                    option = scanner.nextInt();
+                }
+
             }
         }
         if (counter == linhas - 1) {
 
             System.out.println("Já percorreu todas as pessoas");
         }
-        option = 1;
-        while(countergrafic < counter*2 && option != 0){
-            System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
+        System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
             option = scanner.nextInt();
             while (option!= 1 && option!= 0) {
                 mensagemErro(6);
                 option = scanner.nextInt();
             }
-            if(option == 0){
-                System.exit(0);
-            }
+        while(countergrafic < counter*2 && option != 0){
             System.out.println("Deseja fazer o gráfico de quem?");
             for (int i = 0; i < linhas - 1; i++) {
                 if(indices[i] == 1){
@@ -460,7 +459,7 @@ public class Main {
                 }
             }
             int pess = scanner.nextInt() - 1;
-            while(pess < 0 || pess >= linhas-1 || indices[pess] == 0){
+            while(pess > counter){
                 if(indices[pess] == 0){
                     mensagemErro(2);
                 }
@@ -475,12 +474,12 @@ public class Main {
                 option = scanner.nextInt();
             }
             if(option == 1) {
-                if(indices[pess]==1 && metodos[pess] != 3 && metodos[pess] != 1){
+                if(metodos[pess] != 3 && metodos[pess] != 1){
                     metodos[pess]++;
                     met = "Euler";
                 } else met = "error";
             } else {
-                if(indices[pess]==1 && metodos[pess] != 3 && metodos[pess] != 2){
+                if(metodos[pess] != 3 && metodos[pess] != 2){
                     metodos[pess]+=2;
                     met = "Kutta";
                 } else met = "error";
@@ -488,16 +487,27 @@ public class Main {
             if(met!="error"){
                 String caminhoFinalGnu = caminhoFinal + nomes[pess] + met + ".csv";
                 gnuplot(caminhoFinalGnu);
+                countergrafic++;
             }
-            System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
-            option = scanner.nextInt();
-            while (option!= 1 && option!= 0) {
-                mensagemErro(4);  
-                option = scanner.nextInt();      
+            if(met == "error"){
+                if(metodos[pess] == 1){
+                    System.out.println("Método de Euler já foi feito");
+                }
+                else if(metodos[pess] == 2){
+                    System.out.println("Método de kutta já foi feito");
+                }else System.out.println("Ambos os métodos já foram feitos");
+            }
+            if(countergrafic != counter*2){
+                System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
+                option = scanner.nextInt();
+                while (option!= 1 && option!= 0) {
+                    mensagemErro(4);  
+                    option = scanner.nextInt();      
+                }
             }
         }
         if(countergrafic == counter*2){
-            System.out.println("Todos os gráficos já foram feitos");
+            System.out.println("Todos os gráficos já foram concluidos");
         }
         scanner.close();
 	}
@@ -609,6 +619,15 @@ public class Main {
         try {
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(s);
+            System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
+            int ans = scanner.nextInt();
+            while(ans != 0 && ans != 1){
+                mensagemErro(1);
+                ans = scanner.nextInt();
+            }
+            if(ans == 1){
+                rt.exec(g);
+            }
             InputStream stdin = proc.getErrorStream();
             InputStreamReader isr = new InputStreamReader(stdin);
             BufferedReader br = new BufferedReader(isr);
@@ -622,14 +641,8 @@ public class Main {
             proc.getInputStream().close();
             proc.getOutputStream().close();
             proc.getErrorStream().close();
-            System.out.println("Deseja guardar");
-            int i = scanner.nextInt();
-            if(i == 1){
-                rt.exec(g);
-            }
         } catch (Exception e) {
             System.err.println("Fail: " + e);
         }
-        scanner.close();
     }
 }
