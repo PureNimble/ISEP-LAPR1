@@ -41,7 +41,6 @@ public class Main {
 
         if (args.length == 0) {
 			modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
-            gnuplot();
 
         } else {
 			modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
@@ -436,11 +435,34 @@ public class Main {
                 option = scanner.nextInt();
             }
         }
-
         if (counter == linhas - 1) {
 
             System.out.println("Já percorreu todas as pessoas");
         }
+        System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
+        option = scanner.nextInt();
+        while (option!= 1 && option!= 0) {
+            mensagemErro(6);
+            option = scanner.nextInt();
+        }
+        if(option == 0){
+            System.exit(0);
+        }
+        System.out.println("Deseja fazer o gráfico de quem?");
+        for (int i = 0; i < linhas - 1; i++) {
+            System.out.println(i + 1 + " - |" + nomes[i] + "|");
+        }
+        int pess = scanner.nextInt() - 1;
+        System.out.println("Que metodo deseja fazer? |1- Euler| |2- Kutta|");
+        option = scanner.nextInt();
+        String met = "";
+        if (option == 1) {
+            met = "Euler";
+        } else {
+            met = "Kutta";
+        }
+        caminhoFinal = caminhoFinal + nomes[pess] + met + ".csv";
+        gnuplot(caminhoFinal);
         scanner.close();
 	}
 	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
@@ -528,35 +550,35 @@ public class Main {
                 break;
             }
         }
-        public static void gnuplot(){
-            String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
-                "-e",
-                "set datafile separator ';'",
-                "plot 'ficheiroResultadoDinaEuler.csv' u 1:2 w l title 'S', 'ficheiroResultadoDinaEuler.csv' u 1:3 w l title 'I', 'ficheiroResultadoDinaEuler.csv' u 1:4 w l title 'R'",
-                "set xlabel 'Dias'",
-                "set ylabel 'N'",
-                "set grid",
-                "set term png size 1200, 700",
-                "set output 'SRI.png'",
-                "plot 'ficheiroResultadoDinaEuler.csv' u 1:2 w l title 'S', 'ficheiroResultadoDinaEuler.csv' u 1:3 w l title 'I', 'ficheiroResultadoDinaEuler.csv' u 1:4 w l title 'R'"
-                 };
-            try {
-                Runtime rt = Runtime.getRuntime();
-                Process proc = rt.exec(s);
-                InputStream stdin = proc.getErrorStream();
-                InputStreamReader isr = new InputStreamReader(stdin);
-                BufferedReader br = new BufferedReader(isr);
-                String line = null;
-                while ((line = br.readLine()) != null)
-                    System.err.println("gnuplot:"+line);
-                int exitVal = proc.waitFor();
-                if (exitVal != 0)
+    public static void gnuplot(String caminhoFinal){
+        String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
+            "-e", "set datafile separator ';'",
+            "-e", "plot '" + caminhoFinal + "' u 1:2 w l title 'S','" + caminhoFinal + "' u 1:3 w l title 'I','" + caminhoFinal + "' u 1:4 w l title 'R'",
+            "-e", "set xlabel 'Dias'",
+            "-e", "set ylabel 'N'",
+            "-e", "set grid",
+            "-e", "set term png size 1200, 700",
+            "-e", "set output 'SRI.png'",
+            "-e", "replot"
+        };
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec(s);
+            InputStream stdin = proc.getErrorStream();
+            InputStreamReader isr = new InputStreamReader(stdin);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            while ((line = br.readLine()) != null)
+                System.err.println("gnuplot:"+line);
+            int exitVal = proc.waitFor();
+            if (exitVal != 0){
                     System.out.println("gnuplot Process exitValue: " + exitVal);
-                proc.getInputStream().close();
-                proc.getOutputStream().close();
-                proc.getErrorStream().close();
-            } catch (Exception e) {
-                System.err.println("Fail: " + e);
+            }
+            proc.getInputStream().close();
+            proc.getOutputStream().close();
+            proc.getErrorStream().close();
+        } catch (Exception e) {
+            System.err.println("Fail: " + e);
         }
     }
 }
