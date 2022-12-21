@@ -14,7 +14,7 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 
 ## Topicos do Projeto: ##
 -------------------------
-* [main](documentos/main.md);
+* [Função Principal (main)](documentos/main.md);
 * [modo não interativo](documentos/modoNaoInterativo.md);
 * [modo interativo](documentos/modoInterativo.md);
 
