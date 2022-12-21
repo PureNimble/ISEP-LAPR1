@@ -1,24 +1,23 @@
 # ISEP-LAPR1-2022/2023
-==================
 
 ## Introdução ##
 ------------------
 Este repositório contém artefactos didáticos relevantes para o projeto integrador a desenvolver no primeiro semestre do ano letivo 2022-2023 na [Licenciatura em Engenharia ](http://www.isep.ipp.pt/Course/Course/26) do [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
 
-## Utensilios usados: ##
+## Utensílios usados: ##
 ----------------------
 
-* [The team members and task assignment during Sprints](docs/README.md)
+* Usamos o trello como
 * A template to capture and systematize evidence of applying properly the Software Development Process, namely regarding the activities of Engineering Requirements, OO Analysis and Design
 * Source code available to students as a starting point
 * General description of how the provided application works (and it is structured).
 
 ## Topicos do Projeto: ##
 -------------------------
-* main();
-* modoNaointerativo();
-* modointerativo();
+* [main](documentos/main.md);
+* [modo não interativo](documentos/modon.md);
+* [modo interativo](documentos/modo.md);
 
 ## Membros ##
 ------------------
