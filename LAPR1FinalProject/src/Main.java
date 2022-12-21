@@ -28,6 +28,7 @@ import java.lang.Runtime;
          * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
  */
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
 
         float h = 0;
@@ -56,6 +57,7 @@ public class Main {
     public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
 
         Scanner scanner = new Scanner(new File(caminho_ficheiro));
+        scanner = new Scanner(new File(caminho_ficheiro));
 
         int linhas = 0;
         while (scanner.hasNextLine()) {
@@ -64,7 +66,6 @@ public class Main {
                 linhas++;
             }
         }
-        scanner.close();
 
         return linhas;
     }
@@ -384,8 +385,6 @@ public class Main {
         int counter = 0;
         int countergrafic = 0;
 
-        Scanner scanner = new Scanner(System.in);
-
         while (counter < linhas - 1 && option != 0) {
 
         	System.out.println("Selecione uma pessoa");
@@ -399,7 +398,7 @@ public class Main {
             while (((a < 0) || (a >= linhas - 1) || (indices[a] == 1))) {
 
                 if ((a < 0) || (a >= linhas - 1)) {
-        	        mensagemErro(4);;
+        	        mensagemErro(4);
                 } else {
                     System.out.println(nomes[a] + " já foi selecionado/a");
                     mensagemErro(5);
@@ -408,8 +407,11 @@ public class Main {
             }
 
             indices[a]++;
-            System.out.println(" Valor de h?");
-            h = scanner.nextFloat();
+            do{
+                System.out.println(" Valor de h? (Ex.: 0,1)");
+                h = scanner.nextFloat();
+            }
+            while(h <= 0 || h > 1);
 
             System.out.println(" Valor da população?");
             n = scanner.nextFloat();
@@ -434,7 +436,7 @@ public class Main {
                 option = scanner.nextInt();
     
                 while (option != 1 && option != 0) {
-    
+
                     mensagemErro(6);
                     option = scanner.nextInt();
                 }
@@ -459,18 +461,17 @@ public class Main {
                 }
             }
             int pess = scanner.nextInt() - 1;
-            while(pess > counter){
-                if(indices[pess] == 0){
-                    mensagemErro(2);
-                }
-                else mensagemErro(1);
+
+            while(pess >= counter || pess < 0 || indices[pess] == 0){
+                mensagemErro(1);
                 pess = scanner.nextInt() - 1;
             }
+
             System.out.println("Que metodo deseja fazer? |1- Euler| |2- Kutta|");
             option = scanner.nextInt();
             String met = "";
             while(option < 1 || option > 2){
-                mensagemErro(1);
+                mensagemErro(4);
                 option = scanner.nextInt();
             }
             if(option == 1) {
@@ -501,7 +502,7 @@ public class Main {
                 System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
                 option = scanner.nextInt();
                 while (option!= 1 && option!= 0) {
-                    mensagemErro(4);  
+                    mensagemErro(6);  
                     option = scanner.nextInt();      
                 }
             }
@@ -598,7 +599,6 @@ public class Main {
         }
     public static void gnuplot(String caminhoFinalGnu){
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length()-4);
-        Scanner scanner = new Scanner(System.in);
         String[] g = {"C:/Program Files/gnuplot/bin/gnuplot",
         "-e", "set datafile separator ';'",
         "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S','" + caminhoFinalGnu + "' u 1:3 w l title 'I','" + caminhoFinalGnu + "' u 1:4 w l title 'R'",
@@ -622,7 +622,7 @@ public class Main {
             System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
             int ans = scanner.nextInt();
             while(ans != 0 && ans != 1){
-                mensagemErro(1);
+                mensagemErro(6);
                 ans = scanner.nextInt();
             }
             if(ans == 1){
