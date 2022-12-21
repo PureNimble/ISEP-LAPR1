@@ -9,12 +9,13 @@ Projeto Final da unidade curricular Laboratório/Projeto I.
 ### Membros ###
 
 | Nome               | Números |
-|--------------------|---------|
-| João Pinto         | 1221694 |
-| Rafael Araújo      | 1201804 |
-| Vasco Sousa        | 1221700 |
-| Tiago Correia      | 1211742 |
-| Dephane Cabral     | 1221636 |
+|:------------------:|:-------:|
+| **João Pinto**     | 1221694 |
+| **Rafael Araújo**  | 1201804 |
+| **Vasco Sousa**    | 1221700 |
+| **Tiago Correia**  | 1211742 |
+| **Dephane Cabral** | 1221636 |
+
 
 Este repositório contém artefactos didáticos relevantes para o projeto integrador a desenvolver no primeiro semestre do ano letivo 2022-2023 na [Licenciatura em Engenharia ](http://www.isep.ipp.pt/Course/Course/26) do [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
