@@ -25,7 +25,7 @@ import java.lang.Runtime;
          * args[8] -> dias (0<dias)
          * args[9] -> caminho do ficheiroResultado.csv
          *
-         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 ficheiroResultado.csv
+         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar LAPR1FinalProject/ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 LAPR1FinalProject/ficheiroResultado.csv
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -413,12 +413,12 @@ public class Main {
             }
             while(h <= 0 || h > 1);
 
-            System.out.println(" Valor da população?");
+            System.out.println(" Valor da população? (Ex.: 1000)");
             n = scanner.nextFloat();
             s = n - 1;
             sDias = n - 1;
 
-            System.out.println(" Número de dias?");
+            System.out.println(" Número de dias? (Ex.: 30)");
             dias = scanner.nextInt();
 
 			/*System.out.println(" -----------------------MENU-----------------------");
@@ -463,7 +463,7 @@ public class Main {
             int pess = scanner.nextInt() - 1;
 
             while(pess >= counter || pess < 0 || indices[pess] == 0){
-                mensagemErro(1);
+                mensagemErro(5);
                 pess = scanner.nextInt() - 1;
             }
 
