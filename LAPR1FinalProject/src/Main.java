@@ -377,10 +377,12 @@ public class Main {
          // Matrix para colocar os valores
         float[][] matrix = new float[linhas - 1][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
-        int[] indices = new int[linhas - 1];
+        int[] indices = new int[linhas - 1]; 
+        int[] metodos = new int[linhas-1];
 
         //Modo iterativo
         int counter = 0;
+        int countergrafic = 0;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -425,6 +427,7 @@ public class Main {
 
             Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
             Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+
             counter++;
             System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
             option = scanner.nextInt();
@@ -439,30 +442,63 @@ public class Main {
 
             System.out.println("Já percorreu todas as pessoas");
         }
-        System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
-        option = scanner.nextInt();
-        while (option!= 1 && option!= 0) {
-            mensagemErro(6);
+        option = 1;
+        while(countergrafic < counter*2 && option != 0){
+            System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
             option = scanner.nextInt();
+            while (option!= 1 && option!= 0) {
+                mensagemErro(6);
+                option = scanner.nextInt();
+            }
+            if(option == 0){
+                System.exit(0);
+            }
+            System.out.println("Deseja fazer o gráfico de quem?");
+            for (int i = 0; i < linhas - 1; i++) {
+                if(indices[i] == 1){
+                    System.out.println(i+1 + " - |" + nomes[i] + "|");
+                }
+            }
+            int pess = scanner.nextInt() - 1;
+            while(pess < 0 || pess >= linhas-1 || indices[pess] == 0){
+                if(indices[pess] == 0){
+                    mensagemErro(2);
+                }
+                else mensagemErro(1);
+                pess = scanner.nextInt() - 1;
+            }
+            System.out.println("Que metodo deseja fazer? |1- Euler| |2- Kutta|");
+            option = scanner.nextInt();
+            String met = "";
+            while(option < 1 || option > 2){
+                mensagemErro(1);
+                option = scanner.nextInt();
+            }
+            if(option == 1) {
+                if(indices[pess]==1 && metodos[pess] != 3 && metodos[pess] != 1){
+                    metodos[pess]++;
+                    met = "Euler";
+                } else met = "error";
+            } else {
+                if(indices[pess]==1 && metodos[pess] != 3 && metodos[pess] != 2){
+                    metodos[pess]+=2;
+                    met = "Kutta";
+                } else met = "error";
+            }
+            if(met!="error"){
+                String caminhoFinalgnu = caminhoFinal + nomes[pess] + met + ".csv";
+                gnuplot(caminhoFinalgnu);
+            }
+            System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
+            option = scanner.nextInt();
+            while (option!= 1 && option!= 0) {
+                mensagemErro(4);  
+                option = scanner.nextInt();      
+            }
         }
-        if(option == 0){
-            System.exit(0);
+        if(countergrafic == counter*2){
+            System.out.println("Todos os gráficos já foram feitos");
         }
-        System.out.println("Deseja fazer o gráfico de quem?");
-        for (int i = 0; i < linhas - 1; i++) {
-            System.out.println(i + 1 + " - |" + nomes[i] + "|");
-        }
-        int pess = scanner.nextInt() - 1;
-        System.out.println("Que metodo deseja fazer? |1- Euler| |2- Kutta|");
-        option = scanner.nextInt();
-        String met = "";
-        if (option == 1) {
-            met = "Euler";
-        } else {
-            met = "Kutta";
-        }
-        caminhoFinal = caminhoFinal + nomes[pess] + met + ".csv";
-        gnuplot(caminhoFinal);
         scanner.close();
 	}
 	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
