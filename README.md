@@ -8,10 +8,9 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 ## Utensílios usados: ##
 ----------------------
 
-* Usamos o trello como
-* A template to capture and systematize evidence of applying properly the Software Development Process, namely regarding the activities of Engineering Requirements, OO Analysis and Design
-* Source code available to students as a starting point
-* General description of how the provided application works (and it is structured).
+* Usamos o [Trello](https://trello.com/invite/b/aXVvZb4x/ATTIa6ee83f0535319d46e8643906e95abbc11A8D2B8/lapr11dmgrupo02) para o planeamento e organização do projeto, tendo ficado o trabalho de Scrum Master para a aluna Dephane Cabral.
+* O Teams e o Bitbucket foram os locais que escolhemos para o armazenamento dos ficheiros
+* Discord como meio de comunicação principal
 
 ## Topicos do Projeto: ##
 -------------------------
