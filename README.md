@@ -2,7 +2,7 @@
 
 ## Introdução ##
 ------------------
-Este repositório contém artefactos didáticos relevantes para o projeto integrador a desenvolver no primeiro semestre do ano letivo 2022-2023 na [Licenciatura em Engenharia ](http://www.isep.ipp.pt/Course/Course/26) do [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
+Este repositório contém artefactos didáticos relevantes para o projeto integrador a desenvolver no primeiro semestre do ano letivo 2022-2023 na [Licenciatura em Engenharia (LEI) ](http://www.isep.ipp.pt/Course/Course/26) do [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
 
 ## Utensílios usados: ##
@@ -16,8 +16,8 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 ## Topicos do Projeto: ##
 -------------------------
 * [main](documentos/main.md);
-* [modo não interativo](documentos/modon.md);
-* [modo interativo](documentos/modo.md);
+* [modo não interativo](documentos/modoNaoInterativo.md);
+* [modo interativo](documentos/modoInterativo.md);
 
 ## Membros ##
 ------------------
