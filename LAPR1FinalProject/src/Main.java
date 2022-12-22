@@ -521,7 +521,7 @@ public class Main {
                 pess = scanner.nextInt() - 1;
             }
             String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + metodos[pess] + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
-            gnuplot(caminhoFinalGnu);
+            gnuplot(caminhoFinalGnu, dias);
             metodos[pess] = 3;
             countergrafic++;
             if(countergrafic != counter){
@@ -651,15 +651,23 @@ public class Main {
      *************************************************************************
      * @param String caminhoFinalGnu                                         *             
      *************************************************************************/
-    public static void gnuplot(String caminhoFinalGnu){
+    public static void gnuplot(String caminhoFinalGnu, int dias){
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length()-4);
         String[] g = {"C:/Program Files/gnuplot/bin/gnuplot",
         "-e", "set datafile separator ';'",
-        "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S','" + caminhoFinalGnu + "' u 1:3 w l title 'I','" + caminhoFinalGnu + "' u 1:4 w l title 'R'",
-        "-e", "set xlabel 'Dias'",
-        "-e", "set ylabel 'N'",
+        "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
+        "-e", "set xlabel 'Dias' font ',16'",
+        "-e", "set ylabel 'N' font ',16' rotate by 0",
         "-e", "set grid",
-        "-e", "set term png size 1200, 700",
+        "-e", "set key box",
+        "-e", "set key width 1",
+        "-e", "set key height 1",
+        "-e", "set key font ',16'",
+        "-e", "set border 3",
+        "-e", "set tics nomirror",
+        "-e", "set xtics 0,1," + dias,
+        "-e", "set border lw 2",
+        "-e", "set term png size 1200, 800",
         "-e", "set output '" + caminhoPng + ".png'",
         "-e", "replot"
         };
