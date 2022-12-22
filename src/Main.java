@@ -37,7 +37,7 @@ public class Main {
         float sDias = 0;
         int dias = 0;
         int option = 1;
-        String caminhoFinal = "LAPR1FinalProject/ficheiroResultado";
+        String caminhoFinal = "LAPR1FinalProject/";
         String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
