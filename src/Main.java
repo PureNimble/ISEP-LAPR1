@@ -180,10 +180,10 @@ public class Main {
      * @param int dias número de dias          								 *
      * @param float h step        							         		 *
      * @param float[][] matrix 												 *
-     * @param linhas número de linhas 										 *
-     * @param n valor da população  										 *
-     * @param s n-1 												 		 *
-     * @param sDias num de dias 											 *
+     * @param int linhas número de linhas 									 *
+     * @param float n valor da população  									 *
+     * @param float s n-1 												 	 *
+     * @param float sDias num de dias 										 *
      * @param String caminhoFinal ficheiro de resultados finais      		 *
      * @param String[] nomes												 *
      * @param int a															 *
@@ -250,10 +250,10 @@ public class Main {
      * @param int dias número de dias          								 *
      * @param float h step        							         		 *
      * @param float[][] matrix 												 *
-     * @param linhas número de linhas 										 *
-     * @param n valor da população  										 *
-     * @param s n-1 												 		 *
-     * @param sDias num de dias 											 *
+     * @param int linhas número de linhas 									 *
+     * @param float n valor da população  								     *
+     * @param float s n-1 												 	 *
+     * @param floats Dias num de dias 										 *
      * @param String caminhoFinal ficheiro de resultados finais      		 *
      * @param String[] nomes												 *
      * @param int a															 *
@@ -372,7 +372,18 @@ public class Main {
         }
         return a;
     }
-	
+	/*************************************************************************
+     *Função Modo Interativo    											 *
+     *************************************************************************
+     * @param float h step        							         		 *
+     * @param float n valor da população  									 *
+     * @param float s n-1 												 	 *
+     * @param float sDias num de dias 										 *
+     * @param int dias													     *
+     * @param int option													 *
+     * @param String caminhoFinal ficheiro de resultados finais      		 *
+     * @param String caminhoInicial ficheiro SIR     		                 *
+     *************************************************************************/
 	public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
 		int linhas = repeated(caminhoInicial);
          // Matrix para colocar os valores
@@ -462,7 +473,7 @@ public class Main {
             }
             int pess = scanner.nextInt() - 1;
 
-            while(pess >= counter || pess < 0 || indices[pess] == 0){
+            while(pess >= linhas-1 || pess < 0 || indices[pess] == 0){
                 mensagemErro(5);
                 pess = scanner.nextInt() - 1;
             }
