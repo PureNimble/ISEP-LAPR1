@@ -206,7 +206,7 @@ public class Main {
         resultados[i][3] = rec;
         resultados[i][4] = n;
 
-        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+        System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
         System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
         System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
         System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
@@ -222,7 +222,7 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+            System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
             System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
             System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
             System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
@@ -275,7 +275,7 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+        System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
         System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
         System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
         System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
@@ -312,7 +312,7 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+            System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
             System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
             System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
             System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
@@ -346,6 +346,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        linhas -= 1;
         return linhas;
     }
 
@@ -359,7 +360,7 @@ public class Main {
      *************************************************************************/
     public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial) {
 
-        String[] nomes = new String[linhas - 1];
+        String[] nomes = new String[linhas];
 
         // Chamar a função readFile
         try {
@@ -416,28 +417,28 @@ public class Main {
 	public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
 		int linhas = repeated(caminhoInicial);
          // Matrix para colocar os valores
-        float[][] matrix = new float[linhas - 1][4];
+        float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
-        int[] indices = new int[linhas - 1];
-        int[] metodos = new int[linhas - 1];
+        int[] indices = new int[linhas];
+        int[] metodos = new int[linhas];
 
         //Modo iterativo
         int counter = 0;
         int countergrafic = 0;
 
-        while (counter < linhas - 1 && option != 0) {
+        while (counter < linhas && option != 0) {
 
         	System.out.println("Selecione uma pessoa");
 
-            for (int i = 0; i < linhas - 1; i++) {
+            for (int i = 0; i < linhas; i++) {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
             }
 
             int a = scanner.nextInt() - 1;
 
-            while (((a < 0) || (a >= linhas - 1) || (indices[a] == 1))) {
+            while (((a < 0) || (a >= linhas) || (indices[a] == 1))) {
 
-                if ((a < 0) || (a >= linhas - 1)) {
+                if ((a < 0) || (a >= linhas)) {
         	        mensagemErro(4);
                 } else {
                     System.out.println(nomes[a] + " já foi selecionado/a");
@@ -481,7 +482,7 @@ public class Main {
             }
 
             counter++;
-            if(counter != linhas-1){
+            if(counter != linhas){
                 System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
     
@@ -492,7 +493,7 @@ public class Main {
                 }
             }
         }
-        if (counter == linhas - 1) {
+        if (counter == linhas) {
 
             System.out.println("Já percorreu todas as pessoas");
         }
@@ -504,14 +505,14 @@ public class Main {
             }
         while(countergrafic < counter && option != 0){
             System.out.println("Deseja fazer o gráfico de quem?");
-            for (int i = 0; i < linhas - 1; i++) {
+            for (int i = 0; i < linhas; i++) {
                 if(indices[i] == 1){
                     System.out.println(i+1 + " - |" + nomes[i] + "|");
                 }
             }
             int pess = scanner.nextInt() - 1;
 
-            while(pess >= linhas-1 || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1){
+            while(pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1){
                     mensagemErro(4);
                 pess = scanner.nextInt() - 1;
             }
@@ -583,11 +584,11 @@ public class Main {
 
         int linhas = repeated(caminhoInicial);
         // Matrix para colocar os valores
-        float[][] matrix = new float[linhas - 1][4];
+        float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
 
         int a = 0;
-        while (a < linhas - 1) {
+        while (a < linhas) {
             mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
             a++;
         }
