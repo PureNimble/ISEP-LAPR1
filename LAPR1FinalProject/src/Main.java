@@ -206,10 +206,11 @@ public class Main {
         resultados[i][3] = rec;
         resultados[i][4] = n;
 
-        System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
+        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
         System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
         System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
-        System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
+        System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+        System.out.printf("\n");
 
         while (i < dias) {
 
@@ -222,10 +223,11 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
-            System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
-            System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
-            System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
+            System.out.printf("Valor de S" + (i + 1) + ": %.2f", sDias);
+            System.out.printf("\nValor de I" + (i + 1) + ": %.2f", iDias);
+            System.out.printf("\nValor de R" + (i + 1) + ": %.2f", rDias);
+            System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+            System.out.printf("\n");
             i++;
 
             resultados[i][0] = i;
@@ -275,10 +277,11 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-        System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
+        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
         System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
         System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
-        System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
+        System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+        System.out.printf("\n");
 
         while (i < dias) {
             for (float j = 0; j < 1; j += h) {
@@ -312,10 +315,11 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("\nValor de S" + (i) + ": %.2f", sDias);
-            System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
-            System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
-            System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
+            System.out.printf("Valor de S" + (i + 1) + ": %.2f", sDias);
+            System.out.printf("\nValor de I" + (i + 1) + ": %.2f", iDias);
+            System.out.printf("\nValor de R" + (i + 1) + ": %.2f", rDias);
+            System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+            System.out.printf("\n");
             i++;
             resultados[i][0] = i;
             resultados[i][1] = sDias;
