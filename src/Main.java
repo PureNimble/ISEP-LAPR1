@@ -188,7 +188,7 @@ public class Main {
      * @param String[] nomes												 *
      * @param int a															 *
      *************************************************************************/
-    public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static String Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -237,11 +237,13 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
+        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
         try {
-            printFile(caminhoFinal + nomes[a] + "Euler.csv", resultados, dias);
+            printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return caminhoFinalGnu;
     }
 
     /*************************************************************************
@@ -258,7 +260,7 @@ public class Main {
      * @param String[] nomes												 *
      * @param int a															 *
      *************************************************************************/
-    public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static String Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -326,11 +328,13 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
+        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
         try {
-            printFile(caminhoFinal + nomes[a] + "Kutta.csv", resultados, dias);
+            printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return caminhoFinalGnu;
     }
 
     public static int repeated(String caminhoInicial) {
@@ -389,8 +393,8 @@ public class Main {
          // Matrix para colocar os valores
         float[][] matrix = new float[linhas - 1][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
-        int[] indices = new int[linhas - 1]; 
-        int[] metodos = new int[linhas-1];
+        int[] indices = new int[linhas - 1];
+        int[] metodos = new int[linhas - 1];
 
         //Modo iterativo
         int counter = 0;
@@ -432,14 +436,24 @@ public class Main {
             System.out.println(" Número de dias? (Ex.: 30)");
             dias = scanner.nextInt();
 
-			/*System.out.println(" -----------------------MENU-----------------------");
+			System.out.println(" -----------------------MENU-----------------------");
 			System.out.println("| 1 - Método de Euler				   |");
 			System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
 			System.out.println(" --------------------------------------------------");
-			option = scanner.nextInt();*/
+			option = scanner.nextInt();
 
-            Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-            Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+            while(option != 2 && option != 1){
+                mensagemErro(1);
+                option = scanner.nextInt();
+            }
+
+            if(option == 1){
+                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                metodos[a] = 1;
+            } else{
+                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                metodos[a] = 2;
+            }
 
             counter++;
             if(counter != linhas-1){
@@ -451,7 +465,6 @@ public class Main {
                     mensagemErro(6);
                     option = scanner.nextInt();
                 }
-
             }
         }
         if (counter == linhas - 1) {
@@ -464,7 +477,7 @@ public class Main {
                 mensagemErro(6);
                 option = scanner.nextInt();
             }
-        while(countergrafic < counter*2 && option != 0){
+        while(countergrafic < counter && option != 0){
             System.out.println("Deseja fazer o gráfico de quem?");
             for (int i = 0; i < linhas - 1; i++) {
                 if(indices[i] == 1){
@@ -473,43 +486,15 @@ public class Main {
             }
             int pess = scanner.nextInt() - 1;
 
-            while(pess >= linhas-1 || pess < 0 || indices[pess] == 0){
-                mensagemErro(5);
+            while(pess >= linhas-1 || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1){
+                    mensagemErro(4);
                 pess = scanner.nextInt() - 1;
             }
-
-            System.out.println("Que metodo deseja fazer? |1- Euler| |2- Kutta|");
-            option = scanner.nextInt();
-            String met = "";
-            while(option < 1 || option > 2){
-                mensagemErro(4);
-                option = scanner.nextInt();
-            }
-            if(option == 1) {
-                if(metodos[pess] != 3 && metodos[pess] != 1){
-                    metodos[pess]++;
-                    met = "Euler";
-                } else met = "error";
-            } else {
-                if(metodos[pess] != 3 && metodos[pess] != 2){
-                    metodos[pess]+=2;
-                    met = "Kutta";
-                } else met = "error";
-            }
-            if(met!="error"){
-                String caminhoFinalGnu = caminhoFinal + nomes[pess] + met + ".csv";
-                gnuplot(caminhoFinalGnu);
-                countergrafic++;
-            }
-            if(met == "error"){
-                if(metodos[pess] == 1){
-                    System.out.println("Método de Euler já foi feito");
-                }
-                else if(metodos[pess] == 2){
-                    System.out.println("Método de kutta já foi feito");
-                }else System.out.println("Ambos os métodos já foram feitos");
-            }
-            if(countergrafic != counter*2){
+            String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + metodos[pess] + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
+            gnuplot(caminhoFinalGnu);
+            metodos[pess] = 3;
+            countergrafic++;
+            if(countergrafic != counter){
                 System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
                 option = scanner.nextInt();
                 while (option!= 1 && option!= 0) {
@@ -518,7 +503,7 @@ public class Main {
                 }
             }
         }
-        if(countergrafic == counter*2){
+        if(countergrafic == counter){
             System.out.println("Todos os gráficos já foram concluidos");
         }
         scanner.close();
