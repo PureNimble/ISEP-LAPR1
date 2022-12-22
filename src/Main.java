@@ -25,7 +25,7 @@ import java.lang.Runtime;
          * args[8] -> dias (0<dias)
          * args[9] -> caminho do ficheiroResultado.csv
          *
-         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar LAPR1FinalProject/ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 LAPR1FinalProject/ficheiroResultado.csv
+         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar LAPR1FinalProject/ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 LAPR1FinalProject/.csv
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
