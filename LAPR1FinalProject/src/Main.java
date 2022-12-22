@@ -25,7 +25,7 @@ import java.lang.Runtime;
          * args[8] -> dias (0<dias)
          * args[9] -> caminho do ficheiroResultado.csv
          *
-         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar LAPR1FinalProject/ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 LAPR1FinalProject/.csv
+         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 .csv
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -536,7 +536,9 @@ public class Main {
 		}
 
 		caminhoInicial = args[0];
+        caminhoInicial = "LAPR1FinalProject/" + caminhoInicial;
         caminhoFinal = args[9].substring(0, args[9].length() - 4);
+        caminhoFinal = "LAPR1FinalProject/" + caminhoFinal;
         s = n - 1;
         sDias = n - 1;
 
