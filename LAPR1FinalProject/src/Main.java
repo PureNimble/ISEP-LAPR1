@@ -1,13 +1,9 @@
 //Podemos usar
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.lang.Runtime;
 
 /*	2 Modos disponíveis:
@@ -137,6 +133,7 @@ public class Main {
      * @param float s suscetíveis        									 *
      * @param float taxaProp β        										 *
      * @param float inf infetados        									 *
+     * @return valor final              									 *
      *************************************************************************/
     public static float functionS(float t, float s, float taxaProp, float inf) {
         return -taxaProp * s * inf;
@@ -153,6 +150,7 @@ public class Main {
      * @param float taxaReI α                                                *
      * @param float s                                                        *
      * @param float rec número recuperados                                   *
+     * @return valor final              									 *
      *************************************************************************/
     public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
         return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
@@ -169,6 +167,7 @@ public class Main {
      * @param float taxaProp β       							             *
      * @param float inf número de Infetados       							 *
      * @param float s                                                        *
+     * @return valor final              									 *
      *************************************************************************/
     public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
         return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
@@ -186,7 +185,7 @@ public class Main {
      * @param float sDias num de dias 										 *
      * @param String caminhoFinal ficheiro de resultados finais      		 *
      * @param String[] nomes												 *
-     * @param int a															 *
+     * @param int a = index da pessoa										 *
      *************************************************************************/
     public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
@@ -199,7 +198,6 @@ public class Main {
         float inf = 1;
         float rec = 0;
         float t = 0;
-        DecimalFormat frmt = new DecimalFormat("#.##");
         int i = 0;
         float[][] resultados = new float[dias + 1][5];
         resultados[i][0] = i;
@@ -208,10 +206,10 @@ public class Main {
         resultados[i][3] = rec;
         resultados[i][4] = n;
 
-        System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
-        System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
-        System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
-        System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
+        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+        System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
+        System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
+        System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
 
         while (i < dias) {
 
@@ -224,10 +222,10 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
-            System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
-            System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
-            System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
+            System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+            System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
+            System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
+            System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
             i++;
 
             resultados[i][0] = i;
@@ -257,7 +255,7 @@ public class Main {
      * @param floats Dias num de dias 										 *
      * @param String caminhoFinal ficheiro de resultados finais      		 *
      * @param String[] nomes												 *
-     * @param int a															 *
+     * @param int a = index da pessoa										 *
      *************************************************************************/
     public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
@@ -270,7 +268,6 @@ public class Main {
         float inf = 1;
         float rec = 0;
         float t = 0;
-        DecimalFormat frmt = new DecimalFormat("#.##");
         int i = 0;
         float[][] resultados = new float[dias + 1][5];
         resultados[i][0] = i;
@@ -278,10 +275,10 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-        System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
-        System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
-        System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
-        System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
+        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+        System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
+        System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
+        System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
 
         while (i < dias) {
             for (float j = 0; j < 1; j += h) {
@@ -315,10 +312,10 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.println("Valor de S" + (i) + ": " + frmt.format(sDias));
-            System.out.println("Valor de I" + (i) + ": " + frmt.format(iDias));
-            System.out.println("Valor de R" + (i) + ": " + frmt.format(rDias));
-            System.out.println("Valor de N: " + frmt.format(sDias + iDias + rDias));
+            System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
+            System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
+            System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
+            System.out.printf("\nValor de N: " + ": %.2f",(sDias + iDias + rDias));
             i++;
             resultados[i][0] = i;
             resultados[i][1] = sDias;
@@ -335,6 +332,12 @@ public class Main {
         }
     }
 
+    /*************************************************************************
+     *Função repeated                                                        *
+     *************************************************************************
+     * @param String caminhoInicial                                          *
+     * @return linhas                                                        *           
+     *************************************************************************/
     public static int repeated(String caminhoInicial) {
         int linhas = 0;
         // Chamar a função checkNumberOfLines
@@ -346,6 +349,14 @@ public class Main {
         return linhas;
     }
 
+    /*************************************************************************
+     *Função repeatRead                                                      *
+     *************************************************************************
+     * @param float[][] matrix                                               *
+     * @param int linhas                                                     *  
+     * @param String caminhoInicial                                          *
+     * @return nomes                                                         *           
+     *************************************************************************/
     public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial) {
 
         String[] nomes = new String[linhas - 1];
@@ -359,6 +370,22 @@ public class Main {
         return nomes;
     }
 
+    /*************************************************************************
+     *Função mSwitch                                                         *
+     *************************************************************************
+     * @param int option (Euler ou Kutta)                                    *
+     * @param int dias                                                       * 
+     * @param float h                                                        * 
+     * @param float[][] matrix                                               *  
+     * @param int linhas                                                     *  
+     * @param float n                                                        * 
+     * @param float s                                                        *
+     * @param float sDias                                                    *
+     * @param String caminhoFinal                                            *   
+     * @param String[] nomes                                                 *  
+     * @param int a                                                          * 
+     * @return a                                                             *               
+     *************************************************************************/
     public static int mSwitch(int option, int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         switch (option) {
@@ -375,7 +402,7 @@ public class Main {
         return a;
     }
 	/*************************************************************************
-     *Função Modo Interativo    											 *
+     *Função modoInterativo    							    				 *
      *************************************************************************
      * @param float h step        							         		 *
      * @param float n valor da população  									 *
@@ -506,6 +533,20 @@ public class Main {
         }
         scanner.close();
 	}
+
+    /*************************************************************************
+     *Função ModoNãoInterativo    										     *
+     *************************************************************************
+     * @param String[] args        							         		 *
+     * @param float h step        							         		 *
+     * @param float n valor da população  									 *
+     * @param float s n-1 												 	 *
+     * @param float sDias num de dias 										 *
+     * @param int dias													     *
+     * @param int option													 *
+     * @param String caminhoFinal ficheiro de resultados finais      		 *
+     * @param String caminhoInicial ficheiro SIR     		                 *
+     *************************************************************************/
 	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
 
         if(args.length != 10){
@@ -551,6 +592,12 @@ public class Main {
             a++;
         }
 	}
+
+    /*************************************************************************
+     *Função mensagemErro                                                    *
+     *************************************************************************
+     * @param int valor                                                      *             
+     *************************************************************************/
     public static void mensagemErro(int valor) {
         // 0 = tudo bem
         // 1 = erro na estrutura do ficheiro
@@ -593,6 +640,12 @@ public class Main {
                 break;
             }
         }
+
+    /*************************************************************************
+     *Função gnuplot                                                         *
+     *************************************************************************
+     * @param String caminhoFinalGnu                                         *             
+     *************************************************************************/
     public static void gnuplot(String caminhoFinalGnu){
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length()-4);
         String[] g = {"C:/Program Files/gnuplot/bin/gnuplot",
@@ -614,7 +667,7 @@ public class Main {
         };
         try {
             Runtime rt = Runtime.getRuntime();
-            Process proc = rt.exec(s);
+            rt.exec(s);
             System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
             int ans = scanner.nextInt();
             while(ans != 0 && ans != 1){
@@ -624,19 +677,6 @@ public class Main {
             if(ans == 1){
                 rt.exec(g);
             }
-            InputStream stdin = proc.getErrorStream();
-            InputStreamReader isr = new InputStreamReader(stdin);
-            BufferedReader br = new BufferedReader(isr);
-            String line = null;
-            while ((line = br.readLine()) != null)
-                System.err.println("gnuplot:"+line);
-            int exitVal = proc.waitFor();
-            if (exitVal != 0){
-                    System.out.println("gnuplot Process exitValue: " + exitVal);
-            }
-            proc.getInputStream().close();
-            proc.getOutputStream().close();
-            proc.getErrorStream().close();
         } catch (Exception e) {
             System.err.println("Fail: " + e);
         }
