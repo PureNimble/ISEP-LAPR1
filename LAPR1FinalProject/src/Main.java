@@ -188,7 +188,7 @@ public class Main {
      * @param String[] nomes												 *
      * @param int a															 *
      *************************************************************************/
-    public static String Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -243,7 +243,6 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return caminhoFinalGnu;
     }
 
     /*************************************************************************
@@ -260,7 +259,7 @@ public class Main {
      * @param String[] nomes												 *
      * @param int a															 *
      *************************************************************************/
-    public static String Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -334,7 +333,6 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return caminhoFinalGnu;
     }
 
     public static int repeated(String caminhoInicial) {
