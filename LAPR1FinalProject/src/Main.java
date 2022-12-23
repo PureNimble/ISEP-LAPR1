@@ -426,7 +426,7 @@ public class Main {
         int[] indices = new int[linhas];
         int[] metodos = new int[linhas];
 
-        //Modo iterativo
+        //Modo interativo
         int counter = 0;
         int countergrafic = 0;
 
