@@ -689,6 +689,7 @@ public class Main {
             Process prc = rt.exec(s);
             System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
             int ans = scanner.nextInt();
+            rt.exec("taskkill /im gnuplot_qt.exe");
             prc.destroy();
             while(ans != 0 && ans != 1){
                 mensagemErro(6);
