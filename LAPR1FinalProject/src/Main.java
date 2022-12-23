@@ -21,7 +21,7 @@ import java.lang.Runtime;
          * args[8] -> dias (0<dias)
          * args[9] -> caminho do ficheiroResultado.csv
          *
-         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.10 -t 1000 -d 30 .csv
+         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -563,7 +563,7 @@ public class Main {
      *************************************************************************/
 	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
 
-        if(args.length != 10){
+        if(args.length != 9){
             mensagemErro(1);
             System.exit(0);
         }
@@ -583,15 +583,8 @@ public class Main {
             }
         }
 
-		if(!((args[9].substring(args[9].length() - 4, args[9].length())).equals(".csv") && ((args[0].substring(args[0].length() - 4, args[0].length())).equals(".csv")))){
-			mensagemErro(2);
-            System.exit(0);
-		}
-
 		caminhoInicial = args[0];
         caminhoInicial = "LAPR1FinalProject/" + caminhoInicial;
-        caminhoFinal = args[9].substring(0, args[9].length() - 4);
-        caminhoFinal = "LAPR1FinalProject/" + caminhoFinal;
         s = n - 1;
         sDias = n - 1;
 
