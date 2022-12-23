@@ -8,7 +8,7 @@ Na nossa função Principal (Main), apenas declaramos as variáveis que serão r
 ## Metodos usados: ##
 -------------------------
 
-* [modo não interativo](Documentos/modoNaoInterativo.md);
-* [modo interativo](Documentos/modoInterativo.md);
+* [modo não interativo](documentos/modoNaoInterativo.md);
+* [modo interativo](documentos/modoInterativo.md);
 
 ![main](Imagens/main.png)
