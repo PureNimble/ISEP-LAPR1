@@ -508,13 +508,22 @@ public class Main {
                 option = scanner.nextInt();
             }
         while(countergrafic < counter && option != 0){
-            System.out.println("Deseja fazer o gráfico de quem?");
-            for (int i = 0; i < linhas; i++) {
-                if(indices[i] == 1){
-                    System.out.println(i+1 + " - |" + nomes[i] + "|");
+            int pess = 0;
+            if(counter != 1){
+                System.out.println("Deseja fazer o gráfico de quem?");
+                for (int i = 0; i < linhas; i++) {
+                    if(indices[i] == 1){
+                        System.out.println(i+1 + " - |" + nomes[i] + "|");
+                    }
+                }
+                pess = scanner.nextInt() - 1;
+            }else{
+                for (int i = 0; i < linhas; i++) {
+                    if(indices[i] == 1){
+                        pess = i;
+                    }
                 }
             }
-            int pess = scanner.nextInt() - 1;
 
             while(pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1){
                     mensagemErro(4);
@@ -653,7 +662,12 @@ public class Main {
      *************************************************************************/
     public static void gnuplot(String caminhoFinalGnu, int dias){
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length()-4);
-        String[] g = {"C:/Program Files/gnuplot/bin/gnuplot",
+        String[] g = {"-e", "set term png size 1200, 800",
+            "-e", "set output '" + caminhoPng + ".png'",
+            "-e", "replot"
+        };
+
+        String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
             "-e", "set datafile separator ';'",
             "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
             "-e", "set xlabel 'Dias' font ',16'",
@@ -667,39 +681,25 @@ public class Main {
             "-e", "set tics nomirror",
             "-e", "set xtics 0,1," + dias,
             "-e", "set border lw 2",
-            "-e", "set term png size 1200, 800",
-            "-e", "set output '" + caminhoPng + ".png'",
-            "-e", "replot"
-        };
-
-        String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
-            "-p", "-e", "set datafile separator ';'",
-            "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
-            "-e", "set xlabel 'Dias' font ',16'",
-            "-e", "set ylabel 'N' font ',16' rotate by 0",
-            "-e", "set grid",
-            "-e", "set key box",
-            "-e", "set key width 1",
-            "-e", "set key height 1",
-            "-e", "set key font ',16'",
-            "-e", "set border 3",
-            "-e", "set tics nomirror",
-            "-e", "set xtics 0,1," + dias,
-            "-e", "set border lw 2",
-            "-e", "set term wxt size 1200, 800",
+            "-p", "-e", "set term wxt size 1200, 800",
             "-e", "replot"
         };
         try {
             Runtime rt = Runtime.getRuntime();
-            rt.exec(s);
+            Process prc = rt.exec(s);
             System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
             int ans = scanner.nextInt();
+            prc.destroy();
             while(ans != 0 && ans != 1){
                 mensagemErro(6);
                 ans = scanner.nextInt();
             }
             if(ans == 1){
-                rt.exec(g);
+                int slength = s.length - 5;
+                String[] t = new String[slength + g.length];
+                System.arraycopy(s, 0, t, 0, slength);
+                System.arraycopy(g, 0, t, slength, g.length);
+                rt.exec(t);
             }
         } catch (Exception e) {
             System.err.println("Fail: " + e);
