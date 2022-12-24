@@ -206,10 +206,10 @@ public class Main {
         resultados[i][3] = rec;
         resultados[i][4] = n;
 
-        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
-        System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
-        System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
-        System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+        System.out.printf("Valor de S: " + (i) + "%.2f", sDias);
+        System.out.printf("\nValor de I: " + (i) + "%.2f", iDias);
+        System.out.printf("\nValor de R: " + (i) + "%.2f", rDias);
+        System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
         System.out.printf("\n");
 
         while (i < dias) {
@@ -223,10 +223,10 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S" + (i + 1) + ": %.2f", sDias);
-            System.out.printf("\nValor de I" + (i + 1) + ": %.2f", iDias);
-            System.out.printf("\nValor de R" + (i + 1) + ": %.2f", rDias);
-            System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+            System.out.printf("Valor de S: " + (i + 1) + "%.2f", sDias);
+            System.out.printf("\nValor de I: " + (i + 1) + "%.2f", iDias);
+            System.out.printf("\nValor de R: " + (i + 1) + "%.2f", rDias);
+            System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
             System.out.printf("\n");
             i++;
 
@@ -277,10 +277,10 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-        System.out.printf("Valor de S" + (i) + ": %.2f", sDias);
-        System.out.printf("\nValor de I" + (i) + ": %.2f", iDias);
-        System.out.printf("\nValor de R" + (i) + ": %.2f", rDias);
-        System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+        System.out.printf("Valor de S: " + (i) + "%.2f", sDias);
+        System.out.printf("\nValor de I: " + (i) + "%.2f", iDias);
+        System.out.printf("\nValor de R: " + (i) + "%.2f", rDias);
+        System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
         System.out.printf("\n");
 
         while (i < dias) {
@@ -315,10 +315,10 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S" + (i + 1) + ": %.2f", sDias);
-            System.out.printf("\nValor de I" + (i + 1) + ": %.2f", iDias);
-            System.out.printf("\nValor de R" + (i + 1) + ": %.2f", rDias);
-            System.out.printf("\nValor de N: " + ": %.2f\n",(sDias + iDias + rDias));
+            System.out.printf("Valor de S: " + (i + 1) + "%.2f", sDias);
+            System.out.printf("\nValor de I: " + (i + 1) + "%.2f", iDias);
+            System.out.printf("\nValor de R: " + (i + 1) + "%.2f", rDias);
+            System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
             System.out.printf("\n");
             i++;
             resultados[i][0] = i;
@@ -452,19 +452,29 @@ public class Main {
             }
 
             indices[a]++;
-            do{
-                System.out.println(" Valor de h? (Ex.: 0,1)");
+            System.out.println(" Valor de h? (Ex.: 0,1)");
+            h = scanner.nextFloat();
+
+            while(h <= 0 || h >= 1){
+                mensagemErro(7);
                 h = scanner.nextFloat();
             }
-            while(h <= 0 || h > 1);
 
             System.out.println(" Valor da população? (Ex.: 1000)");
             n = scanner.nextFloat();
+            while(n <= 0){
+                mensagemErro(7);
+                n = scanner.nextFloat();
+            }
             s = n - 1;
             sDias = n - 1;
 
             System.out.println(" Número de dias? (Ex.: 30)");
             dias = scanner.nextInt();
+            while(dias <= 0){
+                mensagemErro(7);
+                dias = scanner.nextInt();
+            }
 
 			System.out.println(" -----------------------MENU-----------------------");
 			System.out.println("| 1 - Método de Euler				   |");
@@ -526,7 +536,7 @@ public class Main {
             }
 
             while(pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1){
-                    mensagemErro(4);
+                mensagemErro(4);
                 pess = scanner.nextInt() - 1;
             }
             String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + metodos[pess] + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
@@ -588,6 +598,16 @@ public class Main {
         s = n - 1;
         sDias = n - 1;
 
+        if(option != 1 && option != 2 || h <= 0 || h >= 1 || n <= 0 || dias <= 0) {
+            mensagemErro(1);
+            System.exit(0);
+        }
+
+        if(!((args[0].substring(args[0].length() - 4, args[0].length())).equals(".csv"))){
+			mensagemErro(2);
+            System.exit(0);
+		}
+
         int linhas = repeated(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
@@ -611,39 +631,40 @@ public class Main {
         // 2 = tem demasiadas casas decimais
         switch (valor) {
             case 1:
-                System.out.println("\n***************************************************************************************");
-                System.out.println("\n           -> Erro na estrutura do ficheiro de input. Verifique se está correto <-     ");
-                System.out.println("\n***************************************************************************************");
+                System.out.println("***************************************************************************************");
+                System.out.println("           -> Erro na estrutura do ficheiro de input. Verifique se está correto <-     ");
+                System.out.println("***************************************************************************************");
                 break;
-
             case 2:
-                System.out.println(
-                        "\n*********************************************************************************************");
-                System.out.println(
-                        "\n					-> Tipo de ficheiro inválido (deveria ser do tipo .csv) <-					");
-                System.out.println(
-                        "**********************************************************************************************");
+                System.out.println("*********************************************************************************************");
+                System.out.println("					-> Tipo de ficheiro inválido (deveria ser do tipo .csv) <-					");
+                System.out.println("**********************************************************************************************");
                 break;
             case 3:
-                System.out.println("\n********************************************************");
-                System.out.println("\n           -> Método inválido/inexistente <-          ");
-                System.out.println("\n********************************************************");
+                System.out.println("********************************************************");
+                System.out.println("           -> Método inválido/inexistente <-          ");
+                System.out.println("********************************************************");
                 break;
             case 4:
-                System.out.println("\n********************************************************");
-                System.out.println("\n           -> Opção inválida/inexistente <-            ");
-                System.out.println("\n********************************************************");
+                System.out.println("********************************************************");
+                System.out.println("           -> Opção inválida/inexistente <-            ");
+                System.out.println("********************************************************");
                 break;
             case 5:
-                System.out.println("\n********************************************************");
-                System.out.println("\n           -> Escolha uma pessoa diferente <-            ");
-                System.out.println("\n********************************************************");
+                System.out.println("********************************************************");
+                System.out.println("           -> Escolha uma pessoa diferente <-            ");
+                System.out.println("********************************************************");
                 break;
             case 6:
-                System.out.println("\n********************************************************");
-                System.out.println("\n           -> Opção inválida <-                           ");
-                System.out.println("\n     Opções disponíveis |1-Sim| |0-Não|                   ");
-                System.out.println("\n********************************************************");
+                System.out.println("********************************************************");
+                System.out.println("           -> Opção inválida <-                           ");
+                System.out.println("     Opções disponíveis |1-Sim| |0-Não|                   ");
+                System.out.println("********************************************************");
+                break;
+            case 7:
+                System.out.println("********************************************************");
+                System.out.println("           -> Valor inválido <-                           ");
+                System.out.println("********************************************************");
                 break;
             }
         }
