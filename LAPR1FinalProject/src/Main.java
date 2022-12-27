@@ -25,6 +25,7 @@ import java.lang.Runtime;
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
         float h = 0;
@@ -34,13 +35,13 @@ public class Main {
         int dias = 0;
         int option = 1;
         String caminhoFinal = "LAPR1FinalProject/";
-        String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
+        String caminhoInicial = "LAPR1FinalProject/ SIR.csv";
 
         if (args.length == 0) {
-			modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
 
         } else {
-			modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
         }
     }
 
@@ -71,8 +72,8 @@ public class Main {
      *************************************************************************
      * @param String caminho_ficheiro 										 *
      * @param float[][] matrix = matrix com os dados 				     	 *
-	 * @param String[] nomes = vetor com os nomes 				     	 	 *
-	 * @return matrix = matrix com os dados 				     	 		 *
+     * @param String[] nomes = vetor com os nomes 				     	 	 *
+     * @return matrix = matrix com os dados 				     	 		 *
      *************************************************************************/
     public static float[][] readFile(String caminho_ficheiro, float[][] matrix, String[] nomes) throws FileNotFoundException {
 
@@ -209,7 +210,7 @@ public class Main {
         System.out.printf("Valor de S: " + (i) + "%.2f", sDias);
         System.out.printf("\nValor de I: " + (i) + "%.2f", iDias);
         System.out.printf("\nValor de R: " + (i) + "%.2f", rDias);
-        System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
+        System.out.printf("\nValor de N: " + "%.2f\n", (sDias + iDias + rDias));
         System.out.printf("\n");
 
         while (i < dias) {
@@ -223,10 +224,10 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S: " + (i + 1) + "%.2f", sDias);
-            System.out.printf("\nValor de I: " + (i + 1) + "%.2f", iDias);
-            System.out.printf("\nValor de R: " + (i + 1) + "%.2f", rDias);
-            System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
+            System.out.printf("Valor de S: %d %.2f", (i + 1), sDias);
+            System.out.printf("\nValor de I: %d %.2f", (i + 1), iDias);
+            System.out.printf("\nValor de R: %d %.2f", (i + 1), rDias);
+            System.out.printf("\nValor de N: %.2f\n", (sDias + iDias + rDias));
             System.out.printf("\n");
             i++;
 
@@ -237,7 +238,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
+        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -280,7 +281,7 @@ public class Main {
         System.out.printf("Valor de S: " + (i) + "%.2f", sDias);
         System.out.printf("\nValor de I: " + (i) + "%.2f", iDias);
         System.out.printf("\nValor de R: " + (i) + "%.2f", rDias);
-        System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
+        System.out.printf("\nValor de N: " + "%.2f\n", (sDias + iDias + rDias));
         System.out.printf("\n");
 
         while (i < dias) {
@@ -318,7 +319,7 @@ public class Main {
             System.out.printf("Valor de S: " + (i + 1) + "%.2f", sDias);
             System.out.printf("\nValor de I: " + (i + 1) + "%.2f", iDias);
             System.out.printf("\nValor de R: " + (i + 1) + "%.2f", rDias);
-            System.out.printf("\nValor de N: " + "%.2f\n",(sDias + iDias + rDias));
+            System.out.printf("\nValor de N: " + "%.2f\n", (sDias + iDias + rDias));
             System.out.printf("\n");
             i++;
             resultados[i][0] = i;
@@ -328,7 +329,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
+        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -406,7 +407,8 @@ public class Main {
         }
         return a;
     }
-	/*************************************************************************
+
+    /*************************************************************************
      *Função modoInterativo    							    				 *
      *************************************************************************
      * @param float h step        							         		 *
@@ -418,9 +420,9 @@ public class Main {
      * @param String caminhoFinal ficheiro de resultados finais      		 *
      * @param String caminhoInicial ficheiro SIR     		                 *
      *************************************************************************/
-	public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
-		int linhas = repeated(caminhoInicial);
-         // Matrix para colocar os valores
+    public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
+        int linhas = repeated(caminhoInicial);
+        // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
         int[] indices = new int[linhas];
@@ -432,7 +434,7 @@ public class Main {
 
         while (counter < linhas && option != 0) {
 
-        	System.out.println("Selecione uma pessoa");
+            System.out.println("Selecione uma pessoa");
 
             for (int i = 0; i < linhas; i++) {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
@@ -443,7 +445,7 @@ public class Main {
             while (((a < 0) || (a >= linhas) || (indices[a] == 1))) {
 
                 if ((a < 0) || (a >= linhas)) {
-        	        mensagemErro(4);
+                    mensagemErro(4);
                 } else {
                     System.out.println(nomes[a] + " já foi selecionado/a");
                     mensagemErro(5);
@@ -455,14 +457,14 @@ public class Main {
             System.out.println(" Valor de h? (Ex.: 0,1)");
             h = scanner.nextFloat();
 
-            while(h <= 0 || h >= 1){
+            while (h <= 0 || h >= 1) {
                 mensagemErro(7);
                 h = scanner.nextFloat();
             }
 
             System.out.println(" Valor da população? (Ex.: 1000)");
             n = scanner.nextFloat();
-            while(n <= 0){
+            while (n <= 0) {
                 mensagemErro(7);
                 n = scanner.nextFloat();
             }
@@ -471,35 +473,35 @@ public class Main {
 
             System.out.println(" Número de dias? (Ex.: 30)");
             dias = scanner.nextInt();
-            while(dias <= 0){
+            while (dias <= 0) {
                 mensagemErro(7);
                 dias = scanner.nextInt();
             }
 
-			System.out.println(" -----------------------MENU-----------------------");
-			System.out.println("| 1 - Método de Euler				   |");
-			System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
-			System.out.println(" --------------------------------------------------");
-			option = scanner.nextInt();
+            System.out.println(" -----------------------MENU-----------------------");
+            System.out.println("| 1 - Método de Euler				   |");
+            System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
+            System.out.println(" --------------------------------------------------");
+            option = scanner.nextInt();
 
-            while(option != 2 && option != 1){
+            while (option != 2 && option != 1) {
                 mensagemErro(1);
                 option = scanner.nextInt();
             }
 
-            if(option == 1){
+            if (option == 1) {
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
                 metodos[a] = 1;
-            } else{
+            } else {
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
                 metodos[a] = 2;
             }
 
             counter++;
-            if(counter != linhas){
+            if (counter != linhas) {
                 System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
-    
+
                 while (option != 1 && option != 0) {
 
                     mensagemErro(6);
@@ -512,51 +514,51 @@ public class Main {
             System.out.println("Já percorreu todas as pessoas");
         }
         System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
+        option = scanner.nextInt();
+        while (option != 1 && option != 0) {
+            mensagemErro(6);
             option = scanner.nextInt();
-            while (option!= 1 && option!= 0) {
-                mensagemErro(6);
-                option = scanner.nextInt();
-            }
-        while(countergrafic < counter && option != 0){
+        }
+        while (countergrafic < counter && option != 0) {
             int pess = 0;
-            if(counter != 1){
+            if (counter != 1) {
                 System.out.println("Deseja fazer o gráfico de quem?");
                 for (int i = 0; i < linhas; i++) {
-                    if(indices[i] == 1){
-                        System.out.println(i+1 + " - |" + nomes[i] + "|");
+                    if (indices[i] == 1) {
+                        System.out.println(i + 1 + " - |" + nomes[i] + "|");
                     }
                 }
                 pess = scanner.nextInt() - 1;
-            }else{
+            } else {
                 for (int i = 0; i < linhas; i++) {
-                    if(indices[i] == 1){
+                    if (indices[i] == 1) {
                         pess = i;
                     }
                 }
             }
 
-            while(pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1){
+            while (pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1) {
                 mensagemErro(4);
                 pess = scanner.nextInt() - 1;
             }
-            String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + metodos[pess] + "p" + String.valueOf(h).replace(".", "") + "t" + (int)n + "d" + dias + ".csv";
+            String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + metodos[pess] + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias);
             metodos[pess] = 3;
             countergrafic++;
-            if(countergrafic != counter){
+            if (countergrafic != counter) {
                 System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
                 option = scanner.nextInt();
-                while (option!= 1 && option!= 0) {
-                    mensagemErro(6);  
-                    option = scanner.nextInt();      
+                while (option != 1 && option != 0) {
+                    mensagemErro(6);
+                    option = scanner.nextInt();
                 }
             }
         }
-        if(countergrafic == counter){
+        if (countergrafic == counter) {
             System.out.println("Todos os gráficos já foram concluidos");
         }
         scanner.close();
-	}
+    }
 
     /*************************************************************************
      *Função ModoNãoInterativo    										     *
@@ -571,42 +573,42 @@ public class Main {
      * @param String caminhoFinal ficheiro de resultados finais      		 *
      * @param String caminhoInicial ficheiro SIR     		                 *
      *************************************************************************/
-	public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial){
+    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
 
-        if(args.length != 9){
+        if (args.length != 9) {
             mensagemErro(1);
             System.exit(0);
         }
 
-        for(int b = 1; b<8; b+=2) {
+        for (int b = 1; b < 8; b += 2) {
             if (args[b].equals("-m")) {
-                option = Integer.valueOf(args[b+1]);
+                option = Integer.valueOf(args[b + 1]);
             }
             if (args[b].equals("-p")) {
-                h = Float.valueOf(args[b+1]);
+                h = Float.valueOf(args[b + 1]);
             }
             if (args[b].equals("-t")) {
-                n = Float.valueOf(args[b+1]);
+                n = Float.valueOf(args[b + 1]);
             }
             if (args[b].equals("-d")) {
-                dias = Integer.valueOf(args[b+1]);
+                dias = Integer.valueOf(args[b + 1]);
             }
         }
 
-		caminhoInicial = args[0];
+        caminhoInicial = args[0];
         caminhoInicial = "LAPR1FinalProject/" + caminhoInicial;
         s = n - 1;
         sDias = n - 1;
 
-        if(option != 1 && option != 2 || h <= 0 || h >= 1 || n <= 0 || dias <= 0) {
+        if (option != 1 && option != 2 || h <= 0 || h >= 1 || n <= 0 || dias <= 0) {
             mensagemErro(1);
             System.exit(0);
         }
 
-        if(!((args[0].substring(args[0].length() - 4, args[0].length())).equals(".csv"))){
-			mensagemErro(2);
+        if (!((args[0].substring(args[0].length() - 4, args[0].length())).equals(".csv"))) {
+            mensagemErro(2);
             System.exit(0);
-		}
+        }
 
         int linhas = repeated(caminhoInicial);
         // Matrix para colocar os valores
@@ -618,7 +620,7 @@ public class Main {
             mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
             a++;
         }
-	}
+    }
 
     /*************************************************************************
      *Função mensagemErro                                                    *
@@ -666,37 +668,37 @@ public class Main {
                 System.out.println("           -> Valor inválido <-                           ");
                 System.out.println("********************************************************");
                 break;
-            }
         }
+    }
 
     /*************************************************************************
      *Função gnuplot                                                         *
      *************************************************************************
      * @param String caminhoFinalGnu                                         *             
      *************************************************************************/
-    public static void gnuplot(String caminhoFinalGnu, int dias){
-        String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length()-4);
+    public static void gnuplot(String caminhoFinalGnu, int dias) {
+        String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length() - 4);
         String[] g = {"-e", "set term png size 1200, 800",
-            "-e", "set output '" + caminhoPng + ".png'",
-            "-e", "replot"
+                "-e", "set output '" + caminhoPng + ".png'",
+                "-e", "replot"
         };
 
         String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
-            "-e", "set datafile separator ';'",
-            "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
-            "-e", "set xlabel 'Dias' font ',16'",
-            "-e", "set ylabel 'N' font ',16' rotate by 0",
-            "-e", "set grid",
-            "-e", "set key box",
-            "-e", "set key width 1",
-            "-e", "set key height 1",
-            "-e", "set key font ',16'",
-            "-e", "set border 3",
-            "-e", "set tics nomirror",
-            "-e", "set xtics 0,1," + dias,
-            "-e", "set border lw 2",
-            "-p", "-e", "set term wxt size 1200, 800",
-            "-e", "replot"
+                "-e", "set datafile separator ';'",
+                "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
+                "-e", "set xlabel 'Dias' font ',16'",
+                "-e", "set ylabel 'N' font ',16' rotate by 0",
+                "-e", "set grid",
+                "-e", "set key box",
+                "-e", "set key width 1",
+                "-e", "set key height 1",
+                "-e", "set key font ',16'",
+                "-e", "set border 3",
+                "-e", "set tics nomirror",
+                "-e", "set xtics 0,1," + dias,
+                "-e", "set border lw 2",
+                "-p", "-e", "set term wxt size 1200, 800",
+                "-e", "replot"
         };
         try {
             Runtime rt = Runtime.getRuntime();
@@ -705,11 +707,11 @@ public class Main {
             int ans = scanner.nextInt();
             rt.exec("taskkill /im gnuplot_qt.exe");
             prc.destroy();
-            while(ans != 0 && ans != 1){
+            while (ans != 0 && ans != 1) {
                 mensagemErro(6);
                 ans = scanner.nextInt();
             }
-            if(ans == 1){
+            if (ans == 1) {
                 int slength = s.length - 5;
                 String[] t = new String[slength + g.length];
                 System.arraycopy(s, 0, t, 0, slength);
