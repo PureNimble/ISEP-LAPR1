@@ -35,7 +35,7 @@ public class Main {
         int dias = 0;
         int option = 1;
         String caminhoFinal = "LAPR1FinalProject/";
-        String caminhoInicial = "LAPR1FinalProject/ SIR.csv";
+        String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
             modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
@@ -43,6 +43,7 @@ public class Main {
         } else {
             modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
         }
+        System.out.println("*******************Fim do Programa*******************");
     }
 
     /*************************************************************************
@@ -207,11 +208,11 @@ public class Main {
         resultados[i][3] = rec;
         resultados[i][4] = n;
 
-        System.out.printf("Valor de S: %d%.2f", i, sDias);
-        System.out.printf("\nValor de I: %d%.2f", (i), iDias);
-        System.out.printf("\nValor de R: %d%.2f", i, rDias);
-        System.out.printf("\nValor de N: %.2f\n", (sDias + iDias + rDias));
-        System.out.printf("\n");
+        System.out.printf("Valor de S%d: %.2f%n", i, sDias);
+        System.out.printf("Valor de I%d: %.2f%n", i, iDias);
+        System.out.printf("Valor de R%d: %.2f%n", i, rDias);
+        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+        System.out.printf("%n");
 
         while (i < dias) {
 
@@ -224,11 +225,11 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S: %d %.2f", (i + 1), sDias);
-            System.out.printf("\nValor de I: %d %.2f", (i + 1), iDias);
-            System.out.printf("\nValor de R: %d %.2f", (i + 1), rDias);
-            System.out.printf("\nValor de N: %.2f\n", (sDias + iDias + rDias));
-            System.out.printf("\n");
+            System.out.printf("Valor de S%d: %.2f%n", (i + 1), sDias);
+            System.out.printf("Valor de I%d: %.2f%n", (i + 1), iDias);
+            System.out.printf("Valor de R%d: %.2f%n", (i + 1), rDias);
+            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+            System.out.printf("%n");
             i++;
 
             resultados[i][0] = i;
@@ -278,11 +279,11 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-        System.out.printf("Valor de S: %d%.2f" ,i, sDias);
-        System.out.printf("\nValor de I: %d%.2f",i, iDias);
-        System.out.printf("\nValor de R: %d%.2f" ,i , rDias);
-        System.out.printf("\nValor de N: %.2f\n", (sDias + iDias + rDias));
-        System.out.printf("\n");
+        System.out.printf("Valor de S%d: %.2f%n", i, sDias);
+        System.out.printf("Valor de I%d: %.2f%n", i, iDias);
+        System.out.printf("Valor de R%d: %.2f%n", i, rDias);
+        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+        System.out.printf("%n");
 
         while (i < dias) {
             for (float j = 0; j < 1; j += h) {
@@ -316,11 +317,11 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S: " + (i + 1) + "%.2f", sDias);
-            System.out.printf("\nValor de I: " + (i + 1) + "%.2f", iDias);
-            System.out.printf("\nValor de R: " + (i + 1) + "%.2f", rDias);
-            System.out.printf("\nValor de N: " + "%.2f\n", (sDias + iDias + rDias));
-            System.out.printf("\n");
+            System.out.printf("Valor de S%d: %.2f%n", (i + 1), sDias);
+            System.out.printf("Valor de I%d: %.2f%n", (i + 1), iDias);
+            System.out.printf("Valor de R%d: %.2f%n", (i + 1), rDias);
+            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+            System.out.printf("%n");
             i++;
             resultados[i][0] = i;
             resultados[i][1] = sDias;
