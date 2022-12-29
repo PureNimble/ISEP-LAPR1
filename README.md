@@ -12,7 +12,7 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 * O Teams e o Bitbucket foram os locais que escolhemos para o armazenamento dos ficheiros
 * E por fim, o Discord como meio de comunicação principal
 
-## Topicos do Projeto: ##
+## Tópicos do Projeto: ##
 -------------------------
 * [Função Principal (main)](Documentos/main.md);
 * [modo não interativo](Documentos/modoNaoInterativo.md);
