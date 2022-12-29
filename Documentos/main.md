@@ -2,10 +2,10 @@
 
 ## Descrição ##
 -------------------------
-Na nossa função Principal (Main), apenas declaramos as variáveis que serão recebidas como parametros 
+-> Na nossa função Principal (Main), apenas declaramos as variáveis que serão recebidas como parâmetros 
 (caso o modo não interativo seja acionado), ou serão perguntadas durante a execução (modo interativo).
 
-## Metodos usados: ##
+## Métodos usados: ##
 -------------------------
 
 * [modo não interativo](modoNaoInterativo.md);

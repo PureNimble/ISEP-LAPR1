@@ -4,7 +4,7 @@
 -------------------------
 
 
-## Metodos usados: ##
+## Métodos usados: ##
 -------------------------
 
 * [mensagemerro]
