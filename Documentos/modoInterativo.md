@@ -9,9 +9,9 @@
 
 
 
-* [repeated]
-* [repeatRead]
-* [mensagemerro]
-* [Euler]
-* [Runge_Kutta]
-* [gnuplot]
+* [repeated](métodos/repeated.md)
+* [repeatRead](métodos/repeatRead.md)
+* [mensagemerro](métodos/mensagemerro.md)
+* [Euler](métodos/Euler.md)
+* [Runge_Kutta](métodos/Runge_Kutta.md)
+* [gnuplot](métodos/gnuplot.md)
