@@ -4,10 +4,10 @@
 -------------------------
 
 
-## Metodos usados: ##
+## Métodos usados: ##
 -------------------------
 
-* [mensagemerro]
-* [repeated]
-* [repeatRead]
-* [mSwitch]
+* [mensagemerro](métodos/mensagemerro.md)
+* [repeated](métodos/repeated.md)
+* [repeatRead](métodos/repeatRead.md)
+* [mSwitch](métodos/mSwitch.md)

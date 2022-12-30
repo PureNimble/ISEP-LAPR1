@@ -2,16 +2,17 @@
 
 ## Descrição ##
 -------------------------
+-> são feitas questões ao utilizador para que seja possível calcular as diferentes taxas, é também pedido o nome da pessoa que pretende ser analisada.
 
-
-## Metodos usados: ##
+-> são feitas mais perguntas para saber as configurações relacionadas ao tipo de informação final (gráfico e/ou tabela)
+## Métodos usados: ##
 -------------------------
 
 
 
-* [repeated]
-* [repeatRead]
-* [mensagemerro]
-* [Euler]
-* [Runge_Kutta]
-* [gnuplot]
+* [repeated](métodos/repeated.md)
+* [repeatRead](métodos/repeatRead.md)
+* [mensagemerro](métodos/mensagemerro.md)
+* [Euler](métodos/Euler.md)
+* [Runge_Kutta](métodos/Runge_Kutta.md)
+* [gnuplot](métodos/gnuplot.md)
