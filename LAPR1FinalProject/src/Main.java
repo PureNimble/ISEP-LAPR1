@@ -61,17 +61,10 @@ public class Main {
         return linhas;
     }
 
-    /*************************************************************************
-     * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
-     *************************************************************************
-     * @param String caminho_ficheiro 										 *
-     * @param float[][] matrix = matrix com os dados 				     	 *
-     * @param String[] nomes = vetor com os nomes 				     	 	 *
-     * @return matrix = matrix com os dados 				     	 		 *
-     *************************************************************************/
-    public static float[][] readFile(String caminho_ficheiro, float[][] matrix, String[] nomes) throws FileNotFoundException {
+    //------------------------------------------Função para ler os valores dos dados no ficheiroSIR.csv------------------------------------------
+    public static float[][] readFile(float[][] matrix, String[] nomes) throws FileNotFoundException {
 
-        Scanner scanner = new Scanner(new File(caminho_ficheiro));
+        Scanner scanner = new Scanner(CAMINHO_INICIAL);
 
         int lineNumber = 0;
 
