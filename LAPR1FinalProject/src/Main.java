@@ -87,16 +87,10 @@ public class Main {
         return matrix;
     }
 
-    /*************************************************************************
-     *Função para escrever os dados do sistema em ficheiroResultado.csv      *
-     *************************************************************************
-     * @param String caminho_ficheiro = onde está o ficheiro final           *
-     * @param float[][] resultados [dias][4] = matriz com a informação final *
-     * @param int dias = limite de dias                                      *
-     *************************************************************************/
-    public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
+    //------------------------------------------Função para escrever os dados do sistema em ficheiroResultado.csv------------------------------------------
+    public static void printFile( float resultados[][], int dias) throws FileNotFoundException {
 
-        PrintWriter pw = new PrintWriter(new File(caminho_ficheiro));    // Criar o ficheiro tests.csv
+        PrintWriter pw = new PrintWriter(CAMINHO_FINAL);    // Criar o ficheiro tests.csv
 
         pw.print("Dia;S;I;R;N\n");    // Print do cabeçalho
 
