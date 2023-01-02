@@ -27,6 +27,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static final String CAMINHO_FINAL = "ficheiroSIR.csv";
     static final String CAMINHO_INICIAL = "saida.csv";
+
     public static void main(String[] args) {
 
         float h = 0;
@@ -88,7 +89,7 @@ public class Main {
     }
 
     //------------------------------------------Função para escrever os dados do sistema em ficheiroResultado.csv------------------------------------------
-    public static void printFile( float resultados[][], int dias) throws FileNotFoundException {
+    public static void printFile(float resultados[][], int dias) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter(CAMINHO_FINAL);    // Criar o ficheiro tests.csv
 
@@ -113,18 +114,18 @@ public class Main {
         return -taxaProp * s * inf;
     }
 
-     public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
+    public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
         return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
     }
 
-      public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
+    public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
         return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
     }
 
     //------------------------------------------MÉTODOS NUMÉRICOS------------------------------------------
     //MÉTODO NUMÉRICO(EULER)
 
-    public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static void Euler(int dias, float h, float[][] matrix, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -183,7 +184,7 @@ public class Main {
     }
 
     //MÉTODO NUMÉRICO(RUNGE-KUTTA4)
-    public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static void Runge_Kutta(int dias, float h, float[][] matrix, float n, float s, float sDias, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -262,43 +263,27 @@ public class Main {
 
     //------------------------------------------Função Repeated------------------------------------------
 
-    public static int repeated(String caminhoInicial) throws FileNotFoundException {
-        int linhas = checkNumberOfLines()-1;
+    public static int repeated() throws FileNotFoundException {
+        int linhas = checkNumberOfLines() - 1;
         return linhas;
     }
 
     //------------------------------------------Função mSwitch------------------------------------------
 
-    public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial) {
+    public static String[] repeatRead(int linhas) {
 
         String[] nomes = new String[linhas];
         return nomes;
     }
 
-    /*************************************************************************
-     *Função mSwitch                                                         *
-     *************************************************************************
-     * @param int option (Euler ou Kutta)                                    *
-     * @param int dias                                                       * 
-     * @param float h                                                        * 
-     * @param float[][] matrix                                               *  
-     * @param int linhas                                                     *  
-     * @param float n                                                        * 
-     * @param float s                                                        *
-     * @param float sDias                                                    *
-     * @param String caminhoFinal                                            *   
-     * @param String[] nomes                                                 *  
-     * @param int a                                                          * 
-     * @return a                                                             *               
-     *************************************************************************/
     public static int mSwitch(int option, int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         switch (option) {
             case 1:
-                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                Euler(dias, h, matrix, linhas, n, s, sDias, nomes, a);
                 break;
             case 2:
-                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, nomes, a);
                 break;
             default:
                 mensagemErro(3);
