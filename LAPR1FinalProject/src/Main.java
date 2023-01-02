@@ -25,7 +25,8 @@ import java.lang.Runtime;
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-
+    static final String CAMINHO_FINAL = "ficheiroSIR.csv";
+    static final String CAMINHO_INICIAL = "saida.csv";
     public static void main(String[] args) {
 
         float h = 0;
@@ -34,14 +35,13 @@ public class Main {
         float sDias = 0;
         int dias = 0;
         int option = 1;
-        String caminhoFinal = "LAPR1FinalProject/";
-        String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
+
 
         if (args.length == 0) {
-            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoInterativo(h, n, s, sDias, dias, option, CAMINHO_FINAL, CAMINHO_INICIAL);
 
         } else {
-            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoNaoInterativo(args, h, n, s, sDias, dias, option, CAMINHO_FINAL, CAMINHO_INICIAL);
         }
         System.out.println("*******************Fim do Programa*******************");
     }
