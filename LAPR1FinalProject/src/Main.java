@@ -108,67 +108,22 @@ public class Main {
         pw.close();
     }
 
-    /*************************************************************************
-     *Função Sistema EDOs      												 *
-     *************************************************************************
-     * @param float t dias          										 *
-     * @param float s suscetíveis        									 *
-     * @param float taxaProp β        										 *
-     * @param float inf infetados        									 *
-     * @return valor final              									 *
-     *************************************************************************/
+    //------------------------------------------Função Sistema EDO´s------------------------------------------
     public static float functionS(float t, float s, float taxaProp, float inf) {
         return -taxaProp * s * inf;
     }
 
-    /*************************************************************************
-     *Função Sistema EDOs       										     *
-     *************************************************************************
-     * @param float t dias          										 *
-     * @param float inf número de Infetados       							 *
-     * @param float taxaPop ρ       							             *
-     * @param float taxaProp β       							             *
-     * @param float taxaRej γ     							                 *
-     * @param float taxaReI α                                                *
-     * @param float s                                                        *
-     * @param float rec número recuperados                                   *
-     * @return valor final              									 *
-     *************************************************************************/
-    public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
+     public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
         return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
     }
 
-    /*************************************************************************
-     *Função Sistema EDOs       										     *
-     *************************************************************************
-     * @param float T dias          										 *
-     * @param float R número de recuperados        							 *
-     * @param float taxaRej γ     							                 *
-     * @param float taxaReI α                                                *
-     * @param float taxaPop ρ       							             *
-     * @param float taxaProp β       							             *
-     * @param float inf número de Infetados       							 *
-     * @param float s                                                        *
-     * @return valor final              									 *
-     *************************************************************************/
-    public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
+      public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
         return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
     }
 
-    /*************************************************************************
-     *Função de Euler     											         *
-     *************************************************************************
-     * @param int dias número de dias          								 *
-     * @param float h step        							         		 *
-     * @param float[][] matrix 												 *
-     * @param int linhas número de linhas 									 *
-     * @param float n valor da população  									 *
-     * @param float s n-1 												 	 *
-     * @param float sDias num de dias 										 *
-     * @param String caminhoFinal ficheiro de resultados finais      		 *
-     * @param String[] nomes												 *
-     * @param int a = index da pessoa										 *
-     *************************************************************************/
+    //------------------------------------------MÉTODOS NUMÉRICOS------------------------------------------
+    //MÉTODO NUMÉRICO(EULER)
+
     public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
@@ -219,7 +174,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        String caminhoFinalGnu = CAMINHO_FINAL + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -227,20 +182,7 @@ public class Main {
         }
     }
 
-    /*************************************************************************
-     *Função de Runge_kutta     											 *
-     *************************************************************************
-     * @param int dias número de dias          								 *
-     * @param float h step        							         		 *
-     * @param float[][] matrix 												 *
-     * @param int linhas número de linhas 									 *
-     * @param float n valor da população  								     *
-     * @param float s n-1 												 	 *
-     * @param floats Dias num de dias 										 *
-     * @param String caminhoFinal ficheiro de resultados finais      		 *
-     * @param String[] nomes												 *
-     * @param int a = index da pessoa										 *
-     *************************************************************************/
+    //MÉTODO NUMÉRICO(RUNGE-KUTTA4)
     public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
@@ -310,7 +252,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        String caminhoFinalGnu = CAMINHO_FINAL + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -318,21 +260,10 @@ public class Main {
         }
     }
 
-    /*************************************************************************
-     *Função repeated                                                        *
-     *************************************************************************
-     * @param String caminhoInicial                                          *
-     * @return linhas                                                        *           
-     *************************************************************************/
-    public static int repeated(String caminhoInicial) {
-        int linhas = 0;
-        // Chamar a função checkNumberOfLines
-        try {
-            linhas = checkNumberOfLines(caminhoInicial);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        linhas -= 1;
+    //------------------------------------------Função Repeated------------------------------------------
+
+    public static int repeated(String caminhoInicial) throws FileNotFoundException {
+        int linhas = checkNumberOfLines()-1;
         return linhas;
     }
 
