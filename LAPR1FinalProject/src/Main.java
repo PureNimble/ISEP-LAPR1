@@ -267,24 +267,11 @@ public class Main {
         return linhas;
     }
 
-    /*************************************************************************
-     *Função repeatRead                                                      *
-     *************************************************************************
-     * @param float[][] matrix                                               *
-     * @param int linhas                                                     *  
-     * @param String caminhoInicial                                          *
-     * @return nomes                                                         *           
-     *************************************************************************/
+    //------------------------------------------Função mSwitch------------------------------------------
+
     public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial) {
 
         String[] nomes = new String[linhas];
-
-        // Chamar a função readFile
-        try {
-            matrix = readFile(caminhoInicial, matrix, nomes);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         return nomes;
     }
 
