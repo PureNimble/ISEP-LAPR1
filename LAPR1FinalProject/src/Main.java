@@ -46,16 +46,10 @@ public class Main {
         System.out.println("*******************Fim do Programa*******************");
     }
 
-    /*************************************************************************
-     * Função para verificar o número de linhas do ficheiro csv              *
-     *************************************************************************
-     * @param String caminho_ficheiro                                        *
-     * @return linhas = numero de linhas                                     *
-     *************************************************************************/
-    public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
+    //------------------------------------------Função para verificar o número de linhas do ficheiro csv------------------------------------------
+    public static int checkNumberOfLines() throws FileNotFoundException {
 
-        Scanner scanner = new Scanner(new File(caminho_ficheiro));
-        scanner = new Scanner(new File(caminho_ficheiro));
+        scanner = new Scanner(CAMINHO_INICIAL);
 
         int linhas = 0;
         while (scanner.hasNextLine()) {
@@ -64,7 +58,6 @@ public class Main {
                 linhas++;
             }
         }
-
         return linhas;
     }
 
