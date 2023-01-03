@@ -17,5 +17,5 @@
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
 
-![main](Imagens\modoInterativo_perguntarValores.png)
-![main](Imagens\modoInterativo_)
+![modoInterativo1](Imagens\modoInterativo1.png)
+![modoInterativo2](Imagens\modoInterativo2.png)
