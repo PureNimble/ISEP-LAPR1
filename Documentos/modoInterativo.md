@@ -17,5 +17,10 @@
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
 
+## Perguntas realizadas ao utilizador ##
+-------------------------
 ![modoInterativo1](Imagens/modoInterativo1.png)
+
+## Outras Interações ##
+-------------------------
 ![modoInterativo2](Imagens/modoInterativo2.png)
