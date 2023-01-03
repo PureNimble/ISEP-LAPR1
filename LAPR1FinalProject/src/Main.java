@@ -25,8 +25,6 @@ import java.lang.Runtime;
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
-    static final String CAMINHO_FINAL = "ficheiroSIR.csv";
-    static final String CAMINHO_INICIAL = "saida.csv";
 
     public static void main(String[] args) {
 
@@ -36,36 +34,28 @@ public class Main {
         float sDias = 0;
         int dias = 0;
         int option = 1;
-
+        String caminhoFinal = "LAPR1FinalProject/";
+        String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
-            modoInterativo(h, n, s, sDias, dias, option, CAMINHO_FINAL, CAMINHO_INICIAL);
+            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
 
         } else {
-            modoNaoInterativo(args, h, n, s, sDias, dias, option, CAMINHO_FINAL, CAMINHO_INICIAL);
+            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
         }
         System.out.println("*******************Fim do Programa*******************");
     }
+    /*************************************************************************
+     * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
+     *************************************************************************
+     * @param String caminho_ficheiro 										 *
+     * @param float[][] matrix = matrix com os dados 				     	 *
+     * @param String[] nomes = vetor com os nomes 				     	 	 *
+     * @return matrix = matrix com os dados 				     	 		 *
+     *************************************************************************/
+    public static float[][] readFile(String caminho_ficheiro, float[][] matrix, String[] nomes) throws FileNotFoundException {
 
-    //------------------------------------------Função para verificar o número de linhas do ficheiro csv------------------------------------------
-    public static int checkNumberOfLines() throws FileNotFoundException {
-
-        scanner = new Scanner(CAMINHO_INICIAL);
-
-        int linhas = 0;
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.trim().length() > 0) {
-                linhas++;
-            }
-        }
-        return linhas;
-    }
-
-    //------------------------------------------Função para ler os valores dos dados no ficheiroSIR.csv------------------------------------------
-    public static float[][] readFile(float[][] matrix, String[] nomes) throws FileNotFoundException {
-
-        Scanner scanner = new Scanner(CAMINHO_INICIAL);
+        Scanner scanner = new Scanner(new File(caminho_ficheiro));
 
         int lineNumber = 0;
 
@@ -88,10 +78,16 @@ public class Main {
         return matrix;
     }
 
-    //------------------------------------------Função para escrever os dados do sistema em ficheiroResultado.csv------------------------------------------
-    public static void printFile(float resultados[][], int dias) throws FileNotFoundException {
+    /*************************************************************************
+     *Função para escrever os dados do sistema em ficheiroResultado.csv      *
+     *************************************************************************
+     * @param String caminho_ficheiro = onde está o ficheiro final           *
+     * @param float[][] resultados [dias][4] = matriz com a informação final *
+     * @param int dias = limite de dias                                      *
+     *************************************************************************/
+    public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
 
-        PrintWriter pw = new PrintWriter(CAMINHO_FINAL);    // Criar o ficheiro tests.csv
+        PrintWriter pw = new PrintWriter(new File(caminho_ficheiro));    // Criar o ficheiro tests.csv
 
         pw.print("Dia;S;I;R;N\n");    // Print do cabeçalho
 
@@ -109,23 +105,68 @@ public class Main {
         pw.close();
     }
 
-    //------------------------------------------Função Sistema EDO´s------------------------------------------
+    /*************************************************************************
+     *Função Sistema EDOs      												 *
+     *************************************************************************
+     * @param float t dias          										 *
+     * @param float s suscetíveis        									 *
+     * @param float taxaProp β        										 *
+     * @param float inf infetados        									 *
+     * @return valor final              									 *
+     *************************************************************************/
     public static float functionS(float t, float s, float taxaProp, float inf) {
         return -taxaProp * s * inf;
     }
 
+    /*************************************************************************
+     *Função Sistema EDOs       										     *
+     *************************************************************************
+     * @param float t dias          										 *
+     * @param float inf número de Infetados       							 *
+     * @param float taxaPop ρ       							             *
+     * @param float taxaProp β       							             *
+     * @param float taxaRej γ     							                 *
+     * @param float taxaReI α                                                *
+     * @param float s                                                        *
+     * @param float rec número recuperados                                   *
+     * @return valor final              									 *
+     *************************************************************************/
     public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
         return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
     }
 
+    /*************************************************************************
+     *Função Sistema EDOs       										     *
+     *************************************************************************
+     * @param float T dias          										 *
+     * @param float R número de recuperados        							 *
+     * @param float taxaRej γ     							                 *
+     * @param float taxaReI α                                                *
+     * @param float taxaPop ρ       							             *
+     * @param float taxaProp β       							             *
+     * @param float inf número de Infetados       							 *
+     * @param float s                                                        *
+     * @return valor final              									 *
+     *************************************************************************/
     public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
         return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
     }
 
-    //------------------------------------------MÉTODOS NUMÉRICOS------------------------------------------
-    //MÉTODO NUMÉRICO(EULER)
-
-    public static void Euler(int dias, float h, float[][] matrix, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    /*************************************************************************
+     *Função de Euler     											         *
+     *************************************************************************
+     * @param int dias número de dias          								 *
+     * @param float h step        							         		 *
+     * @param float[][] matrix 												 *
+     * @param int linhas número de linhas 									 *
+     * @param float n valor da população  									 *
+     * @param float s n-1 												 	 *
+     * @param float sDias num de dias 										 *
+     * @param String caminhoFinal ficheiro de resultados finais      		 *
+     * @param String[] nomes												 *
+     * @param int a = index da pessoa										 *
+     *************************************************************************/
+    public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -175,7 +216,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = CAMINHO_FINAL + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -183,8 +224,21 @@ public class Main {
         }
     }
 
-    //MÉTODO NUMÉRICO(RUNGE-KUTTA4)
-    public static void Runge_Kutta(int dias, float h, float[][] matrix, float n, float s, float sDias, String[] nomes, int a) {
+    /*************************************************************************
+     *Função de Runge_kutta     											 *
+     *************************************************************************
+     * @param int dias número de dias          								 *
+     * @param float h step        							         		 *
+     * @param float[][] matrix 												 *
+     * @param int linhas número de linhas 									 *
+     * @param float n valor da população  								     *
+     * @param float s n-1 												 	 *
+     * @param floats Dias num de dias 										 *
+     * @param String caminhoFinal ficheiro de resultados finais      		 *
+     * @param String[] nomes												 *
+     * @param int a = index da pessoa										 *
+     *************************************************************************/
+    public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         float taxaProp = matrix[a][0];
         float taxaRej = matrix[a][1];
@@ -253,7 +307,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = CAMINHO_FINAL + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -261,29 +315,76 @@ public class Main {
         }
     }
 
-    //------------------------------------------Função Repeated------------------------------------------
-
-    public static int repeated() throws FileNotFoundException {
-        int linhas = checkNumberOfLines() - 1;
-        return linhas;
+    /*************************************************************************
+     * Função para verificar o número de linhas do ficheiro csv              *
+     *************************************************************************
+     * @param String caminhoInicial                                          *
+     * @return linhas = numero de linhas                                     *
+     *************************************************************************/
+    public static int checkNumberOfLines(String caminhoInicial) {
+        int linhas = 0;
+        // Chamar a função checkNumberOfLines
+        try {
+            Scanner scanner = new Scanner(new File(caminhoInicial));
+            scanner = new Scanner(new File(caminhoInicial));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().length() > 0) {
+                    linhas++;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        linhas -= 1;
+        return linhas;  
     }
 
-    //------------------------------------------Função mSwitch------------------------------------------
-
-    public static String[] repeatRead(int linhas) {
+    /*************************************************************************
+     *Função repeatRead                                                      *
+     *************************************************************************
+     * @param float[][] matrix                                               *
+     * @param int linhas                                                     *  
+     * @param String caminhoInicial                                          *
+     * @return nomes                                                         *           
+     *************************************************************************/
+    public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial) {
 
         String[] nomes = new String[linhas];
+
+        // Chamar a função readFile
+        try {
+            matrix = readFile(caminhoInicial, matrix, nomes);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return nomes;
     }
 
+    /*************************************************************************
+     *Função mSwitch                                                         *
+     *************************************************************************
+     * @param int option (Euler ou Kutta)                                    *
+     * @param int dias                                                       * 
+     * @param float h                                                        * 
+     * @param float[][] matrix                                               *  
+     * @param int linhas                                                     *  
+     * @param float n                                                        * 
+     * @param float s                                                        *
+     * @param float sDias                                                    *
+     * @param String caminhoFinal                                            *   
+     * @param String[] nomes                                                 *  
+     * @param int a                                                          * 
+     * @return a                                                             *               
+     *************************************************************************/
     public static int mSwitch(int option, int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
         switch (option) {
             case 1:
-                Euler(dias, h, matrix, linhas, n, s, sDias, nomes, a);
+                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
                 break;
             case 2:
-                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, nomes, a);
+                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
                 break;
             default:
                 mensagemErro(3);
@@ -305,7 +406,7 @@ public class Main {
      * @param String caminhoInicial ficheiro SIR     		                 *
      *************************************************************************/
     public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
-        int linhas = repeated(caminhoInicial);
+        int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
@@ -494,7 +595,7 @@ public class Main {
             System.exit(0);
         }
 
-        int linhas = repeated(caminhoInicial);
+        int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
@@ -567,7 +668,7 @@ public class Main {
                 "-e", "replot"
         };
 
-        String[] s = {"C:/Program Files/gnuplot/bin/gnuplot",
+        String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot",
                 "-e", "set datafile separator ';'",
                 "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
                 "-e", "set xlabel 'Dias' font ',16'",
