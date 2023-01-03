@@ -25,6 +25,8 @@ import java.lang.Runtime;
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
+    static final String CAMINHO_INICIAL = "ficheiroSIR.csv";
+    static final String CAMINHO_FINAL = "LAPR1FinalProject/";
 
     public static void main(String[] args) {
 
@@ -34,14 +36,13 @@ public class Main {
         float sDias = 0;
         int dias = 0;
         int option = 1;
-        String caminhoFinal = "LAPR1FinalProject/";
-        String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
+
 
         if (args.length == 0) {
-            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoInterativo(h, n, s, sDias, dias, option, CAMINHO_FINAL, CAMINHO_INICIAL);
 
         } else {
-            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoNaoInterativo(args, h, n, s, sDias, dias, option, CAMINHO_FINAL, CAMINHO_INICIAL);
         }
         System.out.println("*******************Fim do Programa*******************");
     }
@@ -53,9 +54,9 @@ public class Main {
      * @param String[] nomes = vetor com os nomes 				     	 	 *
      * @return matrix = matrix com os dados 				     	 		 *
      *************************************************************************/
-    public static float[][] readFile(String caminho_ficheiro, float[][] matrix, String[] nomes) throws FileNotFoundException {
+    public static float[][] readFile( float[][] matrix, String[] nomes) throws FileNotFoundException {
 
-        Scanner scanner = new Scanner(new File(caminho_ficheiro));
+        Scanner scanner = new Scanner(CAMINHO_INICIAL);
 
         int lineNumber = 0;
 
