@@ -17,5 +17,5 @@
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
 
-![modoInterativo1](Imagens\modoInterativo1.png)
-![modoInterativo2](Imagens\modoInterativo2.png)
+![modoInterativo1](Imagens/modoInterativo1.png)
+![modoInterativo2](Imagens/modoInterativo2.png)
