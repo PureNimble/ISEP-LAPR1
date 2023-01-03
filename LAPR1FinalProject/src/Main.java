@@ -326,17 +326,18 @@ public class Main {
         // Chamar a função checkNumberOfLines
         try {
             Scanner scanner = new Scanner(new File(caminhoInicial));
-            scanner = new Scanner(new File(caminhoInicial));
+            String line;
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (line.trim().length() > 0) {
+                line = scanner.nextLine();
+                if (line.trim().length() > 0) {     // verificar se existe caracteres na linha   
                     linhas++;
                 }
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        linhas -= 1;
+        linhas -= 1;            // remover a linha de cabeçalho
         return linhas;  
     }
 
