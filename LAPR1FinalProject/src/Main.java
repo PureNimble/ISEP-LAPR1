@@ -350,38 +350,6 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função mSwitch                                                         *
-     *************************************************************************
-     * @param int option (Euler ou Kutta)                                    *
-     * @param int dias                                                       * 
-     * @param float h                                                        * 
-     * @param float[][] matrix                                               *  
-     * @param int linhas                                                     *  
-     * @param float n                                                        * 
-     * @param float s                                                        *
-     * @param float sDias                                                    *
-     * @param String caminhoFinal                                            *   
-     * @param String[] nomes                                                 *  
-     * @param int a                                                          * 
-     * @return a                                                             *               
-     *************************************************************************/
-    public static int mSwitch(int option, int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
-
-        switch (option) {
-            case 1:
-                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                break;
-            case 2:
-                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                break;
-            default:
-                mensagemErro(3);
-                break;
-        }
-        return a;
-    }
-
-    /*************************************************************************
      *Função modoInterativo    							    				 *
      *************************************************************************
      * @param float h step        							         		 *
@@ -590,7 +558,17 @@ public class Main {
 
         int a = 0;
         while (a < linhas) {
-            mSwitch(option, dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+            switch (option) {
+                case 1:
+                    Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                    break;
+                case 2:
+                    Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                    break;
+                default:
+                    mensagemErro(3);
+                    break;
+            }
             a++;
         }
     }
