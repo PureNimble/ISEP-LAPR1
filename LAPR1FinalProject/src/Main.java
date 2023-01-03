@@ -45,38 +45,6 @@ public class Main {
         }
         System.out.println("*******************Fim do Programa*******************");
     }
-    /*************************************************************************
-     * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
-     *************************************************************************
-     * @param String caminho_ficheiro 										 *
-     * @param float[][] matrix = matrix com os dados 				     	 *
-     * @param String[] nomes = vetor com os nomes 				     	 	 *
-     * @return matrix = matrix com os dados 				     	 		 *
-     *************************************************************************/
-    public static float[][] readFile(String caminho_ficheiro, float[][] matrix, String[] nomes) throws FileNotFoundException {
-
-        Scanner scanner = new Scanner(new File(caminho_ficheiro));
-
-        int lineNumber = 0;
-
-        while (scanner.hasNextLine()) {
-
-            String line = scanner.nextLine();
-            String[] values = line.split(";");
-
-            if (lineNumber != 0) {
-                nomes[lineNumber - 1] = values[0];
-
-                for (int j = 1; j < 5; j++) {
-                    matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",", "."));
-                }
-            }
-            lineNumber++;
-        }
-        scanner.close();
-
-        return matrix;
-    }
 
     /*************************************************************************
      *Função para escrever os dados do sistema em ficheiroResultado.csv      *
@@ -342,20 +310,39 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função repeatRead                                                      *
+     *Função readFile                                                        *
      *************************************************************************
-     * @param float[][] matrix                                               *
-     * @param int linhas                                                     *  
-     * @param String caminhoInicial                                          *
+     * @param matrix                                                         *
+     * @param linhas                                                         *  
+     * @param caminhoInicial                                                 *
      * @return nomes                                                         *           
      *************************************************************************/
-    public static String[] repeatRead(float[][] matrix, int linhas, String caminhoInicial) {
+    public static String[] readFile(float[][] matrix, int linhas, String caminhoInicial) {
 
         String[] nomes = new String[linhas];
 
         // Chamar a função readFile
         try {
-            matrix = readFile(caminhoInicial, matrix, nomes);
+            Scanner scanner = new Scanner(new File(caminhoInicial));
+
+            int lineNumber = 0;
+
+            while (scanner.hasNextLine()) {
+
+                String line = scanner.nextLine();
+                String[] values = line.split(";");
+
+                if (lineNumber != 0) {
+                    nomes[lineNumber - 1] = values[0];
+
+                    for (int j = 1; j < 5; j++) {
+                        matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",", "."));
+                    }
+                }
+                lineNumber++;
+            }
+            scanner.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -410,7 +397,7 @@ public class Main {
         int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
-        String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
+        String[] nomes = readFile(matrix, linhas, caminhoInicial);
         int[] indices = new int[linhas];
         int[] metodos = new int[linhas];
 
@@ -599,7 +586,7 @@ public class Main {
         int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
-        String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
+        String[] nomes = readFile(matrix, linhas, caminhoInicial);
 
         int a = 0;
         while (a < linhas) {

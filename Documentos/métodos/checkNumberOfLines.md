@@ -7,4 +7,4 @@
 
 ## Função: ##
 -------------------------
-![main](Imagens/checkNumberOfLines.png)
+![main](../Imagens/checkNumberOfLines.png)
