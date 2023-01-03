@@ -11,6 +11,6 @@ programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K").
 -------------------------
 
 * [mensagemerro](métodos/mensagemerro.md)
-* [repeated](métodos/repeated.md)
+* [checkNumberOfLines](métodos/checkNumberOfLines.md)
 * [repeatRead](métodos/repeatRead.md)
 * [mSwitch](métodos/mSwitch.md)

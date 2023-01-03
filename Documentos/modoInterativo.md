@@ -10,7 +10,7 @@
 
 
 
-* [repeated](métodos/repeated.md)
+* [checkNumberOfLines](métodos/checkNumberOfLines.md)
 * [repeatRead](métodos/repeatRead.md)
 * [mensagemerro](métodos/mensagemerro.md)
 * [Euler](métodos/Euler.md)

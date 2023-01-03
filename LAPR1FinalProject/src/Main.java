@@ -337,7 +337,7 @@ public class Main {
             e.printStackTrace();
         }
         linhas -= 1;
-        return linhas;
+        return linhas;  
     }
 
     /*************************************************************************
