@@ -16,3 +16,6 @@
 * [Euler](métodos/Euler.md)
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
+
+![main](Imagens\modoInterativo_perguntarValores.png)
+![main](Imagens\modoInterativo_)
