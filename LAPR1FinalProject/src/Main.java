@@ -1,5 +1,3 @@
-//Podemos usar
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -19,8 +17,6 @@ import java.lang.Runtime;
          * args[6] -> N (N~=1000)
          * args[7] -> -d
          * args[8] -> dias (0<dias)
-         * args[9] -> caminho do ficheiroResultado.csv
-         *
          * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
  */
 public class Main {
@@ -49,9 +45,9 @@ public class Main {
     /*************************************************************************
      *Função para escrever os dados do sistema em ficheiroResultado.csv      *
      *************************************************************************
-     * @param String caminho_ficheiro = onde está o ficheiro final           *
-     * @param float[][] resultados [dias][4] = matriz com a informação final *
-     * @param int dias = limite de dias                                      *
+     * @param caminho_ficheiro Localização do ficheiro final                 *
+     * @param resultados [dias][4] = matriz com a informação final           *
+     * @param dias Limite de dias                                            *
      *************************************************************************/
     public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
 
@@ -76,10 +72,10 @@ public class Main {
     /*************************************************************************
      *Função Sistema EDOs      												 *
      *************************************************************************
-     * @param float t dias          										 *
-     * @param float s suscetíveis        									 *
-     * @param float taxaProp β        										 *
-     * @param float inf infetados        									 *
+     * @param t Dias          										         *
+     * @param s Suscetíveis        									         *
+     * @param taxaProp β        										     *
+     * @param inf infetados        									         *
      * @return valor final              									 *
      *************************************************************************/
     public static float functionS(float t, float s, float taxaProp, float inf) {
@@ -89,14 +85,14 @@ public class Main {
     /*************************************************************************
      *Função Sistema EDOs       										     *
      *************************************************************************
-     * @param float t dias          										 *
-     * @param float inf número de Infetados       							 *
-     * @param float taxaPop ρ       							             *
-     * @param float taxaProp β       							             *
-     * @param float taxaRej γ     							                 *
-     * @param float taxaReI α                                                *
-     * @param float s                                                        *
-     * @param float rec número recuperados                                   *
+     * @param t Dias          										         *
+     * @param inf Número de Infetados       							     *
+     * @param taxaPop ρ       							                     *
+     * @param taxaProp β       							                     *
+     * @param taxaRej γ     							                     *
+     * @param taxaReI α                                                      *
+     * @param s                                                              *
+     * @param rec Número recuperados                                         *
      * @return valor final              									 *
      *************************************************************************/
     public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
@@ -106,14 +102,14 @@ public class Main {
     /*************************************************************************
      *Função Sistema EDOs       										     *
      *************************************************************************
-     * @param float T dias          										 *
-     * @param float R número de recuperados        							 *
-     * @param float taxaRej γ     							                 *
-     * @param float taxaReI α                                                *
-     * @param float taxaPop ρ       							             *
-     * @param float taxaProp β       							             *
-     * @param float inf número de Infetados       							 *
-     * @param float s                                                        *
+     * @param t Dias          				        						 *
+     * @param rec Número de recuperados            							 *
+     * @param taxaRej γ            							                 *
+     * @param taxaReI α                                                      *
+     * @param taxaPop ρ               							             *
+     * @param taxaProp β               							             *
+     * @param inf Número de Infetados              							 *
+     * @param s                                                              *
      * @return valor final              									 *
      *************************************************************************/
     public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
@@ -123,16 +119,16 @@ public class Main {
     /*************************************************************************
      *Função de Euler     											         *
      *************************************************************************
-     * @param int dias número de dias          								 *
-     * @param float h step        							         		 *
-     * @param float[][] matrix 												 *
-     * @param int linhas número de linhas 									 *
-     * @param float n valor da população  									 *
-     * @param float s n-1 												 	 *
-     * @param float sDias num de dias 										 *
-     * @param String caminhoFinal ficheiro de resultados finais      		 *
-     * @param String[] nomes												 *
-     * @param int a = index da pessoa										 *
+     * @param dias Número de dias             								 *
+     * @param h Step            							         		 *
+     * @param matrix        												 *
+     * @param linhas Número de linhas 									     *
+     * @param n Valor da população  									     *
+     * @param s n-1 												 	     *
+     * @param sDias Número de dias 										     *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
+     * @param nomes	Lista de nomes											 *
+     * @param a Index da pessoa     										 *
      *************************************************************************/
     public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
@@ -195,16 +191,16 @@ public class Main {
     /*************************************************************************
      *Função de Runge_kutta     											 *
      *************************************************************************
-     * @param int dias número de dias          								 *
-     * @param float h step        							         		 *
-     * @param float[][] matrix 												 *
-     * @param int linhas número de linhas 									 *
-     * @param float n valor da população  								     *
-     * @param float s n-1 												 	 *
-     * @param floats Dias num de dias 										 *
-     * @param String caminhoFinal ficheiro de resultados finais      		 *
-     * @param String[] nomes												 *
-     * @param int a = index da pessoa										 *
+     * @param dias Número de dias          								     *
+     * @param h Step        							         		     *
+     * @param matrix 												         *
+     * @param linhas Número de linhas 									     *
+     * @param n Número da população  								         *
+     * @param s n-1 												 	     *
+     * @param sdias Número de dias 										     *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais         *
+     * @param nomes Lista de nomes	    									 *
+     * @param a Index da pessoa			        							 *
      *************************************************************************/
     public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
 
@@ -286,8 +282,8 @@ public class Main {
     /*************************************************************************
      * Função para verificar o número de linhas do ficheiro csv              *
      *************************************************************************
-     * @param String caminhoInicial                                          *
-     * @return linhas = numero de linhas                                     *
+     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
+     * @return linhas Número de linhas                                       *
      *************************************************************************/
     public static int checkNumberOfLines(String caminhoInicial) {
         int linhas = 0;
@@ -313,9 +309,9 @@ public class Main {
      *Função readFile                                                        *
      *************************************************************************
      * @param matrix                                                         *
-     * @param linhas                                                         *  
-     * @param caminhoInicial                                                 *
-     * @return nomes                                                         *           
+     * @param linhas Número de linhas                                        *  
+     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
+     * @return nomes Lista de nomes                                          *           
      *************************************************************************/
     public static String[] readFile(float[][] matrix, int linhas, String caminhoInicial) {
 
@@ -352,14 +348,14 @@ public class Main {
     /*************************************************************************
      *Função modoInterativo    							    				 *
      *************************************************************************
-     * @param float h step        							         		 *
-     * @param float n valor da população  									 *
-     * @param float s n-1 												 	 *
-     * @param float sDias num de dias 										 *
-     * @param int dias													     *
-     * @param int option													 *
-     * @param String caminhoFinal ficheiro de resultados finais      		 *
-     * @param String caminhoInicial ficheiro SIR     		                 *
+     * @param h Step        							         		     *
+     * @param n Valor da população  									     *
+     * @param s n-1 												 	     *
+     * @param sDias Número de dias 										     *
+     * @param dias													         *
+     * @param option Método	            								     *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais         *
+     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      *************************************************************************/
     public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
         int linhas = checkNumberOfLines(caminhoInicial);
@@ -504,15 +500,15 @@ public class Main {
     /*************************************************************************
      *Função ModoNãoInterativo    										     *
      *************************************************************************
-     * @param String[] args        							         		 *
-     * @param float h step        							         		 *
-     * @param float n valor da população  									 *
-     * @param float s n-1 												 	 *
-     * @param float sDias num de dias 										 *
-     * @param int dias													     *
-     * @param int option													 *
-     * @param String caminhoFinal ficheiro de resultados finais      		 *
-     * @param String caminhoInicial ficheiro SIR     		                 *
+     * @param args                 							         		 *
+     * @param h Step        							         		     *
+     * @param n Valor da população  									     *
+     * @param s n-1 												 	     *
+     * @param sDias Número de dias 										     *
+     * @param dias													         *
+     * @param option Método												     *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
+     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      *************************************************************************/
     public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
 
@@ -576,7 +572,7 @@ public class Main {
     /*************************************************************************
      *Função mensagemErro                                                    *
      *************************************************************************
-     * @param int valor                                                      *             
+     * @param valor Id do erro                                               *             
      *************************************************************************/
     public static void mensagemErro(int valor) {
         // 0 = tudo bem
@@ -625,7 +621,7 @@ public class Main {
     /*************************************************************************
      *Função gnuplot                                                         *
      *************************************************************************
-     * @param String caminhoFinalGnu                                         *             
+     * @param caminhoFinalGnu                                                *             
      *************************************************************************/
     public static void gnuplot(String caminhoFinalGnu, int dias) {
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length() - 4);
