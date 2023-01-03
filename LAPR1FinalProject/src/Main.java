@@ -128,14 +128,14 @@ public class Main {
      * @param sDias Número de dias 										     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param nomes	Lista de nomes											 *
-     * @param a Index da pessoa     										 *
+     * @param indexPess Index da pessoa     								 *
      *************************************************************************/
-    public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int indexPess) {
 
-        float taxaProp = matrix[a][0];
-        float taxaRej = matrix[a][1];
-        float taxaPop = matrix[a][2];
-        float taxaReI = matrix[a][3];
+        float taxaProp = matrix[indexPess][0];
+        float taxaRej = matrix[indexPess][1];
+        float taxaPop = matrix[indexPess][2];
+        float taxaReI = matrix[indexPess][3];
         float iDias = 1;
         float rDias = 0;
         float inf = 1;
@@ -180,7 +180,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -200,14 +200,14 @@ public class Main {
      * @param sdias Número de dias 										     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param nomes Lista de nomes	    									 *
-     * @param a Index da pessoa			        							 *
+     * @param indexPess Index da pessoa			        					 *
      *************************************************************************/
-    public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int a) {
+    public static void Runge_Kutta(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int indexPess) {
 
-        float taxaProp = matrix[a][0];
-        float taxaRej = matrix[a][1];
-        float taxaPop = matrix[a][2];
-        float taxaReI = matrix[a][3];
+        float taxaProp = matrix[indexPess][0];
+        float taxaRej = matrix[indexPess][1];
+        float taxaPop = matrix[indexPess][2];
+        float taxaReI = matrix[indexPess][3];
         float iDias = 1;
         float rDias = 0;
         float inf = 1;
@@ -271,7 +271,7 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        String caminhoFinalGnu = caminhoFinal + nomes[a] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -377,20 +377,20 @@ public class Main {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
             }
 
-            int a = scanner.nextInt() - 1;
+            int indexPess = scanner.nextInt() - 1;
 
-            while (((a < 0) || (a >= linhas) || (indices[a] == 1))) {
+            while (((indexPess < 0) || (indexPess >= linhas) || (indices[indexPess] == 1))) {
 
-                if ((a < 0) || (a >= linhas)) {
+                if ((indexPess < 0) || (indexPess >= linhas)) {
                     mensagemErro(4);
                 } else {
-                    System.out.println(nomes[a] + " já foi selecionado/a");
+                    System.out.println(nomes[indexPess] + " já foi selecionado/a");
                     mensagemErro(5);
                 }
-                a = scanner.nextInt() - 1;
+                indexPess = scanner.nextInt() - 1;
             }
 
-            indices[a]++;
+            indices[indexPess]++;
             System.out.println(" Valor de h? (Ex.: 0,1)");
             h = scanner.nextFloat();
 
@@ -427,11 +427,11 @@ public class Main {
             }
 
             if (option == 1) {
-                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                metodos[a] = 1;
+                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
+                metodos[indexPess] = 1;
             } else {
-                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
-                metodos[a] = 2;
+                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
+                metodos[indexPess] = 2;
             }
 
             counter++;
@@ -552,20 +552,20 @@ public class Main {
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
 
-        int a = 0;
-        while (a < linhas) {
+        int indexPess = 0;
+        while (indexPess < linhas) {
             switch (option) {
                 case 1:
-                    Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                    Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                     break;
                 case 2:
-                    Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, a);
+                    Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                     break;
                 default:
                     mensagemErro(3);
                     break;
             }
-            a++;
+            indexPess++;
         }
     }
 
