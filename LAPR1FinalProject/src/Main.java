@@ -45,29 +45,6 @@ public class Main {
         }
         System.out.println("*******************Fim do Programa*******************");
     }
-
-    /*************************************************************************
-     * Função para verificar o número de linhas do ficheiro csv              *
-     *************************************************************************
-     * @param String caminho_ficheiro                                        *
-     * @return linhas = numero de linhas                                     *
-     *************************************************************************/
-    public static int checkNumberOfLines(String caminho_ficheiro) throws FileNotFoundException {
-
-        Scanner scanner = new Scanner(new File(caminho_ficheiro));
-        scanner = new Scanner(new File(caminho_ficheiro));
-
-        int linhas = 0;
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.trim().length() > 0) {
-                linhas++;
-            }
-        }
-
-        return linhas;
-    }
-
     /*************************************************************************
      * Função para ler os valores dos dados no ficheiroSIR.csv  		     *
      *************************************************************************
@@ -339,16 +316,23 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função repeated                                                        *
+     * Função para verificar o número de linhas do ficheiro csv              *
      *************************************************************************
      * @param String caminhoInicial                                          *
-     * @return linhas                                                        *           
+     * @return linhas = numero de linhas                                     *
      *************************************************************************/
-    public static int repeated(String caminhoInicial) {
+    public static int checkNumberOfLines(String caminhoInicial) {
         int linhas = 0;
         // Chamar a função checkNumberOfLines
         try {
-            linhas = checkNumberOfLines(caminhoInicial);
+            Scanner scanner = new Scanner(new File(caminhoInicial));
+            scanner = new Scanner(new File(caminhoInicial));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.trim().length() > 0) {
+                    linhas++;
+                }
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -422,7 +406,7 @@ public class Main {
      * @param String caminhoInicial ficheiro SIR     		                 *
      *************************************************************************/
     public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
-        int linhas = repeated(caminhoInicial);
+        int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
@@ -611,7 +595,7 @@ public class Main {
             System.exit(0);
         }
 
-        int linhas = repeated(caminhoInicial);
+        int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = repeatRead(matrix, linhas, caminhoInicial);
