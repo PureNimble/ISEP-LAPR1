@@ -18,6 +18,9 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 * [modo não interativo](Documentos/modoNaoInterativo.md)
 * [modo interativo](Documentos/modoInterativo.md)
 
+## Diagrama do Projeto: ##
+-------------------------
+![diagrama](Documento/Imagens/diagrama.png)
 ## Membros ##
 ------------------
 
