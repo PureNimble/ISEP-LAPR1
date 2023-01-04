@@ -10,7 +10,7 @@ programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K").
 ## Métodos usados: ##
 -------------------------
 
-* [mensagemerro](métodos/mensagemerro.md)
 * [checkNumberOfLines](métodos/checkNumberOfLines.md)
-* [repeatRead](métodos/repeatRead.md)
+* [readFile](métodos/repeatRead.md)
+* [mensagemerro](métodos/mensagemerro.md)
 * [mSwitch](métodos/mSwitch.md)
