@@ -315,27 +315,27 @@ public class Main {
      *************************************************************************/
     public static String[] readFile(float[][] matrix, int linhas, String caminhoInicial) {
 
-        String[] nomes = new String[linhas];
+        String[] nomes = new String[linhas]; // Inicializar a array de nomes
 
-        // Chamar a função readFile
         try {
             Scanner scanner = new Scanner(new File(caminhoInicial));
 
             int lineNumber = 0;
 
             while (scanner.hasNextLine()) {
-
+                int j;
                 String line = scanner.nextLine();
                 String[] values = line.split(";");
 
-                if (lineNumber != 0) {
-                    nomes[lineNumber - 1] = values[0];
-
-                    for (int j = 1; j < 5; j++) {
+                if (lineNumber != 0) {  // Passar a frente a linha do cabeçalho
+                    nomes[lineNumber - 1] = values[0];  // O primeiro elemento da linha é o nome da pessoa
+                    
+                    for (j = 1; j < 5; j++) {
+                        // Colocar os valores na matriz substituindo os valores decimais de "," para "."
                         matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",", "."));
                     }
                 }
-                lineNumber++;
+                lineNumber++; // Próxima linha
             }
             scanner.close();
 
