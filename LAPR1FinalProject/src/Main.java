@@ -220,9 +220,9 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-        System.out.printf("Valor de S%d: %.2f%n", i, sDias);
-        System.out.printf("Valor de I%d: %.2f%n", i, iDias);
-        System.out.printf("Valor de R%d: %.2f%n", i, rDias);
+        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
+        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
+        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
         System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
         System.out.printf("%n");
 
@@ -258,9 +258,9 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S%d: %.2f%n", (i + 1), sDias);
-            System.out.printf("Valor de I%d: %.2f%n", (i + 1), iDias);
-            System.out.printf("Valor de R%d: %.2f%n", (i + 1), rDias);
+            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
+            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
+            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
             System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
             System.out.printf("%n");
             i++;
