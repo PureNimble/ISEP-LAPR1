@@ -1,8 +1,8 @@
-# Euler
+# Print File
 
 ## Descrição ##
 -------------------------
--> Esta função contém todas as operações necessárias para a realização do metodo de Euler.
+-> Função para escrever os dados do sistema num ficheiro de resultados
 
 
 ## Métodos usados: ##
@@ -13,4 +13,4 @@
 * [functionR](functionR.md)
 ## Prints exemplo: ##
 -------------------------
-![euler](../Imagens/euler.png)
+![euler](../Imagens/printFile.png)
