@@ -10,7 +10,7 @@
 
 * [checkNumberOfLines](métodos/checkNumberOfLines.md)
 * [readFile](métodos/readFile.md)
-* [mensagemErro](métodos/mensagemErro.md)
+* [mensagemErro](métodos/mensagemerro.md)
 * [Euler](métodos/Euler.md)
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
