@@ -51,7 +51,7 @@ public class Main {
      *************************************************************************/
     public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
 
-        PrintWriter pw = new PrintWriter(new File(caminho_ficheiro));    // Criar o ficheiro tests.csv
+        PrintWriter pw = new PrintWriter(caminho_ficheiro);    // Criar o ficheiro tests.csv
 
         pw.print("Dia;S;I;R;N\n");    // Print do cabeçalho
 
