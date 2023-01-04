@@ -20,7 +20,7 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 
 ## Diagrama do Projeto: ##
 -------------------------
-![diagrama](Documento/Imagens/diagrama.png)
+![diagrama](Documentos/Imagens/diagrama.png)
 ## Membros ##
 ------------------
 
