@@ -179,7 +179,7 @@ public class Main {
             resultados[i][3] = rDias;
             resultados[i][4] = sDias + iDias + rDias;
         }
-
+        // Criação do nome para o caminho final (especificando o metodo usado e todos os parametros)
         String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
         try {
             printFile(caminhoFinalGnu, resultados, dias);
@@ -630,7 +630,7 @@ public class Main {
                 "-e", "replot"
         };
 
-        String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot",
+        String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
                 "-e", "set datafile separator ';'",
                 "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
                 "-e", "set xlabel 'Dias' font ',16'",

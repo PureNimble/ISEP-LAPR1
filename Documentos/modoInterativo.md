@@ -8,11 +8,9 @@
 ## Métodos usados: ##
 -------------------------
 
-
-
 * [checkNumberOfLines](métodos/checkNumberOfLines.md)
 * [readFile](métodos/readFile.md)
-* [mensagemerro](métodos/mensagemerro.md)
+* [mensagemErro](métodos/mensagemerro.md)
 * [Euler](métodos/Euler.md)
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
