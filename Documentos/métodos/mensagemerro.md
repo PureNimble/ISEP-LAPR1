@@ -5,6 +5,6 @@
 -> Esta função contém todo o tipo de prints de aviso de erro.
 
 
-## Função: ##
+## Prints exemplo: ##
 -------------------------
-![main](../Imagens/mensagemerro.png)
+![main](../Imagens/mensagemErro.png)

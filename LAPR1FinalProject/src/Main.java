@@ -131,7 +131,7 @@ public class Main {
      * @param indexPess Index da pessoa     								 *
      *************************************************************************/
     public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int indexPess) {
-
+        // Inicialização das variáveis ( valores provenientes da matriz) 
         float taxaProp = matrix[indexPess][0];
         float taxaRej = matrix[indexPess][1];
         float taxaPop = matrix[indexPess][2];
@@ -149,9 +149,9 @@ public class Main {
         resultados[i][3] = rec;
         resultados[i][4] = n;
 
-        System.out.printf("Valor de S%d: %.2f%n", i, sDias);
-        System.out.printf("Valor de I%d: %.2f%n", i, iDias);
-        System.out.printf("Valor de R%d: %.2f%n", i, rDias);
+        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
+        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
+        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
         System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
         System.out.printf("%n");
 
@@ -166,9 +166,9 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
-            System.out.printf("Valor de S%d: %.2f%n", (i + 1), sDias);
-            System.out.printf("Valor de I%d: %.2f%n", (i + 1), iDias);
-            System.out.printf("Valor de R%d: %.2f%n", (i + 1), rDias);
+            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
+            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
+            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
             System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
             System.out.printf("%n");
             i++;
