@@ -11,7 +11,7 @@
 
 
 * [checkNumberOfLines](métodos/checkNumberOfLines.md)
-* [repeatRead](métodos/repeatRead.md)
+* [readFile](métodos/readFile.md)
 * [mensagemerro](métodos/mensagemerro.md)
 * [Euler](métodos/Euler.md)
 * [Runge_Kutta](métodos/Runge_Kutta.md)
