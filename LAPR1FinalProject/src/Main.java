@@ -369,6 +369,9 @@ public class Main {
         //Modo interativo
         int counter = 0;
         int countergrafic = 0;
+        String caminhoFinalGnu;
+        String compareKutta;
+        String compareEuler;
 
         while (counter < linhas*2 && option != 0) {
 
@@ -515,7 +518,7 @@ public class Main {
                 }
                 
             }
-            String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+            caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias);
             metodos[pess] -= option;
             countergrafic++;
@@ -530,6 +533,50 @@ public class Main {
         }
         if (countergrafic == counter) {
             System.out.println("Todos os gráficos já foram concluidos");
+        }
+        countergrafic = 0;
+        counter = 0;
+        for (int i = 0; i < linhas; i++){
+            if (numMetodos[i] == 3){
+                countergrafic ++;
+            }
+        }
+        if (countergrafic > counter){
+            System.out.println("Deseja fazer o gráfico comparativo de ambos os métodos? |1-Sim| |0-Não|");
+            option = scanner.nextInt();
+         while (option!= 0 && option!= 1) {
+            mensagemErro(4);
+            option = scanner.nextInt();
+            }
+        }
+        while (countergrafic > counter && option != 0){
+            System.out.println("Deseja fazer a análise de quem?");
+            for (int i = 0; i < linhas; i++){
+                if (numMetodos[i] == 3){
+                    System.out.println(i+1 + "- " + nomes[i]);
+                }
+            }
+            option = scanner.nextInt() - 1;
+            while (numMetodos[option] != 3) {
+                mensagemErro(4);
+                option = scanner.nextInt() - 1;
+            }
+            compareEuler = caminhoFinal + nomes[option] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+            compareKutta = caminhoFinal + nomes[option] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+            comparePlot(compareEuler, compareKutta, dias, nomes[option]);
+            counter++;
+            if (counter != countergrafic){
+                System.out.println("Deseja fazer outra comparação? |1-Sim| |0-Não|");
+                option = scanner.nextInt();
+                while (option != 1 && option != 0){
+                    mensagemErro(6);
+                    option = scanner.nextInt();
+                }
+
+            }
+        }
+        if (countergrafic == counter){
+            System.out.println("Todas as comparações já foram feitas");
         }
         scanner.close();
     }
@@ -675,6 +722,52 @@ public class Main {
         String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
                 "-e", "set datafile separator ';'",
                 "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
+                "-e", "set xlabel 'Dias' font ',16'",
+                "-e", "set ylabel 'N' font ',16' rotate by 0",
+                "-e", "set grid",
+                "-e", "set key box",
+                "-e", "set key width 1",
+                "-e", "set key height 1",
+                "-e", "set key font ',16'",
+                "-e", "set border 3",
+                "-e", "set tics nomirror",
+                "-e", "set xtics 0,1," + dias,
+                "-e", "set border lw 2",
+                "-p", "-e", "set term wxt size 1200, 800",
+                "-e", "replot"
+        };
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process prc = rt.exec(s);
+            System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
+            int ans = scanner.nextInt();
+            rt.exec("taskkill /im gnuplot_qt.exe");
+            prc.destroy();
+            while (ans != 0 && ans != 1) {
+                mensagemErro(6);
+                ans = scanner.nextInt();
+            }
+            if (ans == 1) {
+                int slength = s.length - 5;
+                String[] t = new String[slength + g.length];
+                System.arraycopy(s, 0, t, 0, slength);
+                System.arraycopy(g, 0, t, slength, g.length);
+                rt.exec(t);
+            }
+        } catch (Exception e) {
+            System.err.println("Fail: " + e);
+        }
+    }
+    public static void comparePlot(String compareEuler, String compareKutta, int dias, String nome) {
+        String caminhoPng = "LAPR1FinalProject/" + nome + "m1&m2";
+        String[] g = {"-e", "set term png size 1200, 800",
+                "-e", "set output '" + caminhoPng + ".png'",
+                "-e", "replot"
+        };
+
+        String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
+                "-e", "set datafile separator ';'",
+                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#0000f8' lw 2 dt 3,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#8b0000' lw 2 dt 3,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#00a600' lw 2 dt 3",
                 "-e", "set xlabel 'Dias' font ',16'",
                 "-e", "set ylabel 'N' font ',16' rotate by 0",
                 "-e", "set grid",
