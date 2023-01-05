@@ -369,7 +369,7 @@ public class Main {
         int counter = 0;
         int countergrafic = 0;
 
-        while (counter < linhas && option != 0) {
+        while (counter < linhas*2 && option != 0) {
 
             System.out.println("Selecione uma pessoa");
 
@@ -379,7 +379,7 @@ public class Main {
 
             int indexPess = scanner.nextInt() - 1;
 
-            while (((indexPess < 0) || (indexPess >= linhas) || (indices[indexPess] == 1))) {
+            while (((indexPess < 0) || (indexPess >= linhas) || (indices[indexPess] >= 2))) {
 
                 if ((indexPess < 0) || (indexPess >= linhas)) {
                     mensagemErro(4);
@@ -421,21 +421,22 @@ public class Main {
             System.out.println(" --------------------------------------------------");
             option = scanner.nextInt();
 
-            while (option != 2 && option != 1) {
+            while (option != 2 && option != 1 || metodos[indexPess] == option) {
                 mensagemErro(1);
                 option = scanner.nextInt();
             }
 
             if (option == 1) {
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
-                metodos[indexPess] = 1;
+                metodos[indexPess] ++;
             } else {
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
-                metodos[indexPess] = 2;
+                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
+                metodos[indexPess] += 2;
             }
 
             counter++;
-            if (counter != linhas) {
+            if (counter != linhas*2) {
                 System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
 
@@ -446,7 +447,7 @@ public class Main {
                 }
             }
         }
-        if (counter == linhas) {
+        if (counter == linhas*2) {
 
             System.out.println("Já percorreu todas as pessoas");
         }
@@ -458,10 +459,10 @@ public class Main {
         }
         while (countergrafic < counter && option != 0) {
             int pess = 0;
-            if (counter != 1) {
+            if (counter != 0) {
                 System.out.println("Deseja fazer o gráfico de quem?");
                 for (int i = 0; i < linhas; i++) {
-                    if (indices[i] == 1) {
+                    if (indices[i] >= 1) {
                         System.out.println(i + 1 + " - |" + nomes[i] + "|");
                     }
                 }
@@ -473,14 +474,20 @@ public class Main {
                     }
                 }
             }
-
-            while (pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] != 2 && metodos[pess] != 1) {
+            while (pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] < 1) {
                 mensagemErro(4);
                 pess = scanner.nextInt() - 1;
             }
-            String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + metodos[pess] + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+            System.out.println("1 - Método de Euler");
+            System.out.println("2 - Método de Runge-Kutta de 4ª ordem");
+            option = scanner.nextInt();
+            while (option != 2 && option != 1 || metodos[pess] != option && metodos[pess] != 3) {
+                mensagemErro(1);
+                option = scanner.nextInt();
+            }
+            String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias);
-            metodos[pess] = 3;
+            metodos[pess] -= option;
             countergrafic++;
             if (countergrafic != counter) {
                 System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
