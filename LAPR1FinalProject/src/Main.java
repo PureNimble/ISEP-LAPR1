@@ -422,7 +422,7 @@ public class Main {
             option = scanner.nextInt();
 
             while (option != 2 && option != 1 || metodos[indexPess] == option) {
-                mensagemErro(1);
+                mensagemErro(4);
                 option = scanner.nextInt();
             }
 
@@ -482,7 +482,7 @@ public class Main {
             System.out.println("2 - Método de Runge-Kutta de 4ª ordem");
             option = scanner.nextInt();
             while (option != 2 && option != 1 || metodos[pess] != option && metodos[pess] != 3) {
-                mensagemErro(1);
+                mensagemErro(4);
                 option = scanner.nextInt();
             }
             String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
