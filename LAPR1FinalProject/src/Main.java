@@ -131,6 +131,7 @@ public class Main {
      * @param indexPess Index da pessoa     								 *
      *************************************************************************/
     public static void Euler(int dias, float h, float[][] matrix, int linhas, float n, float s, float sDias, String caminhoFinal, String[] nomes, int indexPess) {
+
         // Inicialização das variáveis ( valores provenientes da matriz) 
         float taxaProp = matrix[indexPess][0];
         float taxaRej = matrix[indexPess][1];
@@ -143,6 +144,7 @@ public class Main {
         float t = 0;
         int i = 0;
         float[][] resultados = new float[dias + 1][5];
+
         resultados[i][0] = i;
         resultados[i][1] = s;
         resultados[i][2] = inf;
@@ -215,11 +217,13 @@ public class Main {
         float t = 0;
         int i = 0;
         float[][] resultados = new float[dias + 1][5];
+
         resultados[i][0] = i;
         resultados[i][1] = s;
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
+
         System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
         System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
         System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
@@ -227,6 +231,7 @@ public class Main {
         System.out.printf("%n");
 
         while (i < dias) {
+
             for (float j = 0; j < 1; j += h) {
 
                 float Sk1 = h * functionS(t, s, taxaProp, inf);
@@ -358,7 +363,9 @@ public class Main {
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      *************************************************************************/
     public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
+
         int linhas = checkNumberOfLines(caminhoInicial);
+
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
@@ -410,6 +417,7 @@ public class Main {
 
             System.out.println(" Número de dias? (Ex.: 30)");
             dias = scanner.nextInt();
+
             while (dias <= 0) {
                 mensagemErro(7);
                 dias = scanner.nextInt();
@@ -422,21 +430,25 @@ public class Main {
             option = scanner.nextInt();
 
             while (option != 2 && option != 1 || metodos[indexPess] == option) {
-                mensagemErro(4);
+                mensagemErro(1);
                 option = scanner.nextInt();
             }
 
             if (option == 1) {
+
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] ++;
             } else {
+
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] += 2;
             }
 
             counter++;
+
             if (counter != linhas*2) {
+
                 System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
 
@@ -451,15 +463,21 @@ public class Main {
 
             System.out.println("Já percorreu todas as pessoas");
         }
+
         System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
         option = scanner.nextInt();
+
         while (option != 1 && option != 0) {
+
             mensagemErro(6);
             option = scanner.nextInt();
         }
         while (countergrafic < counter && option != 0) {
+
             int pess = 0;
+
             if (counter != 0) {
+
                 System.out.println("Deseja fazer o gráfico de quem?");
                 for (int i = 0; i < linhas; i++) {
                     if (indices[i] >= 1) {
@@ -481,8 +499,10 @@ public class Main {
             System.out.println("1 - Método de Euler");
             System.out.println("2 - Método de Runge-Kutta de 4ª ordem");
             option = scanner.nextInt();
+
             while (option != 2 && option != 1 || metodos[pess] != option && metodos[pess] != 3) {
-                mensagemErro(4);
+
+                mensagemErro(1);
                 option = scanner.nextInt();
             }
             String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
@@ -655,6 +675,7 @@ public class Main {
                 "-e", "replot"
         };
         try {
+
             Runtime rt = Runtime.getRuntime();
             Process prc = rt.exec(s);
             System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
@@ -665,6 +686,7 @@ public class Main {
                 mensagemErro(6);
                 ans = scanner.nextInt();
             }
+
             if (ans == 1) {
                 int slength = s.length - 5;
                 String[] t = new String[slength + g.length];
