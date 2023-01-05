@@ -487,22 +487,30 @@ public class Main {
                     mensagemErro(4);
                     option = scanner.nextInt();
                 }
-                if(option == 1) {
+                if(metodos[pess] == 2 && option == 1){
+                    System.out.println("O método de Euler não existe");
+                }
+                else if(metodos[pess] == 1 && option == 2) {
+                    System.out.println("O método de Runge-Kutta não existe");
+                }
+                else {
+                    if(option == 1) {
                     if(metodos[pess] != 2 && option != 2){
                         met = "Euler";
                     } else met = "error";
                 } else {
-                    if(metodos[pess] != 1 && option != 1){
-                        met = "Kutta";
-                    } else met = "error";
-                }
-                if(met == "error"){
-                    if(metodos[pess] == 2){
-                        System.out.println("Método de Euler já foi feito");
+                        if(metodos[pess] != 1 && option != 1){
+                            met = "Kutta";
+                        } else met = "error";
                     }
-                    else System.out.println("Método de kutta já foi feito");
+                    if(met == "error"){
+                        if(metodos[pess] == 2){
+                            System.out.println("Método de Euler já foi feito");
+                        }
+                        else System.out.println("Método de kutta já foi feito");
+                    }
                 }
-
+                
             }
             String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias);
