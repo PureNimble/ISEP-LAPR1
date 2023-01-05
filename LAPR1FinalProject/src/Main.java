@@ -364,6 +364,7 @@ public class Main {
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
         int[] indices = new int[linhas];
         int[] metodos = new int[linhas];
+        int[] numMetodos = new int[linhas];
 
         //Modo interativo
         int counter = 0;
@@ -429,10 +430,12 @@ public class Main {
             if (option == 1) {
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] ++;
+                numMetodos[indexPess] ++;
             } else {
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] += 2;
+                numMetodos[indexPess] += 2;
             }
 
             counter++;
@@ -487,10 +490,10 @@ public class Main {
                     mensagemErro(4);
                     option = scanner.nextInt();
                 }
-                if(metodos[pess] == 2 && option == 1){
+                if(numMetodos[pess] == 2 && option == 1){
                     System.out.println("O método de Euler não existe");
                 }
-                else if(metodos[pess] == 1 && option == 2) {
+                else if(numMetodos[pess] == 1 && option == 2) {
                     System.out.println("O método de Runge-Kutta não existe");
                 }
                 else {
