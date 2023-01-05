@@ -148,7 +148,7 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
-
+        System.out.println("\u001B[1mMétodo de Euler:\u001B[0m\n");
         System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
         System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
         System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
@@ -220,6 +220,7 @@ public class Main {
         resultados[i][2] = inf;
         resultados[i][3] = rec;
         resultados[i][4] = n;
+        System.out.println("\u001B[1mMétodo de Runge-Kutta:\u001B[0m\n");
         System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
         System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
         System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
@@ -394,7 +395,6 @@ public class Main {
                 indexPess = scanner.nextInt() - 1;
             }
 
-            indices[indexPess]++;
             System.out.println(" Valor de h? (Ex.: 0,1)");
             h = scanner.nextFloat();
 
@@ -419,13 +419,14 @@ public class Main {
                 dias = scanner.nextInt();
             }
 
-            System.out.println(" -----------------------MENU-----------------------");
-            System.out.println("| 1 - Método de Euler				   |");
-            System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		   |");
-            System.out.println(" --------------------------------------------------");
+            System.out.println(" -----------------------\u001B[1mMÉTODOS\u001B[0m-----------------------");
+            System.out.println("| 1 - Método de Euler				      |");
+            System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		      |");
+            System.out.println("| 3 - Ambos os métodos      		              |");
+            System.out.println(" -----------------------------------------------------");
             option = scanner.nextInt();
 
-            while (option != 2 && option != 1 || metodos[indexPess] == option) {
+            while (option > 3 && option < 1 || metodos[indexPess] == option || ((metodos[indexPess] == 1 || metodos[indexPess] == 2) && option == 3)) {
                 mensagemErro(4);
                 option = scanner.nextInt();
             }
@@ -434,14 +435,23 @@ public class Main {
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] ++;
                 numMetodos[indexPess] ++;
-            } else {
+                counter ++;
+                indices[indexPess]++;
+            } else if (option == 2){
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
-                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] += 2;
                 numMetodos[indexPess] += 2;
+                counter ++;
+                indices[indexPess]++;
             }
-
-            counter++;
+            else {
+                Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
+                Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
+                metodos[indexPess] += 3;
+                numMetodos[indexPess] += 3;
+                counter += 2;
+                indices[indexPess] += 2;
+            }
             if (counter != linhas*2) {
                 System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
@@ -487,26 +497,31 @@ public class Main {
             }
             String met = "";
             while (met == "" || met == "error"){
-                System.out.println("Que método deseja fazer? |1- Euler| |2- Kutta|");
+                System.out.println("Que método deseja fazer? |1- Euler| |2- Kutta| |3- Ambos|");
                 option = scanner.nextInt();
-                while(option < 1 || option > 2){
+                while(option < 1 || option > 3){
                     mensagemErro(4);
                     option = scanner.nextInt();
                 }
-                if(numMetodos[pess] == 2 && option == 1){
+                if(numMetodos[pess] == 2 && (option == 1 || option == 3)){
                     System.out.println("O método de Euler não existe");
                 }
-                else if(numMetodos[pess] == 1 && option == 2) {
+                else if(numMetodos[pess] == 1 && (option == 2 || option == 3)) {
                     System.out.println("O método de Runge-Kutta não existe");
                 }
                 else {
                     if(option == 1) {
-                    if(metodos[pess] != 2 && option != 2){
-                        met = "Euler";
-                    } else met = "error";
-                } else {
-                        if(metodos[pess] != 1 && option != 1){
+                        if(metodos[pess] != 2){
+                            met = "Euler";
+                        } else met = "error";
+                    } else if(option == 2) {
+                        if(metodos[pess] != 1){
                             met = "Kutta";
+                        } else met = "error";
+                    }
+                    else{
+                        if(metodos[pess] == 3){
+                            met = "EulerKutta";
                         } else met = "error";
                     }
                     if(met == "error"){
@@ -518,10 +533,18 @@ public class Main {
                 }
                 
             }
-            caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-            gnuplot(caminhoFinalGnu, dias);
+            if(met == "EulerKutta"){
+                for(int i = 1 ; i < 3; i++){
+                    caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + i + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+                    gnuplot(caminhoFinalGnu, dias);
+                }
+                countergrafic += 2;
+            }else{
+                caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+                gnuplot(caminhoFinalGnu, dias);
+                countergrafic++;
+            }
             metodos[pess] -= option;
-            countergrafic++;
             if (countergrafic != counter) {
                 System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
                 option = scanner.nextInt();
@@ -557,7 +580,7 @@ public class Main {
                 }
             }
             option = scanner.nextInt() - 1;
-            while (numMetodos[option] != 3) {
+            while (option >= linhas || option < 0 || numMetodos[option] != 3) {
                 mensagemErro(4);
                 option = scanner.nextInt() - 1;
             }
@@ -722,7 +745,7 @@ public class Main {
         String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
                 "-e", "set datafile separator ';'",
                 "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
-                "-e", "set xlabel 'Dias' font ',16'",
+                "-e", "set xlabel 'Número de Dias' font ',16'",
                 "-e", "set ylabel 'N' font ',16' rotate by 0",
                 "-e", "set grid",
                 "-e", "set key box",
@@ -767,8 +790,8 @@ public class Main {
 
         String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
                 "-e", "set datafile separator ';'",
-                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#0000f8' lw 2 dt 3,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#8b0000' lw 2 dt 3,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#00a600' lw 2 dt 3",
-                "-e", "set xlabel 'Dias' font ',16'",
+                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#90EE90' lw 2 dt 2",
+                "-e", "set xlabel 'Número de Dias' font ',16'",
                 "-e", "set ylabel 'N' font ',16' rotate by 0",
                 "-e", "set grid",
                 "-e", "set key box",
