@@ -199,7 +199,7 @@ public class Main {
      * @param linhas Número de linhas 									     *
      * @param n Número da população  								         *
      * @param s n-1 												 	     *
-     * @param sdias Número de dias 										     *
+     * @param sDias Número de dias 										     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param nomes Lista de nomes	    									 *
      * @param indexPess Index da pessoa			        					 *
@@ -291,7 +291,9 @@ public class Main {
      * @return linhas Número de linhas                                       *
      *************************************************************************/
     public static int checkNumberOfLines(String caminhoInicial) {
+
         int linhas = 0;
+
         // Chamar a função checkNumberOfLines
         try {
             Scanner scanner = new Scanner(new File(caminhoInicial));
@@ -328,6 +330,7 @@ public class Main {
             int lineNumber = 0;
 
             while (scanner.hasNextLine()) {
+
                 int j;
                 String line = scanner.nextLine();
                 String[] values = line.split(";");
@@ -479,12 +482,14 @@ public class Main {
             if (counter != 0) {
 
                 System.out.println("Deseja fazer o gráfico de quem?");
+
                 for (int i = 0; i < linhas; i++) {
                     if (indices[i] >= 1) {
                         System.out.println(i + 1 + " - |" + nomes[i] + "|");
                     }
                 }
                 pess = scanner.nextInt() - 1;
+
             } else {
                 for (int i = 0; i < linhas; i++) {
                     if (indices[i] == 1) {
@@ -493,6 +498,7 @@ public class Main {
                 }
             }
             while (pess >= linhas || pess < 0 || indices[pess] == 0 || metodos[pess] < 1) {
+
                 mensagemErro(4);
                 pess = scanner.nextInt() - 1;
             }
@@ -505,13 +511,17 @@ public class Main {
                 mensagemErro(1);
                 option = scanner.nextInt();
             }
+
             String caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias);
             metodos[pess] -= option;
             countergrafic++;
+
             if (countergrafic != counter) {
+
                 System.out.println("Deseja fazer um novo gráfico? |1- Sim| |0- Não|");
                 option = scanner.nextInt();
+
                 while (option != 1 && option != 0) {
                     mensagemErro(6);
                     option = scanner.nextInt();
@@ -545,6 +555,7 @@ public class Main {
         }
 
         for (int b = 1; b < 8; b += 2) {
+
             if (args[b].equals("-m")) {
                 option = Integer.valueOf(args[b + 1]);
             }
@@ -575,12 +586,15 @@ public class Main {
         }
 
         int linhas = checkNumberOfLines(caminhoInicial);
+
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
 
         int indexPess = 0;
+
         while (indexPess < linhas) {
+
             switch (option) {
                 case 1:
                     Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
@@ -602,6 +616,7 @@ public class Main {
      * @param valor Id do erro                                               *             
      *************************************************************************/
     public static void mensagemErro(int valor) {
+
         // 0 = tudo bem
         // 1 = erro na estrutura do ficheiro
         // 2 = tem demasiadas casas decimais
@@ -651,6 +666,7 @@ public class Main {
      * @param caminhoFinalGnu                                                *             
      *************************************************************************/
     public static void gnuplot(String caminhoFinalGnu, int dias) {
+
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length() - 4);
         String[] g = {"-e", "set term png size 1200, 800",
                 "-e", "set output '" + caminhoPng + ".png'",
