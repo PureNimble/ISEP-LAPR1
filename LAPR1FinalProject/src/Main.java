@@ -368,6 +368,7 @@ public class Main {
         int[] indices = new int[linhas];
         int[] metodos = new int[linhas];
         int[] numMetodos = new int[linhas];
+        float [][] valoresInseridos = new float[linhas*2][6];
 
         //Modo interativo
         int counter = 0;
@@ -439,12 +440,18 @@ public class Main {
                 numMetodos[indexPess] ++;
                 counter ++;
                 indices[indexPess]++;
+                valoresInseridos[indexPess][0] = h;
+                valoresInseridos[indexPess][1] = n;
+                valoresInseridos[indexPess][2] = dias;
             } else if (option == 2){
                 Runge_Kutta(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
                 metodos[indexPess] += 2;
                 numMetodos[indexPess] += 2;
                 counter ++;
                 indices[indexPess]++;
+                valoresInseridos[indexPess][3] = h;
+                valoresInseridos[indexPess][4] = n;
+                valoresInseridos[indexPess][5] = dias;
             }
             else {
                 Euler(dias, h, matrix, linhas, n, s, sDias, caminhoFinal, nomes, indexPess);
@@ -453,6 +460,12 @@ public class Main {
                 numMetodos[indexPess] += 3;
                 counter += 2;
                 indices[indexPess] += 2;
+                valoresInseridos[indexPess][0] = h;
+                valoresInseridos[indexPess][1] = n;
+                valoresInseridos[indexPess][2] = dias;
+                valoresInseridos[indexPess][3] = h;
+                valoresInseridos[indexPess][4] = n;
+                valoresInseridos[indexPess][5] = dias;
             }
             if (counter != linhas*2) {
                 System.out.println("Deseja Procurar mais nomes? |1-Sim| |0-Não|");
@@ -536,14 +549,20 @@ public class Main {
                 
             }
             if(met == "EulerKutta"){
-                for(int i = 1 ; i < 3; i++){
-                    caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + i + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-                    gnuplot(caminhoFinalGnu, dias, idMetodo);
-                }
+                caminhoFinalGnu = caminhoFinal + nomes[pess] + "m1" + "p" + String.valueOf(valoresInseridos[pess][0]).replace(".", "") + "t" + (int) valoresInseridos[pess][1] + "d" + (int) valoresInseridos[pess][2] + ".csv";
+                gnuplot(caminhoFinalGnu, dias, idMetodo);
+                caminhoFinalGnu = caminhoFinal + nomes[pess] + "m2" + "p" + String.valueOf(valoresInseridos[pess][3]).replace(".", "") + "t" + (int) valoresInseridos[pess][4] + "d" + (int) valoresInseridos[pess][5] + ".csv";
+                gnuplot(caminhoFinalGnu, dias, idMetodo);
                 countergrafic += 2;
             }else{
-                caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-                gnuplot(caminhoFinalGnu, dias, idMetodo);
+                if (option == 1){
+                    caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(valoresInseridos[pess][0]).replace(".", "") + "t" + (int) valoresInseridos[pess][1] + "d" + (int) valoresInseridos[pess][2] + ".csv";
+                    gnuplot(caminhoFinalGnu, dias, idMetodo);
+                }
+                else{
+                    caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(valoresInseridos[pess][3]).replace(".", "") + "t" +(int) valoresInseridos[pess][4] + "d" + (int) valoresInseridos[pess][5] + ".csv";
+                    gnuplot(caminhoFinalGnu, dias, idMetodo);
+                }
                 countergrafic++;
             }
             metodos[pess] -= option;
@@ -582,7 +601,7 @@ public class Main {
                 }
             }
             option = scanner.nextInt() - 1;
-            while (option >= linhas || option < 0 || numMetodos[option] != 3) {
+            while (option >= linhas || option < 0 || numMetodos[option] != 3 || valoresInseridos[option][0] != valoresInseridos[option][3] || valoresInseridos[option][1] != valoresInseridos[option][4] || valoresInseridos[option][2] != valoresInseridos[option][5]) {
                 mensagemErro(4);
                 option = scanner.nextInt() - 1;
             }
@@ -590,6 +609,7 @@ public class Main {
             compareKutta = caminhoFinal + nomes[option] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             comparePlot(compareEuler, compareKutta, dias, nomes[option]);
             counter++;
+            numMetodos[option] = 0;
             if (counter != countergrafic){
                 System.out.println("Deseja fazer outra comparação? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
