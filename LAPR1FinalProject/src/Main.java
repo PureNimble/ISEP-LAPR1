@@ -8,16 +8,16 @@ import java.lang.Runtime;
 	-> Modo interativo     -> (java -jar lapr1_1dm_grupo02.jar)
 
 	-> Modo não interativo
-         * args[0] -> caminho do ficheiro.csv
-         * args[1] -> -m
-         * args[2] -> metodo a usar (1-Euler, 2-RK4)
-         * args[3] -> -p
-         * args[4] -> h (0<h<1)
-         * args[5] -> -t
-         * args[6] -> N (N~=1000)
-         * args[7] -> -d
-         * args[8] -> dias (0<dias)
-         * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
+        * args[0] -> caminho do ficheiro.csv
+        * args[1] -> -m
+        * args[2] -> metodo a usar (1-Euler, 2-RK4)
+        * args[3] -> -p
+        * args[4] -> h (0<h<1)
+        * args[5] -> -t
+        * args[6] -> N (N~=1000)
+        * args[7] -> -d
+        * args[8] -> dias (0<dias)
+        * teste para os parametros ->  java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
  */
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -30,14 +30,15 @@ public class Main {
         float sDias = 0;
         int dias = 0;
         int option = 1;
+        int idMetodo = 0;
         String caminhoFinal = "LAPR1FinalProject/";
         String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
-            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial,idMetodo);
 
         } else {
-            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial);
+            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial,idMetodo);
         }
         System.out.println("*******************Fim do Programa*******************");
     }
@@ -358,7 +359,8 @@ public class Main {
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      *************************************************************************/
-    public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
+    public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
+        idMetodo = 1;
         int linhas = checkNumberOfLines(caminhoInicial);
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
@@ -536,12 +538,12 @@ public class Main {
             if(met == "EulerKutta"){
                 for(int i = 1 ; i < 3; i++){
                     caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + i + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-                    gnuplot(caminhoFinalGnu, dias);
+                    gnuplot(caminhoFinalGnu, dias, idMetodo);
                 }
                 countergrafic += 2;
             }else{
                 caminhoFinalGnu = caminhoFinal + nomes[pess] + "m" + option + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-                gnuplot(caminhoFinalGnu, dias);
+                gnuplot(caminhoFinalGnu, dias, idMetodo);
                 countergrafic++;
             }
             metodos[pess] -= option;
@@ -617,7 +619,7 @@ public class Main {
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      *************************************************************************/
-    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial) {
+    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
         if (args.length != 9) {
             mensagemErro(1);
@@ -673,6 +675,13 @@ public class Main {
                     break;
             }
             indexPess++;
+        }
+        String caminhoFinalGnu;
+        for (int i = 0; i < indexPess; i++){
+            caminhoFinalGnu = caminhoFinal + nomes[i] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+            gnuplot(caminhoFinalGnu, dias, idMetodo);
+            caminhoFinalGnu = caminhoFinal + nomes[i] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+            gnuplot(caminhoFinalGnu, dias, idMetodo);
         }
     }
 
@@ -735,7 +744,7 @@ public class Main {
      *************************************************************************
      * @param caminhoFinalGnu                                                *             
      *************************************************************************/
-    public static void gnuplot(String caminhoFinalGnu, int dias) {
+    public static void gnuplot(String caminhoFinalGnu, int dias, int idMetodo) {
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length() - 4);
         String[] g = {"-e", "set term png size 1200, 800",
                 "-e", "set output '" + caminhoPng + ".png'",
@@ -762,15 +771,18 @@ public class Main {
         try {
             Runtime rt = Runtime.getRuntime();
             Process prc = rt.exec(s);
-            System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
-            int ans = scanner.nextInt();
+            int ans = 0;
+            if (idMetodo == 1){
+                System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
+                ans = scanner.nextInt();
+                while (ans != 0 && ans != 1) {
+                    mensagemErro(6);
+                    ans = scanner.nextInt();
+                }
+            }
             rt.exec("taskkill /im gnuplot_qt.exe");
             prc.destroy();
-            while (ans != 0 && ans != 1) {
-                mensagemErro(6);
-                ans = scanner.nextInt();
-            }
-            if (ans == 1) {
+            if (ans == 1 || idMetodo == 0) {
                 int slength = s.length - 5;
                 String[] t = new String[slength + g.length];
                 System.arraycopy(s, 0, t, 0, slength);
