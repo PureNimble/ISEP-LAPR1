@@ -176,6 +176,7 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
+
             System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
             System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
             System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
@@ -189,8 +190,10 @@ public class Main {
             resultados[i][3] = rDias;
             resultados[i][4] = sDias + iDias + rDias;
         }
+
         // Criação do nome para o caminho final (especificando o metodo usado e todos os parametros)
         String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+
         try {
             printFile(caminhoFinalGnu, resultados, dias);
         } catch (FileNotFoundException e) {
@@ -269,7 +272,6 @@ public class Main {
                 float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4) / 6;
                 float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4) / 6;
 
-
                 sDias = s + Sk;
                 iDias = inf + Ik;
                 rDias = rec + Rk;
@@ -278,6 +280,7 @@ public class Main {
                 inf = iDias;
                 rec = rDias;
             }
+
             System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
             System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
             System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
@@ -309,6 +312,7 @@ public class Main {
     public static int checkNumberOfLines(String caminhoInicial) {
 
         int linhas = 0;
+
         // Chamar a função checkNumberOfLines
         try {
 
@@ -349,6 +353,7 @@ public class Main {
             int lineNumber = 0;
 
             while (scanner.hasNextLine()) {
+
                 int j;
                 String line = scanner.nextLine();
                 String[] values = line.split(";");
