@@ -486,7 +486,9 @@ public class Main {
 
             System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " (1-Sim // 0-Não)");
             option = scanner.nextInt();
+
             while (option != 1 && option != 0) {
+
                 mensagemErro(4);
                 option = scanner.nextInt();
             }
@@ -494,6 +496,7 @@ public class Main {
 
         try {
             printFileValores(valoresInseridos, counter);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -523,8 +526,11 @@ public class Main {
         while (option != 0 && c > 0) {
 
             System.out.println("Deseja fazer o gráfico de quem?");
+
             for (int i = 0; i < linhas; i++) {
+
                 if (indices[i][0] >= 1) {
+
                     System.out.println(i + 1 + " - |" + nomes[i] + "|");
                 }
             }
@@ -555,6 +561,7 @@ public class Main {
                     mensagemErro(3);
                     option = scanner.nextInt() - 1;
                 }
+
                 indices[indexPess][option + 3]++;
                 indices[indexPess][1]--;
                 caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
@@ -562,6 +569,7 @@ public class Main {
                 c--;
 
             } else {
+
                 idMetodo = 0;
 
                 for (int i = 0; i < counter; i++) {
