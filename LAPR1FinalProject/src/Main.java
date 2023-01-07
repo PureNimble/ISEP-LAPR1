@@ -885,6 +885,7 @@ public class Main {
         };
 
         try {
+
             Runtime rt = Runtime.getRuntime();
             Process prc = rt.exec(s);
 
@@ -895,6 +896,7 @@ public class Main {
             System.arraycopy(s, 0, t, 0, slength);
             System.arraycopy(g, 0, t, slength, g.length);
             rt.exec(t);
+
         } catch (Exception e) {
             System.err.println("Fail: " + e);
         }
@@ -942,6 +944,7 @@ public class Main {
             }
             scanner.close();
             file.delete();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
