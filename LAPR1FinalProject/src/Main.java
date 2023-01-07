@@ -489,14 +489,14 @@ public class Main {
                     }
                 }
             }
-            if(counter != 30){
+            if (counter != 30) {
                 System.out.println("\u001B[1mDeseja inserir novos dados?" + " (mais " + (30 - counter) + " gráficos disponíveis)" + " |1-Sim| |0-Não|\u001B[0m");
                 option = scanner.nextInt();
 
                 while (option != 1 && option != 0) {
-                mensagemErro(4);
-                option = scanner.nextInt();
-            }
+                    mensagemErro(4);
+                    option = scanner.nextInt();
+                }
             }
         }
 
@@ -542,7 +542,7 @@ public class Main {
             }
             System.out.println("\u001B[1m0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)\u001B[0m");
             indexPess = scanner.nextInt() - 1;
-            if(indexPess != -1){
+            if (indexPess != -1) {
                 while (indexPess < 0 || indexPess > counter || indices[indexPess][1] == 0) {
                     mensagemErro(4);
                     indexPess = scanner.nextInt() - 1;
@@ -557,38 +557,49 @@ public class Main {
                     }
                 }
                 option = scanner.nextInt() - 1;
-                while (option < 0 || option > counter){
+                while (option < 0 || option > counter) {
                     mensagemErro(3);
                     option = scanner.nextInt() - 1;
                 }
                 int var = 0;
+
                 while (option >= 0 && option < counter) {
-                    if(indices[indexPess][option + 3] == 0){
-                        if(valoresMetodos[option][0] == indexPess){
+
+                    if (indices[indexPess][option + 3] == 0) {
+
+                        if (valoresMetodos[option][0] == indexPess) {
+
                             indices[indexPess][option + 3]++;
                             indices[indexPess][1] -= valoresMetodos[option][4];
                             caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
                             gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
                             c--;
                             option = -1;
+
                         } else {
                             var = 1;
                         }
-                    }else{
+
+                    } else {
+
                         System.out.println("Esse gráfico já foi feito");
                         var = 1;
                     }
-                    if (var == 1){
+
+                    if (var == 1) {
+
                         option = -1;
-                        while (option < 0 || option >= counter){
+                        while (option < 0 || option >= counter) {
+
                             mensagemErro(3);
                             option = scanner.nextInt() - 1;
                         }
                         var = 0;
-                        
+
                     }
                 }
-            }else {
+
+            } else {
 
                 idMetodo = 0;
 
@@ -642,7 +653,7 @@ public class Main {
                 mensagemErro(6);
                 option = scanner.nextInt();
             }
-            if(option != 0){
+            if (option != 0) {
                 String compareEuler = "";
                 String compareKutta = "";
 
