@@ -128,7 +128,7 @@ public class Main {
      * @param s n-1 												 	     *
      * @param sDias Número de dias 										     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
-     * @param nomes    Lista de nomes											 *
+     * @param nomes    Lista de nomes									     *
      * @param indexPess Index da pessoa     								 *
      *************************************************************************/
     public static void Euler(float[][] valoresMetodos, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int index) {
@@ -383,7 +383,7 @@ public class Main {
      * @param n Valor da população  									     *
      * @param s n-1 												 	     *
      * @param sDias Número de dias 										     *
-     * @param dias                                                             *
+     * @param dias                                                           *
      * @param option Método	            								     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
@@ -414,6 +414,7 @@ public class Main {
             indexPess = scanner.nextInt() - 1;
 
             while ((indexPess < 0) || (indexPess >= linhas)) {
+                mensagemErro(4);
                 indexPess = scanner.nextInt() - 1;
             }
 
@@ -602,7 +603,7 @@ public class Main {
                         }
                     } else {
 
-                        caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[i][0]] + "m" + i + "p" + String.valueOf(valoresMetodos[i][1]).replace(".", "") + "t" + (int) valoresMetodos[i][2] + "d" + (int) valoresMetodos[i][3] + ".csv";
+                        caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[i][0]] + "m" + (int) valoresMetodos[i][4] + "p" + String.valueOf(valoresMetodos[i][1]).replace(".", "") + "t" + (int) valoresMetodos[i][2] + "d" + (int) valoresMetodos[i][3] + ".csv";
                         gnuplot(caminhoFinalGnu, (int) valoresMetodos[i][3], idMetodo);
                     }
                 }
