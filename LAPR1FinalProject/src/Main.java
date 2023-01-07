@@ -406,7 +406,7 @@ public class Main {
         int temp = 0;
 
         while (option != 0 && counter < 30) {
-
+            System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
             for (int i = 0; i < linhas; i++) {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
             }
@@ -417,7 +417,7 @@ public class Main {
                 indexPess = scanner.nextInt() - 1;
             }
 
-            System.out.println(" Valor de h? (Ex.: 0,1)");
+            System.out.println("\u001B[1mValor de h? (Ex.: 0,1)\u001B[0m");
             h = scanner.nextFloat();
 
             while (h <= 0 || h >= 1) {
@@ -426,7 +426,7 @@ public class Main {
                 h = scanner.nextFloat();
             }
 
-            System.out.println(" Valor da população? (Ex.: 1000)");
+            System.out.println("\u001B[1mValor da população? (Ex.: 1000)\u001B[0m");
             n = scanner.nextFloat();
 
             while (n <= 0) {
@@ -435,7 +435,7 @@ public class Main {
                 n = scanner.nextFloat();
             }
 
-            System.out.println(" Número de dias? (Ex.: 30)");
+            System.out.println("\u001B[1mNúmero de dias? (Ex.: 30)\u001B[1m");
             dias = scanner.nextInt();
 
             while (dias <= 0) {
@@ -489,7 +489,7 @@ public class Main {
                 }
             }
             if(counter != 30){
-                System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " |1-Sim| |0-Não|");
+                System.out.println("\u001B[1mDeseja inserir novos dados?" + " (mais " + (30 - counter) + " gráficos disponíveis)" + " |1-Sim| |0-Não|\u001B[0m");
                 option = scanner.nextInt();
 
                 while (option != 1 && option != 0) {
@@ -519,7 +519,7 @@ public class Main {
             }
         }
 
-        System.out.println("Deseja converter os resultados em gráfico? |1-Sim| |0-Não|");
+        System.out.println("\u001B[1mDeseja converter os resultados em gráfico? |1-Sim| |0-Não|\u001B[0m");
         option = scanner.nextInt();
         c = counter;
 
@@ -530,7 +530,7 @@ public class Main {
         }
         while (option != 0 && c > 0) {
 
-            System.out.println("Deseja fazer o gráfico de quem?");
+            System.out.println("\u001B[1mDeseja fazer o gráfico de quem?\u001B[0m");
 
             for (int i = 0; i < linhas; i++) {
 
@@ -539,7 +539,7 @@ public class Main {
                     System.out.println(i + 1 + " - |" + nomes[i] + "|");
                 }
             }
-            System.out.println("0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)");
+            System.out.println("\u001B[1m0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)\u001B[0m");
             indexPess = scanner.nextInt() - 1;
             if(indexPess != -1){
                 while (indexPess < 0 || indexPess > counter || indices[indexPess][1] == 0) {
@@ -574,6 +574,7 @@ public class Main {
                             var = 1;
                         }
                     }
+                    else var = 1;
                     if (var == 1){
                         option = -1;
                         while (option < 0 || option >= counter){
@@ -606,7 +607,7 @@ public class Main {
             }
             if (indexPess != -1 && c > 0) {
 
-                System.out.println("Deseja fazer o gráfico de outra pessoa? |1-Sim| |0-Não|");
+                System.out.println("\u001B[1mDeseja fazer o gráfico de outra pessoa? |1-Sim| |0-Não|\u001B[0m");
                 option = scanner.nextInt();
 
                 while (option != 1 && option != 0) {
@@ -614,7 +615,7 @@ public class Main {
                     option = scanner.nextInt();
                 }
             } else {
-                System.out.print("Os gráficos foram concluídos com sucesso");
+                System.out.print("\u001B[1mOs gráficos foram concluídos com sucesso\u001B[0m");
             }
         }
         int x = 0;
@@ -623,14 +624,14 @@ public class Main {
 
             if (metodosIguais[i][4] == 3) {
 
-                System.out.println("Estão disponíveis análises gráficas?");
+                System.out.println("\u001B[1mEstão disponíveis análises gráficas?\u001B[0m");
                 i = counter;
                 x = 1;
             }
         }
         if (x == 1) {
 
-            System.out.println("Deseja fazer as análises? |1-Sim| |0-Não|");
+            System.out.println("\u001B[0mDeseja fazer as análises? (isto irá guardar os resultados) |1-Sim| |0-Não|\u001B[0m");
             option = scanner.nextInt();
 
             while (option != 0 && option != 1) {
@@ -655,12 +656,12 @@ public class Main {
     /*************************************************************************
      *Função ModoNãoInterativo    										     *
      *************************************************************************
-     * @param args                                                             *
+     * @param args                                                           *
      * @param h Step        							         		     *
      * @param n Valor da população  									     *
      * @param s n-1 												 	     *
      * @param sDias Número de dias 										     *
-     * @param dias                                                             *
+     * @param dias                                                           *
      * @param option Método												     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
