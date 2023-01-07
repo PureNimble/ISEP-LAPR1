@@ -396,7 +396,7 @@ public class Main {
         String caminhoFinalGnu;
         int indexPess;
         int linhas = checkNumberOfLines(caminhoInicial);
-
+        int i;
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
@@ -407,7 +407,7 @@ public class Main {
 
         while (option != 0 && counter < 30) {
             System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
-            for (int i = 0; i < linhas; i++) {
+            for (i = 0; i < linhas; i++) {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
             }
 
@@ -467,7 +467,7 @@ public class Main {
             counter++;
             c = counter - 1;
 
-            for (int i = 0; i < c; i++) {
+            for (i = 0; i < c; i++) {
 
                 if (valoresInseridos[i][0] == indexPess) {
 
@@ -508,7 +508,7 @@ public class Main {
         }
 
         float[][] valoresMetodos = newReadValues(counter);
-        for (int i = 0; i < counter; i++) {
+        for (i = 0; i < counter; i++) {
 
             if (valoresMetodos[i][4] == 1 || valoresMetodos[i][4] == 3) {
 
@@ -533,7 +533,7 @@ public class Main {
 
             System.out.println("\u001B[1mDeseja fazer o gráfico de quem?\u001B[0m");
 
-            for (int i = 0; i < linhas; i++) {
+            for (i = 0; i < linhas; i++) {
 
                 if (indices[i][0] >= 1) {
 
@@ -549,7 +549,7 @@ public class Main {
                 }
                 System.out.println("|" + nomes[indexPess] + "|");
 
-                for (int i = 0; i < counter; i++) {
+                for (i = 0; i < counter; i++) {
 
                     if (valoresMetodos[i][0] == indexPess) {
 
@@ -592,7 +592,7 @@ public class Main {
 
                 idMetodo = 0;
 
-                for (int i = 0; i < counter; i++) {
+                for (i = 0; i < counter; i++) {
 
                     if ((int) valoresMetodos[i][4] == 3) {
 
@@ -624,7 +624,7 @@ public class Main {
         }
         int x = 0;
 
-        for (int i = 0; i < counter; i++) {
+        for (i = 0; i < counter; i++) {
 
             if (metodosIguais[i][4] == 3) {
 
@@ -646,7 +646,7 @@ public class Main {
                 String compareEuler = "";
                 String compareKutta = "";
 
-                for (int i = 0; i < counter; i++) {
+                for (i = 0; i < counter; i++) {
 
                     if (metodosIguais[i][4] == 3) {
                         compareEuler = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m1" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
