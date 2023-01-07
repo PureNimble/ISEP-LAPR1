@@ -483,14 +483,14 @@ public class Main {
                     }
                 }
             }
+            if(counter != 30){
+                System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " |1-Sim| |0-Não|");
+                option = scanner.nextInt();
 
-            System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " |1-Sim| |0-Não|");
-            option = scanner.nextInt();
-
-            while (option != 1 && option != 0) {
-
+                while (option != 1 && option != 0) {
                 mensagemErro(4);
                 option = scanner.nextInt();
+            }
             }
         }
 
@@ -536,15 +536,11 @@ public class Main {
             }
             System.out.println("0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)");
             indexPess = scanner.nextInt() - 1;
-
-            while (indexPess < -1 || indexPess > counter || indices[indexPess][1] == 0) {
-
-                mensagemErro(4);
-                indexPess = scanner.nextInt() - 1;
-            }
-
-            if (indexPess != -1) {
-
+            if(indexPess != -1){
+                while (indexPess < 0 || indexPess > counter || indices[indexPess][1] == 0) {
+                    mensagemErro(4);
+                    indexPess = scanner.nextInt() - 1;
+                }
                 System.out.println("|" + nomes[indexPess] + "|");
 
                 for (int i = 0; i < counter; i++) {
@@ -555,20 +551,34 @@ public class Main {
                     }
                 }
                 option = scanner.nextInt() - 1;
-
-                while (option < 0 || option > valoresMetodos.length || indices[indexPess][option + 3] > 0 || valoresMetodos[option][0] != indexPess) {
-
+                while (option < 0 || option > counter){
                     mensagemErro(3);
                     option = scanner.nextInt() - 1;
                 }
-
-                indices[indexPess][option + 3]++;
-                indices[indexPess][1]--;
-                caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
-                gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
-                c--;
-
-            } else {
+                int var = 0;
+                while (option >= 0 && option < counter) {
+                    if(indices[indexPess][option + 3] == 0){
+                        if(valoresMetodos[option][0] == indexPess){
+                            indices[indexPess][option + 3]++;
+                            indices[indexPess][1]--;
+                            caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
+                            gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
+                            c--;
+                            option = -1;
+                        } else {
+                            var = 1;
+                        }
+                    }
+                    if (var == 1){
+                        option = -1;
+                        while (option < 0 || option >= counter){
+                            mensagemErro(3);
+                            option = scanner.nextInt() - 1;
+                        }
+                        var = 0;
+                    }
+                }
+            }else {
 
                 idMetodo = 0;
 
@@ -591,11 +601,10 @@ public class Main {
             }
             if (indexPess != -1 && c > 0) {
 
-                System.out.println("Deseja fazer o gráfico de outra pessoa |1-Sim| |0-Não|?");
+                System.out.println("Deseja fazer o gráfico de outra pessoa? |1-Sim| |0-Não|");
                 option = scanner.nextInt();
 
                 while (option != 1 && option != 0) {
-
                     mensagemErro(6);
                     option = scanner.nextInt();
                 }
@@ -616,10 +625,11 @@ public class Main {
         }
         if (x == 1) {
 
-            System.out.println("Deseja fazer as análises |1-Sim| |0-Não|?");
+            System.out.println("Deseja fazer as análises? |1-Sim| |0-Não|");
             option = scanner.nextInt();
 
             while (option != 0 && option != 1) {
+                mensagemErro(6);
                 option = scanner.nextInt();
             }
 
