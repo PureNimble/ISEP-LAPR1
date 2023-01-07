@@ -565,7 +565,7 @@ public class Main {
                     if(indices[indexPess][option + 3] == 0){
                         if(valoresMetodos[option][0] == indexPess){
                             indices[indexPess][option + 3]++;
-                            indices[indexPess][1]--;
+                            indices[indexPess][1] -= valoresMetodos[option][4];
                             caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
                             gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
                             c--;
@@ -573,8 +573,10 @@ public class Main {
                         } else {
                             var = 1;
                         }
+                    }else{
+                        System.out.println("Esse gráfico já foi feito");
+                        var = 1;
                     }
-                    else var = 1;
                     if (var == 1){
                         option = -1;
                         while (option < 0 || option >= counter){
@@ -582,6 +584,7 @@ public class Main {
                             option = scanner.nextInt() - 1;
                         }
                         var = 0;
+                        
                     }
                 }
             }else {
@@ -615,7 +618,7 @@ public class Main {
                     option = scanner.nextInt();
                 }
             } else {
-                System.out.print("\u001B[1mOs gráficos foram concluídos com sucesso\u001B[0m");
+                System.out.println("\u001B[1mOs gráficos foram concluídos com sucesso\u001B[0m");
             }
         }
         int x = 0;
@@ -638,16 +641,17 @@ public class Main {
                 mensagemErro(6);
                 option = scanner.nextInt();
             }
+            if(option != 0){
+                String compareEuler = "";
+                String compareKutta = "";
 
-            String compareEuler = "";
-            String compareKutta = "";
+                for (int i = 0; i < counter; i++) {
 
-            for (int i = 0; i < counter; i++) {
-
-                if (metodosIguais[i][4] == 3) {
-                    compareEuler = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m1" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
-                    compareKutta = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m2" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
-                    comparePlot(compareEuler, compareKutta, (int) metodosIguais[i][3], nomes[(int) metodosIguais[i][0]]);
+                    if (metodosIguais[i][4] == 3) {
+                        compareEuler = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m1" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
+                        compareKutta = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m2" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
+                        comparePlot(compareEuler, compareKutta, (int) metodosIguais[i][3], nomes[(int) metodosIguais[i][0]]);
+                    }
                 }
             }
         }
