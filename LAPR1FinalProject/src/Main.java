@@ -397,7 +397,7 @@ public class Main {
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
         float[][] valoresInseridos = new float[30][5];
         int[][] indices = new int[30][32];
-        float metodosIguais[][] = new float[10][5];
+        float metodosIguais[][] = new float[15][5];
         int temp = 0;
 
         while (option != 0 && counter < 30) {
@@ -445,7 +445,7 @@ public class Main {
             System.out.println(" -----------------------------------------------------");
             option = scanner.nextInt();
 
-            while (option > 3 && option < 1) {
+            while (option > 2 || option < 1) {
 
                 mensagemErro(4);
                 option = scanner.nextInt();
@@ -484,7 +484,7 @@ public class Main {
                 }
             }
 
-            System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " (1-Sim // 0-Não)");
+            System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " |1-Sim| |0-Não|");
             option = scanner.nextInt();
 
             while (option != 1 && option != 0) {
@@ -629,7 +629,6 @@ public class Main {
             for (int i = 0; i < counter; i++) {
 
                 if (metodosIguais[i][4] == 3) {
-
                     compareEuler = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m1" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
                     compareKutta = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m2" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
                     comparePlot(compareEuler, compareKutta, (int) metodosIguais[i][3], nomes[(int) metodosIguais[i][0]]);
@@ -881,29 +880,16 @@ public class Main {
         };
 
         try {
-
             Runtime rt = Runtime.getRuntime();
             Process prc = rt.exec(s);
 
-            System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
-
-            int ans = scanner.nextInt();
             rt.exec("taskkill /im gnuplot_qt.exe");
             prc.destroy();
-
-            while (ans != 0 && ans != 1) {
-
-                mensagemErro(6);
-                ans = scanner.nextInt();
-            }
-            if (ans == 1) {
-
-                int slength = s.length - 5;
-                String[] t = new String[slength + g.length];
-                System.arraycopy(s, 0, t, 0, slength);
-                System.arraycopy(g, 0, t, slength, g.length);
-                rt.exec(t);
-            }
+            int slength = s.length - 5;
+            String[] t = new String[slength + g.length];
+            System.arraycopy(s, 0, t, 0, slength);
+            System.arraycopy(g, 0, t, slength, g.length);
+            rt.exec(t);
         } catch (Exception e) {
             System.err.println("Fail: " + e);
         }
@@ -928,8 +914,8 @@ public class Main {
         float[][] valoresMetodos = new float[counter][5];
 
         try {
-
-            Scanner scanner = new Scanner(new File("LAPR1FinalProject/ValoresInseridos.csv"));
+            File file = new File("LAPR1FinalProject/ValoresInseridos.csv");
+            Scanner scanner = new Scanner(file);
 
             int lineNumber = 0;
 
@@ -950,7 +936,7 @@ public class Main {
                 lineNumber++; // Próxima linha
             }
             scanner.close();
-
+            file.delete();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
