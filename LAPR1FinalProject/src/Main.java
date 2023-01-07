@@ -24,6 +24,11 @@ public class Main {
 
     public static void main(String[] args) {
 
+        for (File file : new File("LAPR1FinalProject/Ficheiros_Resultados/").listFiles()){
+            if (!file.isDirectory()) 
+            file.delete();
+        }
+
         float h = 0;
         float n = 0;
         float s = 0;
@@ -31,7 +36,7 @@ public class Main {
         int dias = 0;
         int option = 1;
         int idMetodo = 0;
-        String caminhoFinal = "LAPR1FinalProject/";
+        String caminhoFinal = "LAPR1FinalProject/Ficheiros_Resultados/";
         String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
@@ -547,13 +552,12 @@ public class Main {
                     mensagemErro(4);
                     indexPess = scanner.nextInt() - 1;
                 }
-                System.out.println("|" + nomes[indexPess] + "|");
-
+                System.out.println("Selecione um dos valores disponíveis para a/o" + nomes[indexPess]);
                 for (i = 0; i < counter; i++) {
 
                     if (valoresMetodos[i][0] == indexPess) {
 
-                        System.out.println(i + 1 + "- " + valoresMetodos[i][1] + " " + (int) valoresMetodos[i][2] + " " + (int) valoresMetodos[i][3] + " " + (int) valoresMetodos[i][4] + "\n");
+                        System.out.println(i + 1 + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias" + (int) valoresMetodos[i][3] + " método" + (int) valoresMetodos[i][4] + "\n");
                     }
                 }
                 option = scanner.nextInt() - 1;
@@ -761,6 +765,7 @@ public class Main {
             caminhoFinalGnu = caminhoFinal + nomes[i] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias, idMetodo);
         }
+        System.out.println("Os ficheiros (.csv) e os gráficos (.png) foram criados com sucesso e encontram-se em: '/lapr1_1dm_grupo02/LAPR1FinalProject/Ficheiros_Resultados/'\n");
     }
 
     /*************************************************************************
