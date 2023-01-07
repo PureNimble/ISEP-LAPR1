@@ -484,7 +484,7 @@ public class Main {
                 }
             }
 
-            System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes");
+            System.out.println("Deseja inserir novos dados?" + " faltam " + (30 - counter) + " vezes" + " (1-Sim // 0-Não)");
             option = scanner.nextInt();
             while (option != 1 && option != 0) {
                 mensagemErro(4);
