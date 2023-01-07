@@ -5,10 +5,10 @@
 Este repositório contém artefactos didáticos relevantes para o projeto integrador a desenvolver no primeiro semestre do ano letivo 2022-2023 na [Licenciatura em Engenharia (LEI) ](http://www.isep.ipp.pt/Course/Course/26) do [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
 * **modo Interativo:**
-java -jar lapr1_1dm_grupo02.jar
+> java -jar lapr1_1dm_grupo02.jar
 
 * **modo não interativo:**
-java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
+> java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
 
 ## Utensílios usados: ##
 ----------------------
