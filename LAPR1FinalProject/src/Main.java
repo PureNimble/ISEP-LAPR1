@@ -453,7 +453,7 @@ public class Main {
 
             while (option > 2 || option < 1) {
 
-                mensagemErro(4);
+                mensagemErro(3);
                 option = scanner.nextInt();
             }
 
@@ -494,7 +494,7 @@ public class Main {
                 option = scanner.nextInt();
 
                 while (option != 1 && option != 0) {
-                    mensagemErro(4);
+                    mensagemErro(6);
                     option = scanner.nextInt();
                 }
             }
@@ -558,7 +558,7 @@ public class Main {
                 }
                 option = scanner.nextInt() - 1;
                 while (option < 0 || option > counter) {
-                    mensagemErro(3);
+                    mensagemErro(4);
                     option = scanner.nextInt() - 1;
                 }
                 int var = 0;
