@@ -707,7 +707,7 @@ public class Main {
                     }
                     int var = 0;
 
-                    while (option >= 0 && option < counterGraficos) {
+                    while (option >= 0 && option <= counterGraficos) {
 
                         counterTemp = option;
 
