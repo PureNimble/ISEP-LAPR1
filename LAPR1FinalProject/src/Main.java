@@ -23,12 +23,7 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        for (File file : new File("LAPR1FinalProject/Ficheiros_Resultados/").listFiles()){
-            if (!file.isDirectory()) 
-            file.delete();
-        }
-
+        
         float h = 0;
         float n = 0;
         float s = 0;
@@ -40,8 +35,20 @@ public class Main {
         String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
+            File file = new File(caminhoFinal);
+            if (file.exists() && file.isDirectory()) {
+                File[] files = file.listFiles();
+                if (files != null && files.length > 0) {
+                    System.out.println("\u001B[1mDeseja apagar todos os ficheiros anteriormente criados pelo programa? |1-Sim| |0-Não|\u001B[0m");
+                    int escolha = scanner.nextInt();
+                    if (escolha == 1) {
+                        for (File ficheiro : files) {
+                            ficheiro.delete();
+                        }
+                    }
+                }
+            }
             modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
-
         } else {
             modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
         }
