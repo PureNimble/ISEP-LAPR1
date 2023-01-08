@@ -2,7 +2,10 @@
 
 ## Descrição ##
 -------------------------
--> Esta função contém todas as operações necessárias para a realização do metodo de Euler.
+-> módulo que gera os gráficos correspondentes aos ficheiros (.csv) existentes.
+ 
+-> É também neste módulo que é dada a opção de guardar em formato .png os gráficos gerados anteriormente.
+
 
 
 ## Prints exemplo: ##

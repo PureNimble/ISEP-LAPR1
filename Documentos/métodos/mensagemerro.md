@@ -2,8 +2,7 @@
 
 ## Descrição ##
 -------------------------
--> Esta função contém todo o tipo de prints de aviso de erro.
-
+-> módulo que contém todas as mensagens de erro disponíveis para serem chamadas ao longo do código em determinadas validações.
 
 ## Prints exemplo: ##
 -------------------------

@@ -2,7 +2,9 @@
 
 ## Descrição ##
 -------------------------
--> Função para escrever os dados do sistema num ficheiro de resultados
+-> módulo que pega nos valores armazenados na matriz dos valores gerados através dos métodos
+ numéricos e escreve-os num ficheiro com um nome parecido a "Dinam1p01t1000d30.csv" ou "Dinam2p01t1000d22.csv", dependendo do método 
+selecionado e dos valores iniciais inseridos.
 
 ## Função: ##
 -------------------------

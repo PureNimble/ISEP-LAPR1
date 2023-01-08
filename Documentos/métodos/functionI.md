@@ -2,7 +2,7 @@
 
 ## Descrição ##
 -------------------------
--> Método para calcular a função I do sistema SIR
+-> funções que devolve o valore de I para ambos os módulos que executam os métodos numéricos (Euler e Runge_Kutta).
 
 ## Função: ##
 -------------------------

@@ -2,7 +2,7 @@
 
 ## Descrição ##
 -------------------------
--> Esta função contém todas as operações necessárias para a realização do metodo de Euler.
+-> módulo que escreve num ficheiro os valores inseridos pelo utilizado com o nome de "ValoresInseridos".
 
 ## Prints exemplo: ##
 -------------------------

@@ -2,7 +2,8 @@
 
 ## Descrição ##
 -------------------------
--> Esta função contém todas as operações necessárias para a realização do metodo de Euler.
+-> módulo que aplica o método de Euler para os dados 
+desejados e armazena os valores numa matriz.
 
 
 ## Métodos usados: ##

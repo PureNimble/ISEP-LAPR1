@@ -2,7 +2,7 @@
 
 ## Descrição ##
 -------------------------
--> Esta função contém todas as operações necessárias para a realização do metodo de Runge-Kutta de 4º ordem.
+-> módulo que aplica o método de Runge-Kutta para os dados desejados e armazena os valores numa matriz.
 
 
 ## Métodos usados: ##
@@ -11,6 +11,6 @@
 * [functionS](functionS.md)
 * [functionI](functionI.md)
 * [functionR](functionR.md)
-## Prints exemplo: ##
+## Algoritmo: ##
 -------------------------
 ![RK4](../Imagens/RK4.png)

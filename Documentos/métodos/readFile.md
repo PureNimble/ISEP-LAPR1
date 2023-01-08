@@ -2,7 +2,8 @@
 
 ## Descrição ##
 -------------------------
--> Esta função copia todos os valores do ficheiro inicial, colocando os nomes numa array e os restantes valores numa matriz.
+-> módulo que lê os dados existentes no ficheiroInicial.csv, armazenando os nomes das pessoas num vetor e os dados
+ correspondentes a cada pessoa numa matriz.
 
 
 ## Função: ##

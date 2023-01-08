@@ -2,8 +2,9 @@
 
 ## Descrição ##
 -------------------------
--> Na nossa função Principal (Main), apenas declaramos as variáveis que serão recebidas como parâmetros 
-(caso o modo não interativo seja acionado), ou serão perguntadas durante a execução (modo interativo).
+-> módulo onde são inicializadas variáveis e onde são chamados o modoInterativo e o modoNaoInterativo.
+ 
+->É também neste módulo que, dependendo do modo ativado, o utilizador tem a possibilidade de apagar todos os ficheiros criados anteriormente.
 
 ## Métodos usados: ##
 -------------------------

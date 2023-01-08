@@ -2,7 +2,8 @@
 
 ## Descrição ##
 -------------------------
--> Esta função contém todas as operações necessárias para a realização do metodo de Euler.
+-> módulo que gera gráficos e guarda-os em formato .png caso exista um ficheiro
+ do método de Euler e um ficheiro do método de Runge-Kutta com valores iguais para a mesma pessoa.
 
 
 ## Prints exemplo: ##
