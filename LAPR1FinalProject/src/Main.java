@@ -420,6 +420,7 @@ public class Main {
         float metodosIguais[][] = new float[15][5];
         idMetodo = 1;
         int pass;
+        int counterTemp = 0;
 
         while (option != 0 && counterGraficos < 30) {
             System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
@@ -587,28 +588,38 @@ public class Main {
                 if(indexPess != -1){
                     System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
                     String met = "";
+                    counterTemp = 0;
                     for (i = 0; i < counterGraficos; i++) {
 
                         if (valoresMetodos[i][0] == indexPess) {
                             if((int) valoresMetodos[i][4] == 1){
                                 met = "Euler";
                             }else met = "Runge-Kutta";
-                            System.out.println("\n" + (i + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
+
+                            System.out.println("\n" + (counterTemp + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
+                            counterTemp++;
                         }
                     }
-                    option = scanner.nextInt() - 1;
-                    while (option < 0 || option+1 > counterGraficos) {
+                    option = scanner.nextInt();
+                    while (option <= 0 || option > counterGraficos) {
                         mensagemErro(4);
-                        option = scanner.nextInt() - 1;
+                        option = scanner.nextInt();
                     }
                     int var = 0;
 
                     while (option >= 0 && option < counterGraficos) {
-
+                        counterTemp = option;
+                        for(i = 0; i < counterGraficos; i++){
+                            if(valoresMetodos[i][0] == indexPess){
+                                counterTemp--;
+                                if(counterTemp == 0){
+                                    option = i;
+                                }
+                            }
+                        }
                         if (indices[indexPess][option + 3] == 0) {
 
                             if (valoresMetodos[option][0] == indexPess) {
-
                                 indices[indexPess][option + 3]++;
                                 indices[indexPess][1] -= valoresMetodos[option][4];
                                 caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
@@ -633,7 +644,7 @@ public class Main {
                             while (option < 0 || option >= counterGraficos) {
 
                                 mensagemErro(3);
-                                option = scanner.nextInt() - 1;
+                                option = scanner.nextInt();
                             }
                             var = 0;
 
