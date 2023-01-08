@@ -11,3 +11,9 @@
 
 * [modo não interativo](modoNaoInterativo.md)
 * [modo interativo](modoInterativo.md)
+
+
+## Código: ##
+-------------------------
+
+![main](Images/main.png)

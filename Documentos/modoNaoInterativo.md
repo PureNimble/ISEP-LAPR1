@@ -19,3 +19,6 @@ necessários para os cálculos dos métodos numéricos a partir de parâmetros i
 * [gnuplot](métodos/gnuplot.md)
 * [mensagemErro](métodos/mensagemerro.md)
 
+## Código: ##
+-------------------------
+![modonaoInterativo](Imagens/modonaoInterativo.png)

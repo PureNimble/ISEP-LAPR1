@@ -15,3 +15,7 @@ desejados e armazena os valores numa matriz.
 ## Formula: ##
 -------------------------
 ![euler](../Imagens/euler.png)
+
+## Código: ##
+-------------------------
+![euler1](../Imagens/euler1.png)

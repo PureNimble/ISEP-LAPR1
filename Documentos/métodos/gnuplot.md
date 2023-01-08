@@ -8,6 +8,6 @@
 
 
 
-## Prints exemplo: ##
+## Código: ##
 -------------------------
-![euler](../Imagens/euler.png)
+![gnuplot](../Imagens/gnuplot.png)

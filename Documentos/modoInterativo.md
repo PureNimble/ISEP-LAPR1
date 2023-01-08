@@ -26,3 +26,4 @@ de menus que permitem ao utilizador definir o que é feito durante o período de
 ## Outras Interações ##
 -------------------------
 ![modoInterativo2](Imagens/modoInterativo2.png)
+
