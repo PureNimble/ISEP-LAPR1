@@ -699,7 +699,7 @@ public class Main {
         }
         if (x == 1) {
 
-            System.out.println("\u001B[0mDeseja fazer as análises? (isto irá guardar os resultados) |1-Sim| |0-Não|\u001B[0m");
+            System.out.println("\u001B[1mDeseja fazer as análises? (isto irá guardar os resultados) |1-Sim| |0-Não|\u001B[0m");
             option = scanner.nextInt();
 
             while (option != 0 && option != 1) {
