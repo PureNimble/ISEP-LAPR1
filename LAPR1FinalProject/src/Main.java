@@ -844,6 +844,10 @@ public class Main {
      *************************************************************************/
     public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
+        String input;
+        float checkerM = 0;
+        float checkerD = 0;
+        int i;
         if (args.length != 9) {
             mensagemErro(1);
             System.exit(0);
@@ -852,16 +856,42 @@ public class Main {
         for (int b = 1; b < 8; b += 2) {
 
             if (args[b].equals("-m")) {
-                option = Integer.valueOf(args[b + 1]);
+                input = args[b + 1];
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                checkerM = Float.valueOf(input);
+                option = (int) checkerM;
             }
             if (args[b].equals("-p")) {
-                h = Float.valueOf(args[b + 1]);
+                input = args[b + 1];
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                h = Float.valueOf(input);
             }
             if (args[b].equals("-t")) {
-                n = Float.valueOf(args[b + 1]);
+                input = args[b + 1];
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                n = Float.valueOf(input);
             }
             if (args[b].equals("-d")) {
-                dias = Integer.valueOf(args[b + 1]);
+                input = args[b + 1];
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                checkerD = Float.valueOf(input);
+                dias = (int) checkerD;
             }
         }
 
@@ -873,7 +903,7 @@ public class Main {
             System.exit(0);
         }
 
-        if (n != (int) n) {
+        if (n != (int) n || checkerM != option || checkerD != dias) {
             mensagemErro(1);
             System.exit(0);
         }
@@ -907,7 +937,7 @@ public class Main {
 
         String caminhoFinalGnu;
 
-        for (int i = 0; i < indexPess; i++) {
+        for (i = 0; i < indexPess; i++) {
 
             caminhoFinalGnu = caminhoFinal + nomes[i] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
             gnuplot(caminhoFinalGnu, dias, idMetodo);
