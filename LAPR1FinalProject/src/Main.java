@@ -91,9 +91,9 @@ public class Main {
      *************************************************************************/
     public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
 
-        PrintWriter pw = new PrintWriter(caminho_ficheiro);    // Criar o ficheiro tests.csv
+        PrintWriter pw = new PrintWriter(caminho_ficheiro);
 
-        pw.print("Dia;S;I;R;N\n");    // Print do cabeçalho
+        pw.print("Dia;S;I;R;N\n");
 
         for (int i = 0; i < dias; i++) {
             pw.print((int) (resultados[i][0]) + ";");
@@ -170,7 +170,6 @@ public class Main {
      *************************************************************************/
     public static void euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
-        // Inicialização das variáveis (valores provenientes da matriz)
         float s = n - 1;
         float sDias = s;
         float taxaProp = matrix[indexPess][0];
@@ -224,7 +223,6 @@ public class Main {
             resultados[i][4] = sDias + iDias + rDias;
         }
 
-        // Criação do nome para o caminho final (especificando o metodo usado e todos os parametros)
         String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
 
         try {
@@ -340,7 +338,6 @@ public class Main {
 
         int linhas = 0;
 
-        // Chamar a função checkNumberOfLines
         try {
 
             Scanner scanner = new Scanner(new File(caminhoInicial));
@@ -350,7 +347,7 @@ public class Main {
 
                 line = scanner.nextLine();
 
-                if (line.trim().length() > 0) {     // verificar se existe caracteres na linha   
+                if (line.trim().length() > 0) {      
                     linhas++;
                 }
 
@@ -358,7 +355,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        linhas -= 1;            // remover a linha de cabeçalho
+        linhas -= 1;          
         return linhas;
     }
 
@@ -372,7 +369,7 @@ public class Main {
      *************************************************************************/
     public static String[] readFile(float[][] matrix, int linhas, String caminhoInicial) {
 
-        String[] nomes = new String[linhas]; // Inicializar a array de nomes
+        String[] nomes = new String[linhas]; 
 
         try {
             Scanner scanner = new Scanner(new File(caminhoInicial));
@@ -385,15 +382,15 @@ public class Main {
                 String line = scanner.nextLine();
                 String[] values = line.split(";");
 
-                if (lineNumber != 0) {  // Passar a frente a linha do cabeçalho
-                    nomes[lineNumber - 1] = values[0];  // O primeiro elemento da linha é o nome da pessoa
+                if (lineNumber != 0) {  
+                    nomes[lineNumber - 1] = values[0];  
 
                     for (j = 1; j < 5; j++) {
-                        // Colocar os valores na matriz substituindo os valores decimais de "," para "."
+                    
                         matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",", "."));
                     }
                 }
-                lineNumber++; // Próxima linha
+                lineNumber++; 
             }
             scanner.close();
 
@@ -1139,11 +1136,11 @@ public class Main {
                 String line = scanner.nextLine();
                 String[] values = line.split(";");
 
-                if (lineNumber != 0) {  // Passar a frente a linha do cabeçalho
+                if (lineNumber != 0) {  
 
                     for (j = 0; j < 5; j++) {
 
-                        // Colocar os valores na matriz substituindo os valores decimais de "," para "."
+                        
                         valoresMetodos[lineNumber - 1][j] = Float.valueOf(values[j].replace(",", "."));
                     }
                 }
