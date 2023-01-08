@@ -34,6 +34,8 @@ public class Main {
         int idMetodo = 0;
         String caminhoFinal = "LAPR1FinalProject/Ficheiros_Resultados/";
         String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
+        String input = "";
+        float escolha = 0;
 
         if (args.length == 0) {
 
@@ -44,7 +46,7 @@ public class Main {
                 File[] files = file.listFiles();
 
                 if (files != null && files.length > 0) {
-
+                    
                     int shouldDelete = 0;
 
                     for (File ficheiro : files) {
@@ -57,14 +59,8 @@ public class Main {
                     if (shouldDelete > 0) {
 
                         System.out.println("\u001B[1mDeseja apagar todos os ficheiros anteriormente criados pelo programa? |1-Sim| |0-Não|\u001B[0m");
-                        int escolha = scanner.nextInt();
-
-                        while (escolha != 1 && escolha != 0) {
-
-                            mensagemErro(6);
-                            escolha = scanner.nextInt();
-                        }
-
+                        input = scanner.next();
+                        escolha = checkIntSN(input, escolha);
                         if (escolha == 1) {
 
                             for (File ficheiro : files) {
@@ -78,10 +74,10 @@ public class Main {
                 }
             }
 
-            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
+            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo, input, escolha);
         } else {
 
-            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
+            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo, input);
         }
         System.out.println("\n*******************\u001B[1mFim do Programa\u001B[0m*******************");
     }
@@ -419,8 +415,10 @@ public class Main {
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      * @param idMetodo identificador de modoInterativo                       *
+     * @param input leitura do input                                         *
+     * @param checker verifica os valores                                    *
      *************************************************************************/
-    public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
+    public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo, String input, float checker) {
 
         int counterGraficos = 0;
         int counterGeral;
@@ -437,8 +435,6 @@ public class Main {
         idMetodo = 1;
         int pass;
         int counterTemp = 0;
-        String input;
-        float checker = 0;
 
         while (option != 0 && counterGraficos < 30) {
             System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
@@ -585,12 +581,8 @@ public class Main {
             }
             if (counterGraficos != 30) {
                 System.out.println("\u001B[1mDeseja inserir novos dados?" + " (mais " + (30 - counterGraficos) + " gráficos disponíveis)" + " |1-Sim| |0-Não|\u001B[0m");
-                option = scanner.nextInt();
-
-                while (option != 1 && option != 0) {
-                    mensagemErro(6);
-                    option = scanner.nextInt();
-                }
+                input = scanner.next();
+                option = checkIntSN(input, checker);
             }
         }
 
@@ -619,14 +611,10 @@ public class Main {
         }
 
         System.out.println("\u001B[1mDeseja converter os resultados em gráfico? |1-Sim| |0-Não|\u001B[0m");
-        option = scanner.nextInt();
+        input = scanner.next();
+        option = checkIntSN(input, checker);
         counterGeral = counterGraficos;
 
-        while (option != 1 && option != 0) {
-
-            mensagemErro(6);
-            option = scanner.nextInt();
-        }
         while (option != 0 && counterGeral > 0) {
 
             System.out.println("\n\u001B[1mDeseja fazer o gráfico de quem?\u001B[0m");
@@ -786,12 +774,8 @@ public class Main {
             if (indexPess != -1 && counterGeral > 0) {
 
                 System.out.println("\u001B[1mDeseja fazer o gráfico de outra pessoa? |1-Sim| |0-Não|\u001B[0m");
-                option = scanner.nextInt();
-
-                while (option != 1 && option != 0) {
-                    mensagemErro(6);
-                    option = scanner.nextInt();
-                }
+                input = scanner.next();
+                option = checkIntSN(input, checker);
             } else {
                 System.out.println("*******************\u001B[1mOs gráficos foram concluídos com sucesso\u001B[0m*******************");
             }
@@ -810,12 +794,8 @@ public class Main {
         if (x == 1) {
 
             System.out.println("\u001B[1mDeseja fazer as análises? (isto irá guardar os resultados) |1-Sim| |0-Não|\u001B[0m");
-            option = scanner.nextInt();
-
-            while (option != 0 && option != 1) {
-                mensagemErro(6);
-                option = scanner.nextInt();
-            }
+            input = scanner.next();
+            option = checkIntSN(input, checker);
             if (option != 0) {
                 String compareEuler = "";
                 String compareKutta = "";
@@ -845,10 +825,10 @@ public class Main {
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      * @param idMetodo identificador de modoInterativo                       *
+     * @param input leitura do input                                         *
      *************************************************************************/
-    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
+    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo, String input) {
 
-        String input;
         float checkerM = 0;
         float checkerD = 0;
         int i;
@@ -1043,15 +1023,11 @@ public class Main {
             int ans = 0;
 
             if (idMetodo == 1) {
-
-                System.out.println("\u001B[1mDeseja guardar o gráfico? |1- Sim| |0- Não|\u001B[0m");
-                ans = scanner.nextInt();
-
-                while (ans != 0 && ans != 1) {
-
-                    mensagemErro(6);
-                    ans = scanner.nextInt();
-                }
+                String input;
+                float checker = 0;
+                System.out.println("\u001B[1mDeseja guardar o gráfico? |1-Sim| |0-Não|\u001B[0m");
+                input = scanner.next();
+                ans = checkIntSN(input, checker);
             }
 
             rt.exec("taskkill /im gnuplot_qt.exe");
@@ -1181,4 +1157,24 @@ public class Main {
         }
         return valoresMetodos;
     }
+    public static int checkIntSN(String input, float escolha){
+        int i;
+        for(i = 0; i < input.length(); i++) {
+            if(input.indexOf(",") == i){
+                input = input.replaceAll(",", ".");
+            }
+        }
+        escolha = Float.valueOf(input);
+        while (escolha < 0 || escolha > 1 || escolha != (int)escolha) {
+            mensagemErro(6);
+            input = scanner.next();
+            for(i = 0; i < input.length(); i++) {
+                if(input.indexOf(",") == i){
+                    input = input.replaceAll(",", ".");
+                }
+            }
+            escolha = Float.valueOf(input);
+        }
+        return (int) escolha;
+    } 
 }
