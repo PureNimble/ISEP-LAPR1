@@ -153,14 +153,10 @@ public class Main {
      * @param nomes    Lista de nomes									     *
      * @param indexPess Index da pessoa     								 *
      *************************************************************************/
-    public static void Euler(float[][] valoresMetodos, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int index) {
+    public static void Euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
         // Inicialização das variáveis ( valores provenientes da matriz) 
-        int indexPess = (int) valoresMetodos[index][0];
-        float h = valoresMetodos[index][1];
-        float n = valoresMetodos[index][2];
-        int dias = (int) valoresMetodos[index][3];
-        float s = valoresMetodos[index][2] - 1;
+        float s = n - 1;
         float sDias = s;
         float taxaProp = matrix[indexPess][0];
         float taxaRej = matrix[indexPess][1];
@@ -237,13 +233,9 @@ public class Main {
      * @param nomes Lista de nomes	    									 *
      * @param indexPess Index da pessoa			        					 *
      *************************************************************************/
-    public static void Runge_Kutta(float[][] valoresMetodos, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int index) {
+    public static void Runge_Kutta(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
-        int indexPess = (int) valoresMetodos[index][0];
-        float h = valoresMetodos[index][1];
-        float n = valoresMetodos[index][2];
-        int dias = (int) valoresMetodos[index][3];
-        float s = valoresMetodos[index][2] - 1;
+        float s = n - 1;
         float sDias = s;
         float taxaProp = matrix[indexPess][0];
         float taxaRej = matrix[indexPess][1];
@@ -531,14 +523,18 @@ public class Main {
 
         float[][] valoresMetodos = newReadValores(counter);
         for (i = 0; i < counter; i++) {
+            indexPess = (int)valoresMetodos[i][0];
+            h = valoresMetodos[i][1];
+            n = valoresMetodos[i][2];
+            dias = (int)valoresMetodos[i][3];
 
             if (valoresMetodos[i][4] == 1 || valoresMetodos[i][4] == 3) {
 
-                Euler(valoresMetodos, matrix, linhas, caminhoFinal, nomes, i);
+                Euler(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
             }
             if (valoresMetodos[i][4] == 2 || valoresMetodos[i][4] == 3) {
 
-                Runge_Kutta(valoresMetodos, matrix, linhas, caminhoFinal, nomes, i);
+                Runge_Kutta(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
             }
         }
 
@@ -740,17 +736,6 @@ public class Main {
         }
 
         int linhas = checkNumberOfLines(caminhoInicial);
-        float[][] valoresMetodos = new float[linhas][5];
-
-        for (int i = 0; i < linhas; i++) {
-
-            valoresMetodos[i][0] = i;
-            valoresMetodos[i][1] = h;
-            valoresMetodos[i][2] = n;
-            valoresMetodos[i][3] = dias;
-            valoresMetodos[i][4] = option;
-        }
-
         // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
@@ -761,10 +746,10 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    Euler(valoresMetodos, matrix, linhas, caminhoFinal, nomes, indexPess);
+                    Euler(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
                     break;
                 case 2:
-                    Runge_Kutta(valoresMetodos, matrix, linhas, caminhoFinal, nomes, indexPess);
+                    Runge_Kutta(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
                     break;
                 default:
                     mensagemErro(3);
@@ -909,7 +894,7 @@ public class Main {
 
     public static void comparePlot(String compareEuler, String compareKutta, int dias, String nome) {
 
-        String caminhoPng = "LAPR1FinalProject/" + nome + "m1&m2";
+        String caminhoPng = "LAPR1FinalProject/Ficheiros_Resultados/" + nome + "m1&m2";
         String[] g = {"-e", "set term png size 1200, 800",
                 "-e", "set output '" + caminhoPng + ".png'",
                 "-e", "replot"
