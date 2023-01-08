@@ -7,10 +7,14 @@ Este repositório contém artefactos didáticos relevantes para o projeto integr
 ## Modos disponíveis: ##
 ------------------
 * **modo Interativo:**
-> java -jar lapr1_1dm_grupo02.jar
+```
+ java -jar lapr1_1dm_grupo02.jar
+```
 
 * **modo não interativo:**
-> java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
+```
+ java -jar lapr1_1dm_grupo02.jar ficheiroSIR.csv -m 1 -p 0.1 -t 1000 -d 30
+```
 
 ## Utensílios usados: ##
 ----------------------

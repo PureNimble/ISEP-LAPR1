@@ -2,9 +2,9 @@
 
 ## Descrição ##
 -------------------------
--> são feitas questões ao utilizador para que seja possível calcular as diferentes taxas, é também pedido o nome da pessoa que pretende ser analisada.
+-> módulo executado através do comando "java -jar nome_programa.jar" e que consiste na execução do programa através
+ de menus que permitem ao utilizador definir o que é feito durante o período de execução.
 
--> são feitas mais perguntas para saber as configurações relacionadas ao tipo de informação final (gráfico e/ou tabela)
 ## Métodos usados: ##
 -------------------------
 
