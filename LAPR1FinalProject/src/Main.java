@@ -28,7 +28,7 @@ public class Main {
         float h = 0;
         float n = 0;
         float s = 0;
-        float sDias = 0;
+        float sInicial = 0;
         int dias = 0;
         int option = 1;
         int idMetodo = 0;
@@ -78,10 +78,10 @@ public class Main {
                 }
             }
 
-            modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
+            modoInterativo(h, n, s, sInicial, dias, option, caminhoFinal, caminhoInicial, idMetodo);
         } else {
 
-            modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
+            modoNaoInterativo(args, h, n, s, sInicial, dias, option, caminhoFinal, caminhoInicial, idMetodo);
         }
         System.out.println("\n*******************\u001B[1mFim do Programa\u001B[0m*******************");
     }
@@ -176,13 +176,13 @@ public class Main {
 
         // Inicialização das variáveis (valores provenientes da matriz)
         float s = n - 1;
-        float sDias = s;
+        float sInicial = s;
         float taxaProp = matrix[indexPess][0];
         float taxaRej = matrix[indexPess][1];
         float taxaPop = matrix[indexPess][2];
         float taxaReI = matrix[indexPess][3];
-        float iDias = 1;
-        float rDias = 0;
+        float iInicial = 1;
+        float rInicial = 0;
         float inf = 1;
         float rec = 0;
         float t = 0;
@@ -196,36 +196,36 @@ public class Main {
         resultados[i][4] = n;
 
         System.out.println("\u001B[1mMétodo de Euler: " + nomes[indexPess] + "(h:" + h + " N:" + (int) n + " Dias:" + dias + ")" + "\u001B[0m\n");
-        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
-        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
-        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
-        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+        System.out.printf("Valor de S[%d]: %.2f%n", i, sInicial);
+        System.out.printf("Valor de I[%d]: %.2f%n", i, iInicial);
+        System.out.printf("Valor de R[%d]: %.2f%n", i, rInicial);
+        System.out.printf("Valor de N: %.2f%n", (sInicial + iInicial + rInicial));
         System.out.printf("%n");
 
         while (i < dias) {
 
             for (float j = 0; j < 1; j += h) {
 
-                sDias = s + h * functionS((t + i * h), s, taxaProp, inf);
-                iDias = inf + h * functionI((t + i * h), inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
-                rDias = rec + h * functionR((t + i * h), rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
-                s = sDias;
-                inf = iDias;
-                rec = rDias;
+                sInicial = s + h * functionS((t + i * h), s, taxaProp, inf);
+                iInicial = inf + h * functionI((t + i * h), inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
+                rInicial = rec + h * functionR((t + i * h), rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
+                s = sInicial;
+                inf = iInicial;
+                rec = rInicial;
             }
 
-            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
-            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
-            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
-            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sInicial);
+            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iInicial);
+            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rInicial);
+            System.out.printf("Valor de N: %.2f%n", (sInicial + iInicial + rInicial));
             System.out.printf("%n");
             i++;
 
             resultados[i][0] = i;
-            resultados[i][1] = sDias;
-            resultados[i][2] = iDias;
-            resultados[i][3] = rDias;
-            resultados[i][4] = sDias + iDias + rDias;
+            resultados[i][1] = sInicial;
+            resultados[i][2] = iInicial;
+            resultados[i][3] = rInicial;
+            resultados[i][4] = sInicial + iInicial + rInicial;
         }
 
         // Criação do nome para o caminho final (especificando o metodo usado e todos os parametros)
@@ -253,13 +253,13 @@ public class Main {
     public static void Runge_Kutta(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
         float s = n - 1;
-        float sDias = s;
+        float sInicial = s;
         float taxaProp = matrix[indexPess][0];
         float taxaRej = matrix[indexPess][1];
         float taxaPop = matrix[indexPess][2];
         float taxaReI = matrix[indexPess][3];
-        float iDias = 1;
-        float rDias = 0;
+        float iInicial = 1;
+        float rInicial = 0;
         float inf = 1;
         float rec = 0;
         float t = 0;
@@ -273,10 +273,10 @@ public class Main {
         resultados[i][4] = n;
 
         System.out.println("\u001B[1mMétodo de Runge-Kutta: " + nomes[indexPess] + "(h:" + h + " N:" + (int) n + " Dias:" + dias + ")" + "\u001B[0m\n");
-        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
-        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
-        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
-        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+        System.out.printf("Valor de S[%d]: %.2f%n", i, sInicial);
+        System.out.printf("Valor de I[%d]: %.2f%n", i, iInicial);
+        System.out.printf("Valor de R[%d]: %.2f%n", i, rInicial);
+        System.out.printf("Valor de N: %.2f%n", (sInicial + iInicial + rInicial));
         System.out.printf("%n");
 
         while (i < dias) {
@@ -303,27 +303,27 @@ public class Main {
                 float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4) / 6;
                 float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4) / 6;
 
-                sDias = s + Sk;
-                iDias = inf + Ik;
-                rDias = rec + Rk;
+                sInicial = s + Sk;
+                iInicial = inf + Ik;
+                rInicial = rec + Rk;
                 t += h;
-                s = sDias;
-                inf = iDias;
-                rec = rDias;
+                s = sInicial;
+                inf = iInicial;
+                rec = rInicial;
             }
 
-            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
-            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
-            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
-            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sInicial);
+            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iInicial);
+            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rInicial);
+            System.out.printf("Valor de N: %.2f%n", (sInicial + iInicial + rInicial));
             System.out.printf("%n");
             i++;
 
             resultados[i][0] = i;
-            resultados[i][1] = sDias;
-            resultados[i][2] = iDias;
-            resultados[i][3] = rDias;
-            resultados[i][4] = sDias + iDias + rDias;
+            resultados[i][1] = sInicial;
+            resultados[i][2] = iInicial;
+            resultados[i][3] = rInicial;
+            resultados[i][4] = sInicial + iInicial + rInicial;
         }
 
         String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
@@ -413,14 +413,14 @@ public class Main {
      * @param h Step        							         		     *
      * @param n Valor da população  									     *
      * @param s n-1 												 	     *
-     * @param sDias Número de dias 										     *
+     * @param sInicial Número de dias 										     *
      * @param dias                                                           *
      * @param option Método	            								     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      * @param idMetodo identificador de modoInterativo                       *
      *************************************************************************/
-    public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
+    public static void modoInterativo(float h, float n, float s, float sInicial, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
         int counterGraficos = 0;
         int counterGeral;
@@ -779,14 +779,14 @@ public class Main {
      * @param h Step        							         		     *
      * @param n Valor da população  									     *
      * @param s n-1 												 	     *
-     * @param sDias Número de dias 										     *
+     * @param sInicial Número de dias 										     *
      * @param dias                                                           *
      * @param option Método												     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
      * @param idMetodo identificador de modoInterativo                       *
      *************************************************************************/
-    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
+    public static void modoNaoInterativo(String[] args, float h, float n, float s, float sInicial, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
         if (args.length != 9) {
             mensagemErro(1);
