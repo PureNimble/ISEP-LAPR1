@@ -428,7 +428,7 @@ public class Main {
 
             indexPess = scanner.nextInt() - 1;
 
-            while ((indexPess < 0) || (indexPess >= linhas)) {
+            while (indexPess < 0 || indexPess >= linhas) {
                 mensagemErro(4);
                 indexPess = scanner.nextInt() - 1;
             }
@@ -445,7 +445,7 @@ public class Main {
             System.out.println("\u001B[1mValor da população? (Ex.: 1000)\u001B[0m");
             n = scanner.nextFloat();
 
-            while (n <= 0) {
+            while (n <= 0 || n != (int) n) {
 
                 mensagemErro(7);
                 n = scanner.nextFloat();
@@ -562,12 +562,15 @@ public class Main {
             System.out.println("0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)");
             indexPess = scanner.nextInt() - 1;
             if (indexPess != -1) {
-                while (indexPess < 0 || indexPess > counterGraficos || indices[indexPess][1] == 0) {
-                    if(indices[indexPess][1] == 0){
+                while (indexPess < 0 || indexPess >= counterGraficos || indices[indexPess][1] == 0) {
+                    if(indexPess < 0 || indexPess >= counterGraficos) {
+                        mensagemErro(4);
+                    } else if(indices[indexPess][1] == 0) {
                         mensagemErro(5);
-                    }else mensagemErro(4);
+                    }
                     indexPess = scanner.nextInt() - 1;
                 }
+                
                 System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
                 String met = "";
                 for (i = 0; i < counterGraficos; i++) {
@@ -580,7 +583,7 @@ public class Main {
                     }
                 }
                 option = scanner.nextInt() - 1;
-                while (option < 0 || option > counterGraficos) {
+                while (option < 0 || option+1 > counterGraficos) {
                     mensagemErro(4);
                     option = scanner.nextInt() - 1;
                 }
@@ -733,6 +736,11 @@ public class Main {
         caminhoInicial = "LAPR1FinalProject/" + caminhoInicial;
 
         if (option != 1 && option != 2 || h <= 0 || h >= 1 || n <= 0 || dias <= 0) {
+            mensagemErro(1);
+            System.exit(0);
+        }
+
+        if (n != (int) n) {
             mensagemErro(1);
             System.exit(0);
         }
