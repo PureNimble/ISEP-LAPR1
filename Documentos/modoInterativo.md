@@ -3,7 +3,7 @@
 ## Descrição ##
 -------------------------
 -> módulo executado através do comando "java -jar nome_programa.jar" e que consiste na execução do programa através
- de menus que permitem ao utilizador definir o que é feito durante o período de execução.
+de menus que permitem ao utilizador definir o que é feito durante o período de execução.
 
 ## Métodos usados: ##
 -------------------------
@@ -18,7 +18,7 @@
 * [printFileValores](métodos/printFileValores.md)
 * [newReadValores](métodos/newReadValores.md)
 * [mensagemErrro](métodos/mensagemerro.md)
-
+* [checkIntSN](métodos/checkIntSN.md)
 ## Perguntas realizadas ao utilizador ##
 -------------------------
 ![modoInterativo1](Imagens/modoInterativo1.png)
