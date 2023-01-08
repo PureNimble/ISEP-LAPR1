@@ -419,6 +419,7 @@ public class Main {
         int[][] indices = new int[30][32];
         float metodosIguais[][] = new float[15][5];
         idMetodo = 1;
+        int pass;
 
         while (option != 0 && counterGraficos < 30) {
             System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
@@ -559,9 +560,10 @@ public class Main {
                     System.out.println(i + 1 + " - |" + nomes[i] + "|");
                 }
             }
+            pass = 0;
             System.out.println("0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)");
             indexPess = scanner.nextInt() - 1;
-            if (indexPess != -1) {
+            while (indexPess != -1 && pass == 0) {
                 while (indexPess < 0 || indexPess >= counterGraficos || indices[indexPess][1] == 0) {
                     if(indexPess < 0 || indexPess >= counterGraficos) {
                         mensagemErro(4);
@@ -569,63 +571,77 @@ public class Main {
                         mensagemErro(5);
                     }
                     indexPess = scanner.nextInt() - 1;
-                }
-                
-                System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
-                String met = "";
-                for (i = 0; i < counterGraficos; i++) {
-
-                    if (valoresMetodos[i][0] == indexPess) {
-                        if((int) valoresMetodos[i][4] == 1){
-                            met = "Euler";
-                        }else met = "Runge-Kutta";
-                        System.out.println("\n" + (i + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
+                    if(indexPess == -1){
+                        pass = 1;
+                        for(i = 0; i < counterGraficos; i++){
+                            if(indices[i][1] != 0){
+                                indexPess = i;
+                            }
+                        }
                     }
                 }
-                option = scanner.nextInt() - 1;
-                while (option < 0 || option+1 > counterGraficos) {
-                    mensagemErro(4);
-                    option = scanner.nextInt() - 1;
+                if(pass == 1){
+                    indexPess = -1;
+                    pass = 0;
                 }
-                int var = 0;
+                if(indexPess != -1){
+                    System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
+                    String met = "";
+                    for (i = 0; i < counterGraficos; i++) {
 
-                while (option >= 0 && option < counterGraficos) {
+                        if (valoresMetodos[i][0] == indexPess) {
+                            if((int) valoresMetodos[i][4] == 1){
+                                met = "Euler";
+                            }else met = "Runge-Kutta";
+                            System.out.println("\n" + (i + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
+                        }
+                    }
+                    option = scanner.nextInt() - 1;
+                    while (option < 0 || option+1 > counterGraficos) {
+                        mensagemErro(4);
+                        option = scanner.nextInt() - 1;
+                    }
+                    int var = 0;
 
-                    if (indices[indexPess][option + 3] == 0) {
+                    while (option >= 0 && option < counterGraficos) {
 
-                        if (valoresMetodos[option][0] == indexPess) {
+                        if (indices[indexPess][option + 3] == 0) {
 
-                            indices[indexPess][option + 3]++;
-                            indices[indexPess][1] -= valoresMetodos[option][4];
-                            caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
-                            gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
-                            counterGeral--;
-                            option = -1;
+                            if (valoresMetodos[option][0] == indexPess) {
+
+                                indices[indexPess][option + 3]++;
+                                indices[indexPess][1] -= valoresMetodos[option][4];
+                                caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
+                                gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
+                                counterGeral--;
+                                option = -1;
+                                pass = 1;
+
+                            } else {
+                                var = 1;
+                            }
 
                         } else {
+
+                            System.out.println("Esse gráfico já foi feito");
                             var = 1;
                         }
 
-                    } else {
+                        if (var == 1) {
 
-                        System.out.println("Esse gráfico já foi feito");
-                        var = 1;
-                    }
+                            option = -1;
+                            while (option < 0 || option >= counterGraficos) {
 
-                    if (var == 1) {
+                                mensagemErro(3);
+                                option = scanner.nextInt() - 1;
+                            }
+                            var = 0;
 
-                        option = -1;
-                        while (option < 0 || option >= counterGraficos) {
-
-                            mensagemErro(3);
-                            option = scanner.nextInt() - 1;
                         }
-                        var = 0;
-
                     }
                 }
 
-            } else {
+            } if(indexPess == -1) {
 
                 idMetodo = 0;
 
