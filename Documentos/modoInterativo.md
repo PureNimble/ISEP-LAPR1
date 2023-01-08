@@ -14,6 +14,10 @@
 * [Euler](métodos/Euler.md)
 * [Runge_Kutta](métodos/Runge_Kutta.md)
 * [gnuplot](métodos/gnuplot.md)
+* [comparePlot](métodos/comparePlot.md)
+* [printFileValores](métodos/printFileValores.md)
+* [newReadValores](métodos/newReadValores.md)
+* [mensagemErrro](métodos/mensagemerro.md)
 
 ## Perguntas realizadas ao utilizador ##
 -------------------------
