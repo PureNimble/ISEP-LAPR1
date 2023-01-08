@@ -721,42 +721,46 @@ public class Main {
                                 }
                             }
                         }
-                        if (indices[indexPess][option + 3] == 0) {
+                        if(counterTemp <= 0){
+                                
+                            if (indices[indexPess][option + 3] == 0) {
 
-                            if (valoresMetodos[option][0] == indexPess) {
+                                if (valoresMetodos[option][0] == indexPess) {
 
-                                indices[indexPess][option + 3]++;
-                                indices[indexPess][1] -= valoresMetodos[option][4];
-                                caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
-                                gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
-                                counterGeral--;
-                                option = -1;
-                                pass = 1;
+                                    indices[indexPess][option + 3]++;
+                                    indices[indexPess][1] -= valoresMetodos[option][4];
+                                    caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
+                                    gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
+                                    counterGeral--;
+                                    option = -1;
+                                    pass = 1;
+
+                                } else {
+                                    var = 1;
+                                }
 
                             } else {
+
+                                System.out.println("Esse gráfico já foi feito");
                                 var = 1;
                             }
 
-                        } else {
+                            if (var == 1) {
 
-                            System.out.println("Esse gráfico já foi feito");
-                            var = 1;
-                        }
+                                option = -1;
+                                while (option < 0 || option >= counterGraficos) {
 
-                        if (var == 1) {
-
-                            option = -1;
-                            while (option < 0 || option >= counterGraficos) {
-
-                                mensagemErro(3);
-                                option = scanner.nextInt();
-                            }
-                            var = 0;
-
-                        }
+                                    mensagemErro(3);
+                                    option = scanner.nextInt();
+                                }
+                                var = 0;
+                            } 
+                        }else{
+                            pass = 1;
+                            option = -2;
+                        } 
                     }
-                }
-
+                } 
             }
             if (indexPess == -1) {
 
