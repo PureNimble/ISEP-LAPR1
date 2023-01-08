@@ -582,39 +582,60 @@ public class Main {
                     System.out.println(i + 1 + " - |" + nomes[i] + "|");
                 }
             }
+
             pass = 0;
             System.out.println("0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)");
+
             indexPess = scanner.nextInt() - 1;
+
             while (indexPess != -1 && pass == 0) {
+
                 while (indexPess < 0 || indexPess >= counterGraficos || indices[indexPess][1] == 0) {
+
                     if (indexPess < 0 || indexPess >= counterGraficos) {
+
                         mensagemErro(4);
+
                     } else if (indices[indexPess][1] == 0) {
+
                         mensagemErro(5);
                     }
                     indexPess = scanner.nextInt() - 1;
+
                     if (indexPess == -1) {
+
                         pass = 1;
+
                         for (i = 0; i < counterGraficos; i++) {
+
                             if (indices[i][1] != 0) {
+
                                 indexPess = i;
                             }
                         }
                     }
                 }
+
                 if (pass == 1) {
+
                     indexPess = -1;
                     pass = 0;
                 }
+
                 if (indexPess != -1) {
+
                     System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
                     String met = "";
                     counterTemp = 0;
+
                     for (i = 0; i < counterGraficos; i++) {
 
                         if (valoresMetodos[i][0] == indexPess) {
+
                             if ((int) valoresMetodos[i][4] == 1) {
+
                                 met = "Euler";
+
                             } else met = "Runge-Kutta";
 
                             System.out.println("\n" + (counterTemp + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
@@ -622,16 +643,22 @@ public class Main {
                         }
                     }
                     option = scanner.nextInt();
+
                     while (option <= 0 || option > counterGraficos) {
+
                         mensagemErro(4);
                         option = scanner.nextInt();
                     }
                     int var = 0;
 
                     while (option >= 0 && option < counterGraficos) {
+
                         counterTemp = option;
+
                         for (i = 0; i < counterGraficos; i++) {
+
                             if (valoresMetodos[i][0] == indexPess) {
+
                                 counterTemp--;
                                 if (counterTemp == 0) {
                                     option = i;
@@ -641,6 +668,7 @@ public class Main {
                         if (indices[indexPess][option + 3] == 0) {
 
                             if (valoresMetodos[option][0] == indexPess) {
+
                                 indices[indexPess][option + 3]++;
                                 indices[indexPess][1] -= valoresMetodos[option][4];
                                 caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
