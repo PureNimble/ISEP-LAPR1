@@ -83,324 +83,6 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função para escrever os dados do sistema em ficheiroResultado.csv      *
-     *************************************************************************
-     * @param caminho_ficheiro Localização do ficheiro final                 *
-     * @param resultados [dias][4] = matriz com a informação final           *
-     * @param dias Limite de dias                                            *
-     *************************************************************************/
-    public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
-
-        PrintWriter pw = new PrintWriter(caminho_ficheiro);
-
-        pw.print("Dia;S;I;R;N\n");
-
-        for (int i = 0; i < dias; i++) {
-            pw.print((int) (resultados[i][0]) + ";");
-
-            for (int j = 1; j < 5; j++) {
-                pw.print(String.valueOf(resultados[i][j]).replace(".", ","));
-                if (j < 4) {
-                    pw.print(";");
-                }
-            }
-            pw.println();
-        }
-        pw.close();
-    }
-
-    /*************************************************************************
-     *Função Sistema EDOs      												 *
-     *************************************************************************
-     * @param t Dias          										         *
-     * @param s Suscetíveis        									         *
-     * @param taxaProp β        										     *
-     * @param inf infetados        									         *
-     * @return valor final              									 *
-     *************************************************************************/
-    public static float functionS(float t, float s, float taxaProp, float inf) {
-        return -taxaProp * s * inf;
-    }
-
-    /*************************************************************************
-     *Função Sistema EDOs       										     *
-     *************************************************************************
-     * @param t Dias          										         *
-     * @param inf Número de Infetados       							     *
-     * @param taxaPop ρ       							                     *
-     * @param taxaProp β       							                     *
-     * @param taxaRej γ     							                     *
-     * @param taxaReI α                                                      *
-     * @param s                                                              *
-     * @param rec Número recuperados                                         *
-     * @return valor final              									 *
-     *************************************************************************/
-    public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
-        return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
-    }
-
-    /*************************************************************************
-     *Função Sistema EDOs       										     *
-     *************************************************************************
-     * @param t Dias          				        						 *
-     * @param rec Número de recuperados            							 *
-     * @param taxaRej γ            							                 *
-     * @param taxaReI α                                                      *
-     * @param taxaPop ρ               							             *
-     * @param taxaProp β               							             *
-     * @param inf Número de Infetados              							 *
-     * @param s                                                              *
-     * @return valor final              									 *
-     *************************************************************************/
-    public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
-        return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
-    }
-
-    /*************************************************************************
-     *Função de euler     											         *
-     *************************************************************************
-     * @param h Step            							         		 *
-     * @param n Valor da população  									     *
-     * @param dias Número de dias             								 *
-     * @param matrix                                                         *
-     * @param linhas Número de linhas 									     *
-     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
-     * @param nomes    Lista de nomes									     *
-     * @param indexPess Index da pessoa     								 *
-     *************************************************************************/
-    public static void euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
-
-        float s = n - 1;
-        float sDias = s;
-        float taxaProp = matrix[indexPess][0];
-        float taxaRej = matrix[indexPess][1];
-        float taxaPop = matrix[indexPess][2];
-        float taxaReI = matrix[indexPess][3];
-        float iDias = 1;
-        float rDias = 0;
-        float inf = 1;
-        float rec = 0;
-        float t = 0;
-        int i = 0;
-        float[][] resultados = new float[dias + 1][5];
-
-        resultados[i][0] = i;
-        resultados[i][1] = s;
-        resultados[i][2] = inf;
-        resultados[i][3] = rec;
-        resultados[i][4] = n;
-
-        System.out.println("\u001B[1mMétodo de Euler: " + nomes[indexPess] + "(h:" + h + " N:" + (int) n + " Dias:" + dias + ")" + "\u001B[0m\n");
-        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
-        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
-        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
-        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
-        System.out.printf("%n");
-
-        while (i < dias) {
-
-            for (float j = 0; j < 1; j += h) {
-
-                sDias = s + h * functionS((t + i * h), s, taxaProp, inf);
-                iDias = inf + h * functionI((t + i * h), inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
-                rDias = rec + h * functionR((t + i * h), rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
-                s = sDias;
-                inf = iDias;
-                rec = rDias;
-            }
-
-            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
-            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
-            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
-            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
-            System.out.printf("%n");
-            i++;
-
-            resultados[i][0] = i;
-            resultados[i][1] = sDias;
-            resultados[i][2] = iDias;
-            resultados[i][3] = rDias;
-            resultados[i][4] = sDias + iDias + rDias;
-        }
-
-        String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-
-        try {
-            printFile(caminhoFinalGnu, resultados, dias);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*************************************************************************
-     *Função de rK4     											         *
-     *************************************************************************
-     * @param h Step            							         		 *
-     * @param n Valor da população  									     *
-     * @param dias Número de dias             								 *
-     * @param matrix                                                         *
-     * @param linhas Número de linhas 									     *
-     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
-     * @param nomes    Lista de nomes									     *
-     * @param indexPess Index da pessoa     								 *
-     *************************************************************************/
-    public static void rK4(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
-
-        float s = n - 1;
-        float sDias = s;
-        float taxaProp = matrix[indexPess][0];
-        float taxaRej = matrix[indexPess][1];
-        float taxaPop = matrix[indexPess][2];
-        float taxaReI = matrix[indexPess][3];
-        float iDias = 1;
-        float rDias = 0;
-        float inf = 1;
-        float rec = 0;
-        float t = 0;
-        int i = 0;
-        float[][] resultados = new float[dias + 1][5];
-
-        resultados[i][0] = i;
-        resultados[i][1] = s;
-        resultados[i][2] = inf;
-        resultados[i][3] = rec;
-        resultados[i][4] = n;
-
-        System.out.println("\u001B[1mMétodo de Runge-Kutta: " + nomes[indexPess] + "(h:" + h + " N:" + (int) n + " Dias:" + dias + ")" + "\u001B[0m\n");
-        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
-        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
-        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
-        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
-        System.out.printf("%n");
-
-        while (i < dias) {
-
-            for (float j = 0; j < 1; j += h) {
-
-                float Sk1 = h * functionS(t, s, taxaProp, inf);
-                float Ik1 = h * functionI(t, inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
-                float Rk1 = h * functionR(t, rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
-
-                float Sk2 = h * functionS((t + h / 2), (s + Sk1 / 2), taxaProp, (inf + Ik1 / 2));
-                float Ik2 = h * functionI((t + h / 2), (inf + Ik1 / 2), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk1 / 2), (rec + Rk1 / 2));
-                float Rk2 = h * functionR((t + h / 2), (rec + Rk1 / 2), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik1 / 2), (s + Sk1 / 2));
-
-                float Sk3 = h * functionS((t + h / 2), (s + Sk2 / 2), taxaProp, (inf + Ik2 / 2));
-                float Ik3 = h * functionI((t + h / 2), (inf + Ik2 / 2), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk2 / 2), (rec + Rk2 / 2));
-                float Rk3 = h * functionR((t + h / 2), (rec + Rk2 / 2), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik2 / 2), (s + Sk2 / 2));
-
-                float Sk4 = h * functionS((t + h), (s + Sk3), taxaProp, (inf + Ik3));
-                float Ik4 = h * functionI((t + h), (inf + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk3), (rec + Rk3));
-                float Rk4 = h * functionR((t + h), (rec + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik3), (s + Sk3));
-
-                float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4) / 6;
-                float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4) / 6;
-                float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4) / 6;
-
-                sDias = s + Sk;
-                iDias = inf + Ik;
-                rDias = rec + Rk;
-                t += h;
-                s = sDias;
-                inf = iDias;
-                rec = rDias;
-            }
-
-            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
-            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
-            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
-            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
-            System.out.printf("%n");
-            i++;
-
-            resultados[i][0] = i;
-            resultados[i][1] = sDias;
-            resultados[i][2] = iDias;
-            resultados[i][3] = rDias;
-            resultados[i][4] = sDias + iDias + rDias;
-        }
-
-        String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
-        try {
-            printFile(caminhoFinalGnu, resultados, dias);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*************************************************************************
-     * Função para verificar o número de linhas do ficheiro csv              *
-     *************************************************************************
-     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
-     * @return linhas Número de linhas                                       *
-     *************************************************************************/
-    public static int checkNumberOfLines(String caminhoInicial) {
-
-        int linhas = 0;
-
-        try {
-
-            Scanner scanner = new Scanner(new File(caminhoInicial));
-            String line;
-
-            while (scanner.hasNextLine()) {
-
-                line = scanner.nextLine();
-
-                if (line.trim().length() > 0) {      
-                    linhas++;
-                }
-
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        linhas -= 1;          
-        return linhas;
-    }
-
-    /*************************************************************************
-     *Função readFile                                                        *
-     *************************************************************************
-     * @param matrix                                                         *
-     * @param linhas Número de linhas                                        *  
-     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
-     * @return nomes Lista de nomes                                          *           
-     *************************************************************************/
-    public static String[] readFile(float[][] matrix, int linhas, String caminhoInicial) {
-
-        String[] nomes = new String[linhas]; 
-
-        try {
-            Scanner scanner = new Scanner(new File(caminhoInicial));
-
-            int lineNumber = 0;
-
-            while (scanner.hasNextLine()) {
-
-                int j;
-                String line = scanner.nextLine();
-                String[] values = line.split(";");
-
-                if (lineNumber != 0) {  
-                    nomes[lineNumber - 1] = values[0];  
-
-                    for (j = 1; j < 5; j++) {
-                    
-                        matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",", "."));
-                    }
-                }
-                lineNumber++; 
-            }
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return nomes;
-    }
-
-    /*************************************************************************
      *Função modoInterativo    							    				 *
      *************************************************************************
      * @param h Step        							         		     *
@@ -929,6 +611,297 @@ public class Main {
     }
 
     /*************************************************************************
+     *Função Sistema EDOs      												 *
+     *************************************************************************
+     * @param t Dias          										         *
+     * @param s Suscetíveis        									         *
+     * @param taxaProp β        										     *
+     * @param inf infetados        									         *
+     * @return valor final              									 *
+     *************************************************************************/
+    public static float functionS(float t, float s, float taxaProp, float inf) {
+        return -taxaProp * s * inf;
+    }
+
+    /*************************************************************************
+     *Função Sistema EDOs       										     *
+     *************************************************************************
+     * @param t Dias          										         *
+     * @param inf Número de Infetados       							     *
+     * @param taxaPop ρ       							                     *
+     * @param taxaProp β       							                     *
+     * @param taxaRej γ     							                     *
+     * @param taxaReI α                                                      *
+     * @param s                                                              *
+     * @param rec Número recuperados                                         *
+     * @return valor final              									 *
+     *************************************************************************/
+    public static float functionI(float t, float inf, float taxaPop, float taxaProp, float taxaRej, float taxaReI, float s, float rec) {
+        return taxaPop * taxaProp * s * inf - taxaRej * inf + taxaReI * rec;
+    }
+
+    /*************************************************************************
+     *Função Sistema EDOs       										     *
+     *************************************************************************
+     * @param t Dias          				        						 *
+     * @param rec Número de recuperados            							 *
+     * @param taxaRej γ            							                 *
+     * @param taxaReI α                                                      *
+     * @param taxaPop ρ               							             *
+     * @param taxaProp β               							             *
+     * @param inf Número de Infetados              							 *
+     * @param s                                                              *
+     * @return valor final              									 *
+     *************************************************************************/
+    public static float functionR(float t, float rec, float taxaRej, float taxaReI, float taxaPop, float taxaProp, float inf, float s) {
+        return taxaRej * inf - taxaReI * rec + (1 - taxaPop) * taxaProp * s * inf;
+    }
+
+    /*************************************************************************
+     *Função de euler     											         *
+     *************************************************************************
+     * @param h Step            							         		 *
+     * @param n Valor da população  									     *
+     * @param dias Número de dias             								 *
+     * @param matrix                                                         *
+     * @param linhas Número de linhas 									     *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
+     * @param nomes    Lista de nomes									     *
+     * @param indexPess Index da pessoa     								 *
+     *************************************************************************/
+    public static void euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
+
+        float s = n - 1;
+        float sDias = s;
+        float taxaProp = matrix[indexPess][0];
+        float taxaRej = matrix[indexPess][1];
+        float taxaPop = matrix[indexPess][2];
+        float taxaReI = matrix[indexPess][3];
+        float iDias = 1;
+        float rDias = 0;
+        float inf = 1;
+        float rec = 0;
+        float t = 0;
+        int i = 0;
+        float[][] resultados = new float[dias + 1][5];
+
+        resultados[i][0] = i;
+        resultados[i][1] = s;
+        resultados[i][2] = inf;
+        resultados[i][3] = rec;
+        resultados[i][4] = n;
+
+        System.out.println("\u001B[1mMétodo de Euler: " + nomes[indexPess] + "(h:" + h + " N:" + (int) n + " Dias:" + dias + ")" + "\u001B[0m\n");
+        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
+        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
+        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
+        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+        System.out.printf("%n");
+
+        while (i < dias) {
+
+            for (float j = 0; j < 1; j += h) {
+
+                sDias = s + h * functionS((t + i * h), s, taxaProp, inf);
+                iDias = inf + h * functionI((t + i * h), inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
+                rDias = rec + h * functionR((t + i * h), rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
+                s = sDias;
+                inf = iDias;
+                rec = rDias;
+            }
+
+            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
+            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
+            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
+            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+            System.out.printf("%n");
+            i++;
+
+            resultados[i][0] = i;
+            resultados[i][1] = sDias;
+            resultados[i][2] = iDias;
+            resultados[i][3] = rDias;
+            resultados[i][4] = sDias + iDias + rDias;
+        }
+
+        String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m1" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+
+        try {
+            printFile(caminhoFinalGnu, resultados, dias);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*************************************************************************
+     *Função de rK4     											         *
+     *************************************************************************
+     * @param h Step            							         		 *
+     * @param n Valor da população  									     *
+     * @param dias Número de dias             								 *
+     * @param matrix                                                         *
+     * @param linhas Número de linhas 									     *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
+     * @param nomes    Lista de nomes									     *
+     * @param indexPess Index da pessoa     								 *
+     *************************************************************************/
+    public static void rK4(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
+
+        float s = n - 1;
+        float sDias = s;
+        float taxaProp = matrix[indexPess][0];
+        float taxaRej = matrix[indexPess][1];
+        float taxaPop = matrix[indexPess][2];
+        float taxaReI = matrix[indexPess][3];
+        float iDias = 1;
+        float rDias = 0;
+        float inf = 1;
+        float rec = 0;
+        float t = 0;
+        int i = 0;
+        float[][] resultados = new float[dias + 1][5];
+
+        resultados[i][0] = i;
+        resultados[i][1] = s;
+        resultados[i][2] = inf;
+        resultados[i][3] = rec;
+        resultados[i][4] = n;
+
+        System.out.println("\u001B[1mMétodo de Runge-Kutta: " + nomes[indexPess] + "(h:" + h + " N:" + (int) n + " Dias:" + dias + ")" + "\u001B[0m\n");
+        System.out.printf("Valor de S[%d]: %.2f%n", i, sDias);
+        System.out.printf("Valor de I[%d]: %.2f%n", i, iDias);
+        System.out.printf("Valor de R[%d]: %.2f%n", i, rDias);
+        System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+        System.out.printf("%n");
+
+        while (i < dias) {
+
+            for (float j = 0; j < 1; j += h) {
+
+                float Sk1 = h * functionS(t, s, taxaProp, inf);
+                float Ik1 = h * functionI(t, inf, taxaPop, taxaProp, taxaRej, taxaReI, s, rec);
+                float Rk1 = h * functionR(t, rec, taxaRej, taxaReI, taxaPop, taxaProp, inf, s);
+
+                float Sk2 = h * functionS((t + h / 2), (s + Sk1 / 2), taxaProp, (inf + Ik1 / 2));
+                float Ik2 = h * functionI((t + h / 2), (inf + Ik1 / 2), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk1 / 2), (rec + Rk1 / 2));
+                float Rk2 = h * functionR((t + h / 2), (rec + Rk1 / 2), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik1 / 2), (s + Sk1 / 2));
+
+                float Sk3 = h * functionS((t + h / 2), (s + Sk2 / 2), taxaProp, (inf + Ik2 / 2));
+                float Ik3 = h * functionI((t + h / 2), (inf + Ik2 / 2), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk2 / 2), (rec + Rk2 / 2));
+                float Rk3 = h * functionR((t + h / 2), (rec + Rk2 / 2), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik2 / 2), (s + Sk2 / 2));
+
+                float Sk4 = h * functionS((t + h), (s + Sk3), taxaProp, (inf + Ik3));
+                float Ik4 = h * functionI((t + h), (inf + Ik3), taxaPop, taxaProp, taxaRej, taxaReI, (s + Sk3), (rec + Rk3));
+                float Rk4 = h * functionR((t + h), (rec + Rk3), taxaRej, taxaReI, taxaPop, taxaProp, (inf + Ik3), (s + Sk3));
+
+                float Sk = (Sk1 + 2 * Sk2 + 2 * Sk3 + Sk4) / 6;
+                float Ik = (Ik1 + 2 * Ik2 + 2 * Ik3 + Ik4) / 6;
+                float Rk = (Rk1 + 2 * Rk2 + 2 * Rk3 + Rk4) / 6;
+
+                sDias = s + Sk;
+                iDias = inf + Ik;
+                rDias = rec + Rk;
+                t += h;
+                s = sDias;
+                inf = iDias;
+                rec = rDias;
+            }
+
+            System.out.printf("Valor de S[%d]: %.2f%n", (i + 1), sDias);
+            System.out.printf("Valor de I[%d]: %.2f%n", (i + 1), iDias);
+            System.out.printf("Valor de R[%d]: %.2f%n", (i + 1), rDias);
+            System.out.printf("Valor de N: %.2f%n", (sDias + iDias + rDias));
+            System.out.printf("%n");
+            i++;
+
+            resultados[i][0] = i;
+            resultados[i][1] = sDias;
+            resultados[i][2] = iDias;
+            resultados[i][3] = rDias;
+            resultados[i][4] = sDias + iDias + rDias;
+        }
+
+        String caminhoFinalGnu = caminhoFinal + nomes[indexPess] + "m2" + "p" + String.valueOf(h).replace(".", "") + "t" + (int) n + "d" + dias + ".csv";
+        try {
+            printFile(caminhoFinalGnu, resultados, dias);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*************************************************************************
+     * Função checkNumberOfLines                                             *
+     *************************************************************************
+     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
+     * @return linhas Número de linhas                                       *
+     *************************************************************************/
+    public static int checkNumberOfLines(String caminhoInicial) {
+
+        int linhas = 0;
+
+        try {
+
+            Scanner scanner = new Scanner(new File(caminhoInicial));
+            String line;
+
+            while (scanner.hasNextLine()) {
+
+                line = scanner.nextLine();
+
+                if (line.trim().length() > 0) {      
+                    linhas++;
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        linhas -= 1;          
+        return linhas;
+    }
+
+    /*************************************************************************
+     *Função readFile                                                        *
+     *************************************************************************
+     * @param matrix                                                         *
+     * @param linhas Número de linhas                                        *  
+     * @param caminhoInicial Localização do ficheiros de dados iniciais      *
+     * @return nomes Lista de nomes                                          *           
+     *************************************************************************/
+    public static String[] readFile(float[][] matrix, int linhas, String caminhoInicial) {
+
+        String[] nomes = new String[linhas]; 
+
+        try {
+            Scanner scanner = new Scanner(new File(caminhoInicial));
+
+            int lineNumber = 0;
+
+            while (scanner.hasNextLine()) {
+
+                int j;
+                String line = scanner.nextLine();
+                String[] values = line.split(";");
+
+                if (lineNumber != 0) {  
+                    nomes[lineNumber - 1] = values[0];  
+
+                    for (j = 1; j < 5; j++) {
+                    
+                        matrix[lineNumber - 1][j - 1] = Float.valueOf(values[j].replace(",", "."));
+                    }
+                }
+                lineNumber++; 
+            }
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return nomes;
+    }
+
+    /*************************************************************************
      *Função mensagemErro                                                    *
      *************************************************************************
      * @param valor Id do erro                                               *             
@@ -979,6 +952,33 @@ public class Main {
                 System.out.println("********************************************************");
                 break;
         }
+    }
+
+    /*************************************************************************
+     *Função printFile                                                       *
+     *************************************************************************
+     * @param caminho_ficheiro Localização do ficheiro final                 *
+     * @param resultados [dias][4] = matriz com a informação final           *
+     * @param dias Limite de dias                                            *
+     *************************************************************************/
+    public static void printFile(String caminho_ficheiro, float resultados[][], int dias) throws FileNotFoundException {
+
+        PrintWriter pw = new PrintWriter(caminho_ficheiro);
+
+        pw.print("Dia;S;I;R;N\n");
+
+        for (int i = 0; i < dias; i++) {
+            pw.print((int) (resultados[i][0]) + ";");
+
+            for (int j = 1; j < 5; j++) {
+                pw.print(String.valueOf(resultados[i][j]).replace(".", ","));
+                if (j < 4) {
+                    pw.print(";");
+                }
+            }
+            pw.println();
+        }
+        pw.close();
     }
 
     /*************************************************************************
