@@ -437,6 +437,8 @@ public class Main {
         idMetodo = 1;
         int pass;
         int counterTemp = 0;
+        String input;
+        float checker = 0;
 
         while (option != 0 && counterGraficos < 30) {
             System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
@@ -444,55 +446,109 @@ public class Main {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
             }
 
-            indexPess = scanner.nextInt() - 1;
+            input = scanner.next();
+            for(i = 0; i < input.length(); i++) {
+                if(input.indexOf(",") == i){
+                    input = input.replaceAll(",", ".");
+                }
+            }
+            checker = Float.valueOf(input) - 1;
+            indexPess = (int) checker;
 
-            while (indexPess < 0 || indexPess >= linhas) {
+            while (indexPess < 0 || indexPess >= linhas || checker != indexPess) {
                 mensagemErro(4);
-                indexPess = scanner.nextInt() - 1;
+                input = scanner.next();
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                checker = Float.valueOf(input) - 1;
+                indexPess = (int) checker;
             }
 
             System.out.println("\u001B[1mValor de h? (Ex.: 0,1)\u001B[0m");
-            String input = scanner.next();
+            input = scanner.next();
             input = input.replaceAll(",", ".");
-            h = Float.parseFloat(input);
+            h = Float.valueOf(input);
 
             while (h <= 0 || h >= 1) {
 
                 mensagemErro(7);
                 input = scanner.next();
                 input = input.replaceAll(",", ".");
-                h = Float.parseFloat(input);
+                h = Float.valueOf(input);
             }
 
 
             System.out.println("\u001B[1mValor da população? (Ex.: 1000)\u001B[0m");
-            n = scanner.nextFloat();
+            input = scanner.next();
+            for(i = 0; i < input.length(); i++) {
+                if(input.indexOf(",") == i){
+                    input = input.replaceAll(",", ".");
+                }
+            }
+            n = Float.valueOf(input);
 
             while (n <= 0 || n != (int) n) {
 
                 mensagemErro(7);
-                n = scanner.nextFloat();
+                input = scanner.next();
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                n = Float.valueOf(input);
             }
 
             System.out.println("\u001B[1mNúmero de dias? (Ex.: 30)\u001B[0m");
-            dias = scanner.nextInt();
+            input = scanner.next();
+            for(i = 0; i < input.length(); i++) {
+                if(input.indexOf(",") == i){
+                    input = input.replaceAll(",", ".");
+                }
+            }
+            checker = Float.valueOf(input);
+            dias = (int) checker;
 
-            while (dias <= 0) {
-
+            while (dias <= 0 || dias != checker) {
+                
                 mensagemErro(7);
-                dias = scanner.nextInt();
+                input = scanner.next();
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                checker = Float.valueOf(input);
+                dias = (int) checker;
             }
 
             System.out.println(" -----------------------\u001B[1mMÉTODOS\u001B[0m-----------------------");
             System.out.println("| \u001B[1m1 - Método de Euler\u001B[0m		                      |");
             System.out.println("| \u001B[1m2 - Método de Runge-Kutta de 4ª ordem\u001B[0m               |");
             System.out.println(" -----------------------------------------------------");
-            option = scanner.nextInt();
+            input = scanner.next();
+            for(i = 0; i < input.length(); i++) {
+                if(input.indexOf(",") == i){
+                    input = input.replaceAll(",", ".");
+                }
+            }
+            checker = Float.valueOf(input);
+            option = (int) checker;
 
-            while (option > 2 || option < 1) {
+            while (option > 2 || option < 1 || option != checker) {
 
                 mensagemErro(3);
-                option = scanner.nextInt();
+                input = scanner.next();
+                for(i = 0; i < input.length(); i++) {
+                    if(input.indexOf(",") == i){
+                        input = input.replaceAll(",", ".");
+                    }
+                }
+                checker = Float.valueOf(input);
+                option = (int) checker;
             }
 
             indices[indexPess][0]++;
