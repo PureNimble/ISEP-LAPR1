@@ -1157,6 +1157,14 @@ public class Main {
         }
         return valoresMetodos;
     }
+
+    /*************************************************************************
+     *Função checkIntSN                                                      *
+     *************************************************************************
+     * @param input valores inseridos pelo utilizador                        *   
+     * @param escolha float de input                                         *
+     * @return (int) escolha                                                 *         
+     *************************************************************************/
     public static int checkIntSN(String input, float escolha){
         int i;
         for(i = 0; i < input.length(); i++) {
