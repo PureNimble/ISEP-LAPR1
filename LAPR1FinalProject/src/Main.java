@@ -23,7 +23,8 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        
+
+        System.out.println("*******************\u001B[1mInício do Programa\u001B[0m*******************\n");
         float h = 0;
         float n = 0;
         float s = 0;
@@ -48,6 +49,10 @@ public class Main {
                     if (shouldDelete > 0) {
                         System.out.println("\u001B[1mDeseja apagar todos os ficheiros anteriormente criados pelo programa? |1-Sim| |0-Não|\u001B[0m");
                         int escolha = scanner.nextInt();
+                        while(escolha != 1 && escolha != 0){
+                            mensagemErro(6);
+                            escolha = scanner.nextInt();
+                        }
                         if (escolha == 1) {
                             for (File ficheiro : files) {
                                 if (!ficheiro.getName().equals(".gitignore")) {
@@ -62,7 +67,7 @@ public class Main {
         } else {
             modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
         }
-        System.out.println("*******************Fim do Programa*******************");
+        System.out.println("\n*******************\u001B[1mFim do Programa\u001B[0m*******************");
     }
 
     /*************************************************************************
@@ -401,22 +406,21 @@ public class Main {
      *************************************************************************/
     public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
-        idMetodo = 1;
-        int counter = 0;
-        int c;
+        int counterGraficos = 0;
+        int counterGeral;
+        int countEqual = 0;
         String caminhoFinalGnu;
         int indexPess;
         int linhas = checkNumberOfLines(caminhoInicial);
         int i;
-        // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
         float[][] valoresInseridos = new float[30][5];
         int[][] indices = new int[30][32];
         float metodosIguais[][] = new float[15][5];
-        int temp = 0;
+        idMetodo = 1;
 
-        while (option != 0 && counter < 30) {
+        while (option != 0 && counterGraficos < 30) {
             System.out.println("\u001B[1mSelecione uma pessoa:\u001B[0m");
             for (i = 0; i < linhas; i++) {
                 System.out.println(i + 1 + " - |" + nomes[i] + "|");
@@ -447,7 +451,7 @@ public class Main {
                 n = scanner.nextFloat();
             }
 
-            System.out.println("\u001B[1mNúmero de dias? (Ex.: 30)\u001B[1m");
+            System.out.println("\u001B[1mNúmero de dias? (Ex.: 30)\u001B[0m");
             dias = scanner.nextInt();
 
             while (dias <= 0) {
@@ -457,8 +461,8 @@ public class Main {
             }
 
             System.out.println(" -----------------------\u001B[1mMÉTODOS\u001B[0m-----------------------");
-            System.out.println("| 1 - Método de Euler				      |");
-            System.out.println("| 2 - Método de Runge-Kutta de 4ª ordem		      |");
+            System.out.println("| \u001B[1m1 - Método de Euler\u001B[0m		                      |");
+            System.out.println("| \u001B[1m2 - Método de Runge-Kutta de 4ª ordem\u001B[0m               |");
             System.out.println(" -----------------------------------------------------");
             option = scanner.nextInt();
 
@@ -469,39 +473,39 @@ public class Main {
             }
 
             indices[indexPess][0]++;
-            valoresInseridos[counter][0] = indexPess;
-            valoresInseridos[counter][1] = h;
-            valoresInseridos[counter][2] = n;
-            valoresInseridos[counter][3] = dias;
-            valoresInseridos[counter][4] = option;
+            valoresInseridos[counterGraficos][0] = indexPess;
+            valoresInseridos[counterGraficos][1] = h;
+            valoresInseridos[counterGraficos][2] = n;
+            valoresInseridos[counterGraficos][3] = dias;
+            valoresInseridos[counterGraficos][4] = option;
             indices[indexPess][1] += option;
-            counter++;
-            c = counter - 1;
+            counterGraficos++;
+            counterGeral = counterGraficos - 1;
 
-            for (i = 0; i < c; i++) {
+            for (i = 0; i < counterGeral; i++) {
 
                 if (valoresInseridos[i][0] == indexPess) {
 
                     if (valoresInseridos[i][1] == h && valoresInseridos[i][2] == n && valoresInseridos[i][3] == dias && valoresInseridos[i][4] == option) {
 
-                        System.out.println("Já existe um ficheiro para esses valores");
-                        counter--;
+                        System.out.println("*******************\u001B[1mJá existe um ficheiro para esses valores\u001B[0m*******************\n");
+                        counterGraficos--;
                         indices[indexPess][1] -= option;
                     }
                     if (valoresInseridos[i][1] == h && valoresInseridos[i][2] == n && valoresInseridos[i][3] == dias && valoresInseridos[i][4] != option) {
 
-                        indices[temp][2] = 1;
-                        metodosIguais[temp][0] = indexPess;
-                        metodosIguais[temp][1] = h;
-                        metodosIguais[temp][2] = n;
-                        metodosIguais[temp][3] = dias;
-                        metodosIguais[temp][4] = 3;
-                        temp++;
+                        indices[countEqual][2] = 1;
+                        metodosIguais[countEqual][0] = indexPess;
+                        metodosIguais[countEqual][1] = h;
+                        metodosIguais[countEqual][2] = n;
+                        metodosIguais[countEqual][3] = dias;
+                        metodosIguais[countEqual][4] = 3;
+                        countEqual++;
                     }
                 }
             }
-            if (counter != 30) {
-                System.out.println("\u001B[1mDeseja inserir novos dados?" + " (mais " + (30 - counter) + " gráficos disponíveis)" + " |1-Sim| |0-Não|\u001B[0m");
+            if (counterGraficos != 30) {
+                System.out.println("\u001B[1mDeseja inserir novos dados?" + " (mais " + (30 - counterGraficos) + " gráficos disponíveis)" + " |1-Sim| |0-Não|\u001B[0m");
                 option = scanner.nextInt();
 
                 while (option != 1 && option != 0) {
@@ -512,14 +516,14 @@ public class Main {
         }
 
         try {
-            printFileValores(valoresInseridos, counter);
+            printFileValores(valoresInseridos, counterGraficos);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        float[][] valoresMetodos = newReadValores(counter);
-        for (i = 0; i < counter; i++) {
+        float[][] valoresMetodos = newReadValores(counterGraficos);
+        for (i = 0; i < counterGraficos; i++) {
             indexPess = (int)valoresMetodos[i][0];
             h = valoresMetodos[i][1];
             n = valoresMetodos[i][2];
@@ -537,16 +541,16 @@ public class Main {
 
         System.out.println("\u001B[1mDeseja converter os resultados em gráfico? |1-Sim| |0-Não|\u001B[0m");
         option = scanner.nextInt();
-        c = counter;
+        counterGeral = counterGraficos;
 
         while (option != 1 && option != 0) {
 
             mensagemErro(6);
             option = scanner.nextInt();
         }
-        while (option != 0 && c > 0) {
+        while (option != 0 && counterGeral > 0) {
 
-            System.out.println("\u001B[1mDeseja fazer o gráfico de quem?\u001B[0m");
+            System.out.println("\n\u001B[1mDeseja fazer o gráfico de quem?\u001B[0m");
 
             for (i = 0; i < linhas; i++) {
 
@@ -555,29 +559,34 @@ public class Main {
                     System.out.println(i + 1 + " - |" + nomes[i] + "|");
                 }
             }
-            System.out.println("\u001B[1m0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)\u001B[0m");
+            System.out.println("0 - Fazer de Todos (ao fazer isto irá guardar todos os gráficos automáticamente)");
             indexPess = scanner.nextInt() - 1;
             if (indexPess != -1) {
-                while (indexPess < 0 || indexPess > counter || indices[indexPess][1] == 0) {
-                    mensagemErro(4);
+                while (indexPess < 0 || indexPess > counterGraficos || indices[indexPess][1] == 0) {
+                    if(indices[indexPess][1] == 0){
+                        mensagemErro(5);
+                    }else mensagemErro(4);
                     indexPess = scanner.nextInt() - 1;
                 }
-                System.out.println("Selecione um dos valores disponíveis para a/o" + nomes[indexPess]);
-                for (i = 0; i < counter; i++) {
+                System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
+                String met = "";
+                for (i = 0; i < counterGraficos; i++) {
 
                     if (valoresMetodos[i][0] == indexPess) {
-
-                        System.out.println(i + 1 + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias" + (int) valoresMetodos[i][3] + " método" + (int) valoresMetodos[i][4] + "\n");
+                        if((int) valoresMetodos[i][4] == 1){
+                            met = "Euler";
+                        }else met = "Runge-Kutta";
+                        System.out.println("\n" + (i + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
                     }
                 }
                 option = scanner.nextInt() - 1;
-                while (option < 0 || option > counter) {
+                while (option < 0 || option > counterGraficos) {
                     mensagemErro(4);
                     option = scanner.nextInt() - 1;
                 }
                 int var = 0;
 
-                while (option >= 0 && option < counter) {
+                while (option >= 0 && option < counterGraficos) {
 
                     if (indices[indexPess][option + 3] == 0) {
 
@@ -587,7 +596,7 @@ public class Main {
                             indices[indexPess][1] -= valoresMetodos[option][4];
                             caminhoFinalGnu = caminhoFinal + nomes[(int) valoresMetodos[option][0]] + "m" + (int) valoresMetodos[option][4] + "p" + String.valueOf(valoresMetodos[option][1]).replace(".", "") + "t" + (int) valoresMetodos[option][2] + "d" + (int) valoresMetodos[option][3] + ".csv";
                             gnuplot(caminhoFinalGnu, (int) valoresMetodos[indexPess][3], idMetodo);
-                            c--;
+                            counterGeral--;
                             option = -1;
 
                         } else {
@@ -603,7 +612,7 @@ public class Main {
                     if (var == 1) {
 
                         option = -1;
-                        while (option < 0 || option >= counter) {
+                        while (option < 0 || option >= counterGraficos) {
 
                             mensagemErro(3);
                             option = scanner.nextInt() - 1;
@@ -617,7 +626,7 @@ public class Main {
 
                 idMetodo = 0;
 
-                for (i = 0; i < counter; i++) {
+                for (i = 0; i < counterGraficos; i++) {
 
                     if ((int) valoresMetodos[i][4] == 3) {
 
@@ -634,7 +643,7 @@ public class Main {
                 }
                 option = 0;
             }
-            if (indexPess != -1 && c > 0) {
+            if (indexPess != -1 && counterGeral > 0) {
 
                 System.out.println("\u001B[1mDeseja fazer o gráfico de outra pessoa? |1-Sim| |0-Não|\u001B[0m");
                 option = scanner.nextInt();
@@ -644,17 +653,17 @@ public class Main {
                     option = scanner.nextInt();
                 }
             } else {
-                System.out.println("\u001B[1mOs gráficos foram concluídos com sucesso\u001B[0m");
+                System.out.println("*******************\u001B[1mOs gráficos foram concluídos com sucesso\u001B[0m*******************");
             }
         }
         int x = 0;
 
-        for (i = 0; i < counter; i++) {
+        for (i = 0; i < counterGraficos; i++) {
 
             if (metodosIguais[i][4] == 3) {
 
-                System.out.println("\u001B[1mEstão disponíveis análises gráficas?\u001B[0m");
-                i = counter;
+                System.out.println("\n\u001B[1mEstão disponíveis análises gráficas?\u001B[0m");
+                i = counterGraficos;
                 x = 1;
             }
         }
@@ -671,7 +680,7 @@ public class Main {
                 String compareEuler = "";
                 String compareKutta = "";
 
-                for (i = 0; i < counter; i++) {
+                for (i = 0; i < counterGraficos; i++) {
 
                     if (metodosIguais[i][4] == 3) {
                         compareEuler = caminhoFinal + nomes[(int) metodosIguais[i][0]] + "m1" + "p" + String.valueOf(metodosIguais[i][1]).replace(".", "") + "t" + (int) metodosIguais[i][2] + "d" + (int) metodosIguais[i][3] + ".csv";
@@ -734,7 +743,6 @@ public class Main {
         }
 
         int linhas = checkNumberOfLines(caminhoInicial);
-        // Matrix para colocar os valores
         float[][] matrix = new float[linhas][4];
         String[] nomes = readFile(matrix, linhas, caminhoInicial);
 
@@ -775,50 +783,47 @@ public class Main {
      *************************************************************************/
     public static void mensagemErro(int valor) {
 
-        // 0 = tudo bem
-        // 1 = erro na estrutura do ficheiro
-        // 2 = tem demasiadas casas decimais
         switch (valor) {
 
             case 1:
                 System.out.println("***************************************************************************************");
-                System.out.println("           -> Erro na estrutura do ficheiro de input. Verifique se está correto <-     ");
+                System.out.println("           \u001B[1m-> Erro na estrutura do ficheiro de input. Verifique se está correto <-\u001B[0m     ");
                 System.out.println("***************************************************************************************");
                 break;
             case 2:
                 System.out.println("*********************************************************************************************");
-                System.out.println("					-> Tipo de ficheiro inválido (deveria ser do tipo .csv) <-					");
+                System.out.println("					\u001B[1m-> Tipo de ficheiro inválido (deveria ser do tipo .csv) <-\u001B[0m					");
                 System.out.println("**********************************************************************************************");
                 break;
             case 3:
                 System.out.println("********************************************************");
-                System.out.println("           -> Método inválido/inexistente <-          ");
+                System.out.println("           \u001B[1m-> Método inválido/inexistente <-\u001B[0m          ");
                 System.out.println("********************************************************");
                 break;
             case 4:
                 System.out.println("********************************************************");
-                System.out.println("           -> Opção inválida/inexistente <-            ");
+                System.out.println("           \u001B[1m-> Opção inválida/inexistente <-\u001B[0m            ");
                 System.out.println("********************************************************");
                 break;
             case 5:
                 System.out.println("********************************************************");
-                System.out.println("           -> Escolha uma pessoa diferente <-            ");
+                System.out.println("           \u001B[1m-> Escolha uma pessoa diferente <-\u001B[0m            ");
                 System.out.println("********************************************************");
                 break;
             case 6:
                 System.out.println("********************************************************");
-                System.out.println("           -> Opção inválida <-                           ");
-                System.out.println("     Opções disponíveis |1-Sim| |0-Não|                   ");
+                System.out.println("           \u001B[1m-> Opção inválida <-                           ");
+                System.out.println("     Opções disponíveis |1-Sim| |0-Não|\u001B[0m                   ");
                 System.out.println("********************************************************");
                 break;
             case 7:
                 System.out.println("********************************************************");
-                System.out.println("           -> Valor inválido <-                           ");
+                System.out.println("           \u001B[1m-> Valor inválido <-\u001B[0m                          ");
                 System.out.println("********************************************************");
                 break;
             case 8:
                 System.out.println("********************************************************");
-                System.out.println("           -> Ambos os métodos já foram feitos <-                           ");
+                System.out.println("           \u001B[1m-> Ambos os métodos já foram feitos <-\u001B[0m                           ");
                 System.out.println("********************************************************");
                 break;
         }
@@ -831,41 +836,40 @@ public class Main {
      * @param dias número de dias                                            *
      * @param idMetodo identificador do modo                                 *              
      *************************************************************************/
-
     public static void gnuplot(String caminhoFinalGnu, int dias, int idMetodo) {
 
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length() - 4);
-        String[] g = {"-e", "set term png size 1200, 800",
-                "-e", "set output '" + caminhoPng + ".png'",
-                "-e", "replot"
+        String[] png = {"-e", "set term png size 1200, 800",
+            "-e", "set output '" + caminhoPng + ".png'",
+            "-e", "replot"
         };
 
-        String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
-                "-e", "set datafile separator ';'",
-                "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
-                "-e", "set xlabel 'Número de Dias' font ',16'",
-                "-e", "set ylabel 'N' font ',16' rotate by 0",
-                "-e", "set grid",
-                "-e", "set key box",
-                "-e", "set key width 1",
-                "-e", "set key height 1",
-                "-e", "set key font ',16'",
-                "-e", "set border 3",
-                "-e", "set tics nomirror",
-                "-e", "set xtics 0,1," + dias,
-                "-e", "set border lw 2",
-                "-p", "-e", "set term wxt size 1200, 800",
-                "-e", "replot"
+        String[] plot = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
+            "-e", "set datafile separator ';'",
+            "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
+            "-e", "set xlabel 'Número de Dias' font ',16'",
+            "-e", "set ylabel 'N' font ',16' rotate by 0",
+            "-e", "set grid",
+            "-e", "set key box",
+            "-e", "set key width 1",
+            "-e", "set key height 1",
+            "-e", "set key font ',16'",
+            "-e", "set border 3",
+            "-e", "set tics nomirror",
+            "-e", "set xtics 0,1," + dias,
+            "-e", "set border lw 2",
+            "-p", "-e", "set term wxt size 1200, 800",
+            "-e", "replot"
         };
         try {
 
             Runtime rt = Runtime.getRuntime();
-            Process prc = rt.exec(s);
+            Process prc = rt.exec(plot);
             int ans = 0;
 
             if (idMetodo == 1) {
 
-                System.out.print("Deseja guardar o gráfico? |1- Sim| |0- Não|");
+                System.out.println("\u001B[1mDeseja guardar o gráfico? |1- Sim| |0- Não|\u001B[0m");
                 ans = scanner.nextInt();
 
                 while (ans != 0 && ans != 1) {
@@ -880,10 +884,10 @@ public class Main {
 
             if (ans == 1 || idMetodo == 0) {
 
-                int slength = s.length - 5;
-                String[] t = new String[slength + g.length];
-                System.arraycopy(s, 0, t, 0, slength);
-                System.arraycopy(g, 0, t, slength, g.length);
+                int slength = plot.length - 5;
+                String[] t = new String[slength + png.length];
+                System.arraycopy(plot, 0, t, 0, slength);
+                System.arraycopy(png, 0, t, slength, png.length);
                 rt.exec(t);
             }
 
@@ -900,44 +904,42 @@ public class Main {
      * @param dias número de dias                                            *  
      * @param nome nome da pessoa a comparar                                 *           
      *************************************************************************/
-
     public static void comparePlot(String compareEuler, String compareKutta, int dias, String nome) {
 
         String caminhoPng = "LAPR1FinalProject/Ficheiros_Resultados/" + nome + "m1&m2";
-        String[] g = {"-e", "set term png size 1200, 800",
-                "-e", "set output '" + caminhoPng + ".png'",
-                "-e", "replot"
+        String[] png = {"-e", "set term png size 1200, 800",
+            "-e", "set output '" + caminhoPng + ".png'",
+            "-e", "replot"
         };
 
-        String[] s = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
-                "-e", "set datafile separator ';'",
-                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#90EE90' lw 2 dt 2",
-                "-e", "set xlabel 'Número de Dias' font ',16'",
-                "-e", "set ylabel 'N' font ',16' rotate by 0",
-                "-e", "set grid",
-                "-e", "set key box",
-                "-e", "set key width 1",
-                "-e", "set key height 1",
-                "-e", "set key font ',16'",
-                "-e", "set border 3",
-                "-e", "set tics nomirror",
-                "-e", "set xtics 0,1," + dias,
-                "-e", "set border lw 2",
-                "-p", "-e", "set term wxt size 1200, 800",
-                "-e", "replot"
+        String[] plot = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
+            "-e", "set datafile separator ';'",
+            "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#90EE90' lw 2 dt 2",
+            "-e", "set xlabel 'Número de Dias' font ',16'",
+            "-e", "set ylabel 'N' font ',16' rotate by 0",
+            "-e", "set grid",
+            "-e", "set key box",
+            "-e", "set key width 1",
+            "-e", "set key height 1",
+            "-e", "set key font ',16'",
+            "-e", "set border 3",
+            "-e", "set tics nomirror",
+            "-e", "set xtics 0,1," + dias,
+            "-e", "set border lw 2",
+            "-p", "-e", "set term wxt size 1200, 800",
+            "-e", "replot"
         };
 
         try {
 
             Runtime rt = Runtime.getRuntime();
-            Process prc = rt.exec(s);
-
+            Process prc = rt.exec(plot);
             rt.exec("taskkill /im gnuplot_qt.exe");
             prc.destroy();
-            int slength = s.length - 5;
-            String[] t = new String[slength + g.length];
-            System.arraycopy(s, 0, t, 0, slength);
-            System.arraycopy(g, 0, t, slength, g.length);
+            int slength = plot.length - 5;
+            String[] t = new String[slength + png.length];
+            System.arraycopy(plot, 0, t, 0, slength);
+            System.arraycopy(png, 0, t, slength, png.length);
             rt.exec(t);
 
         } catch (Exception e) {
@@ -951,7 +953,6 @@ public class Main {
      * @param valoresInseridos valores inseridos pelo utilizador             *
      * @param counter contador (número de valores inseridos)                 *          
      *************************************************************************/
-
     public static void printFileValores(float[][] valoresInseridos, int counter) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter("LAPR1FinalProject/ValoresInseridos.csv");    // Criar o ficheiro tests.csv
@@ -971,7 +972,6 @@ public class Main {
      *************************************************************************
      * @param counter contador (número de valores inseridos)                 *          
      *************************************************************************/
-
     public static float[][] newReadValores(int counter) {
 
         float[][] valoresMetodos = new float[counter][5];
