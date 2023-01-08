@@ -529,7 +529,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        float[][] valoresMetodos = newReadValues(counter);
+        float[][] valoresMetodos = newReadValores(counter);
         for (i = 0; i < counter; i++) {
 
             if (valoresMetodos[i][4] == 1 || valoresMetodos[i][4] == 3) {
@@ -965,7 +965,7 @@ public class Main {
         pw.close();
     }
 
-    public static float[][] newReadValues(int counter) {
+    public static float[][] newReadValores(int counter) {
 
         float[][] valoresMetodos = new float[counter][5];
 
