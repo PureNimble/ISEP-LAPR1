@@ -39,11 +39,21 @@ public class Main {
             if (file.exists() && file.isDirectory()) {
                 File[] files = file.listFiles();
                 if (files != null && files.length > 0) {
-                    System.out.println("\u001B[1mDeseja apagar todos os ficheiros anteriormente criados pelo programa? |1-Sim| |0-Não|\u001B[0m");
-                    int escolha = scanner.nextInt();
-                    if (escolha == 1) {
-                        for (File ficheiro : files) {
-                            ficheiro.delete();
+                    int shouldDelete = 0;
+                    for (File ficheiro : files) {
+                        if (!ficheiro.getName().equals(".gitignore")) {
+                            shouldDelete++;
+                        }
+                    }
+                    if (shouldDelete > 0) {
+                        System.out.println("\u001B[1mDeseja apagar todos os ficheiros anteriormente criados pelo programa? |1-Sim| |0-Não|\u001B[0m");
+                        int escolha = scanner.nextInt();
+                        if (escolha == 1) {
+                            for (File ficheiro : files) {
+                                if (!ficheiro.getName().equals(".gitignore")) {
+                                    ficheiro.delete();
+                                }
+                            }
                         }
                     }
                 }
