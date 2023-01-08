@@ -436,13 +436,18 @@ public class Main {
             }
 
             System.out.println("\u001B[1mValor de h? (Ex.: 0,1)\u001B[0m");
-            h = scanner.nextFloat();
-
+            String input = scanner.next();
+            input = input.replaceAll(",", ".");
+            h = Float.parseFloat(input);
+            
             while (h <= 0 || h >= 1) {
-
+            
                 mensagemErro(7);
-                h = scanner.nextFloat();
+                input = scanner.next();
+                input = input.replaceAll(",", ".");
+                h = Float.parseFloat(input);
             }
+            
 
             System.out.println("\u001B[1mValor da população? (Ex.: 1000)\u001B[0m");
             n = scanner.nextFloat();
