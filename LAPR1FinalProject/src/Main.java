@@ -1062,7 +1062,7 @@ public class Main {
 
         String[] plot = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
                 "-e", "set datafile separator ';'",
-                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#90EE90' lw 2 dt 2",
+                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'SEuler' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'IEuler' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'REuler' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'SKutta' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'IKutta' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'RKutta' lc rgb '#90EE90' lw 2 dt 2",
                 "-e", "set xlabel 'Número de Dias' font ',16'",
                 "-e", "set ylabel 'N' font ',16' rotate by 0",
                 "-e", "set grid",
