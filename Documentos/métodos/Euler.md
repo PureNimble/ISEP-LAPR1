@@ -11,6 +11,6 @@
 * [functionS](functionS.md)
 * [functionI](functionI.md)
 * [functionR](functionR.md)
-## Prints exemplo: ##
+## Formula: ##
 -------------------------
 ![euler](../Imagens/euler.png)
