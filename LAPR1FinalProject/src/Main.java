@@ -36,25 +36,39 @@ public class Main {
         String caminhoInicial = "LAPR1FinalProject/ficheiroSIR.csv";
 
         if (args.length == 0) {
+
             File file = new File(caminhoFinal);
+
             if (file.exists() && file.isDirectory()) {
+
                 File[] files = file.listFiles();
+
                 if (files != null && files.length > 0) {
+
                     int shouldDelete = 0;
+
                     for (File ficheiro : files) {
+
                         if (!ficheiro.getName().equals(".gitignore")) {
+
                             shouldDelete++;
                         }
                     }
                     if (shouldDelete > 0) {
+
                         System.out.println("\u001B[1mDeseja apagar todos os ficheiros anteriormente criados pelo programa? |1-Sim| |0-Não|\u001B[0m");
                         int escolha = scanner.nextInt();
-                        while(escolha != 1 && escolha != 0){
+
+                        while (escolha != 1 && escolha != 0) {
+
                             mensagemErro(6);
                             escolha = scanner.nextInt();
                         }
+
                         if (escolha == 1) {
+
                             for (File ficheiro : files) {
+
                                 if (!ficheiro.getName().equals(".gitignore")) {
                                     ficheiro.delete();
                                 }
@@ -63,8 +77,10 @@ public class Main {
                     }
                 }
             }
+
             modoInterativo(h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
         } else {
+
             modoNaoInterativo(args, h, n, s, sDias, dias, option, caminhoFinal, caminhoInicial, idMetodo);
         }
         System.out.println("\n*******************\u001B[1mFim do Programa\u001B[0m*******************");
@@ -158,7 +174,7 @@ public class Main {
      *************************************************************************/
     public static void Euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
-        // Inicialização das variáveis ( valores provenientes da matriz) 
+        // Inicialização das variáveis (valores provenientes da matriz)
         float s = n - 1;
         float sDias = s;
         float taxaProp = matrix[indexPess][0];
@@ -439,15 +455,15 @@ public class Main {
             String input = scanner.next();
             input = input.replaceAll(",", ".");
             h = Float.parseFloat(input);
-            
+
             while (h <= 0 || h >= 1) {
-            
+
                 mensagemErro(7);
                 input = scanner.next();
                 input = input.replaceAll(",", ".");
                 h = Float.parseFloat(input);
             }
-            
+
 
             System.out.println("\u001B[1mValor da população? (Ex.: 1000)\u001B[0m");
             n = scanner.nextFloat();
@@ -531,10 +547,10 @@ public class Main {
 
         float[][] valoresMetodos = newReadValores(counterGraficos);
         for (i = 0; i < counterGraficos; i++) {
-            indexPess = (int)valoresMetodos[i][0];
+            indexPess = (int) valoresMetodos[i][0];
             h = valoresMetodos[i][1];
             n = valoresMetodos[i][2];
-            dias = (int)valoresMetodos[i][3];
+            dias = (int) valoresMetodos[i][3];
 
             if (valoresMetodos[i][4] == 1 || valoresMetodos[i][4] == 3) {
 
@@ -571,35 +587,35 @@ public class Main {
             indexPess = scanner.nextInt() - 1;
             while (indexPess != -1 && pass == 0) {
                 while (indexPess < 0 || indexPess >= counterGraficos || indices[indexPess][1] == 0) {
-                    if(indexPess < 0 || indexPess >= counterGraficos) {
+                    if (indexPess < 0 || indexPess >= counterGraficos) {
                         mensagemErro(4);
-                    } else if(indices[indexPess][1] == 0) {
+                    } else if (indices[indexPess][1] == 0) {
                         mensagemErro(5);
                     }
                     indexPess = scanner.nextInt() - 1;
-                    if(indexPess == -1){
+                    if (indexPess == -1) {
                         pass = 1;
-                        for(i = 0; i < counterGraficos; i++){
-                            if(indices[i][1] != 0){
+                        for (i = 0; i < counterGraficos; i++) {
+                            if (indices[i][1] != 0) {
                                 indexPess = i;
                             }
                         }
                     }
                 }
-                if(pass == 1){
+                if (pass == 1) {
                     indexPess = -1;
                     pass = 0;
                 }
-                if(indexPess != -1){
+                if (indexPess != -1) {
                     System.out.println("\n\u001B[1mSelecione um dos valores disponíveis para a/o " + nomes[indexPess] + ":\u001B[0m");
                     String met = "";
                     counterTemp = 0;
                     for (i = 0; i < counterGraficos; i++) {
 
                         if (valoresMetodos[i][0] == indexPess) {
-                            if((int) valoresMetodos[i][4] == 1){
+                            if ((int) valoresMetodos[i][4] == 1) {
                                 met = "Euler";
-                            }else met = "Runge-Kutta";
+                            } else met = "Runge-Kutta";
 
                             System.out.println("\n" + (counterTemp + 1) + "- h:" + valoresMetodos[i][1] + " população:" + (int) valoresMetodos[i][2] + " dias:" + (int) valoresMetodos[i][3] + " método:" + met);
                             counterTemp++;
@@ -614,10 +630,10 @@ public class Main {
 
                     while (option >= 0 && option < counterGraficos) {
                         counterTemp = option;
-                        for(i = 0; i < counterGraficos; i++){
-                            if(valoresMetodos[i][0] == indexPess){
+                        for (i = 0; i < counterGraficos; i++) {
+                            if (valoresMetodos[i][0] == indexPess) {
                                 counterTemp--;
-                                if(counterTemp == 0){
+                                if (counterTemp == 0) {
                                     option = i;
                                 }
                             }
@@ -657,7 +673,8 @@ public class Main {
                     }
                 }
 
-            } if(indexPess == -1) {
+            }
+            if (indexPess == -1) {
 
                 idMetodo = 0;
 
@@ -880,26 +897,26 @@ public class Main {
 
         String caminhoPng = caminhoFinalGnu.substring(0, caminhoFinalGnu.length() - 4);
         String[] png = {"-e", "set term png size 1200, 800",
-            "-e", "set output '" + caminhoPng + ".png'",
-            "-e", "replot"
+                "-e", "set output '" + caminhoPng + ".png'",
+                "-e", "replot"
         };
 
         String[] plot = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
-            "-e", "set datafile separator ';'",
-            "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
-            "-e", "set xlabel 'Número de Dias' font ',16'",
-            "-e", "set ylabel 'N' font ',16' rotate by 0",
-            "-e", "set grid",
-            "-e", "set key box",
-            "-e", "set key width 1",
-            "-e", "set key height 1",
-            "-e", "set key font ',16'",
-            "-e", "set border 3",
-            "-e", "set tics nomirror",
-            "-e", "set xtics 0,1," + dias,
-            "-e", "set border lw 2",
-            "-p", "-e", "set term wxt size 1200, 800",
-            "-e", "replot"
+                "-e", "set datafile separator ';'",
+                "-e", "plot '" + caminhoFinalGnu + "' u 1:2 w l title 'S' lc rgb '#0000f8' lw 2,'" + caminhoFinalGnu + "' u 1:3 w l title 'I' lc rgb '#8b0000' lw 2,'" + caminhoFinalGnu + "' u 1:4 w l title 'R' lc rgb '#00a600' lw 2",
+                "-e", "set xlabel 'Número de Dias' font ',16'",
+                "-e", "set ylabel 'N' font ',16' rotate by 0",
+                "-e", "set grid",
+                "-e", "set key box",
+                "-e", "set key width 1",
+                "-e", "set key height 1",
+                "-e", "set key font ',16'",
+                "-e", "set border 3",
+                "-e", "set tics nomirror",
+                "-e", "set xtics 0,1," + dias,
+                "-e", "set border lw 2",
+                "-p", "-e", "set term wxt size 1200, 800",
+                "-e", "replot"
         };
         try {
 
@@ -948,26 +965,26 @@ public class Main {
 
         String caminhoPng = "LAPR1FinalProject/Ficheiros_Resultados/" + nome + "m1&m2";
         String[] png = {"-e", "set term png size 1200, 800",
-            "-e", "set output '" + caminhoPng + ".png'",
-            "-e", "replot"
+                "-e", "set output '" + caminhoPng + ".png'",
+                "-e", "replot"
         };
 
         String[] plot = {"LAPR1FinalProject/gnuplot/bin/gnuplot.exe",
-            "-e", "set datafile separator ';'",
-            "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#90EE90' lw 2 dt 2",
-            "-e", "set xlabel 'Número de Dias' font ',16'",
-            "-e", "set ylabel 'N' font ',16' rotate by 0",
-            "-e", "set grid",
-            "-e", "set key box",
-            "-e", "set key width 1",
-            "-e", "set key height 1",
-            "-e", "set key font ',16'",
-            "-e", "set border 3",
-            "-e", "set tics nomirror",
-            "-e", "set xtics 0,1," + dias,
-            "-e", "set border lw 2",
-            "-p", "-e", "set term wxt size 1200, 800",
-            "-e", "replot"
+                "-e", "set datafile separator ';'",
+                "-e", "plot '" + compareEuler + "' u 1:2 w l title 'S1' lc rgb '#0000f8' lw 2,'" + compareEuler + "' u 1:3 w l title 'I1' lc rgb '#8b0000' lw 2,'" + compareEuler + "' u 1:4 w l title 'R1' lc rgb '#00a600' lw 2,'" + compareKutta + "' u 1:2 w l title 'S2' lc rgb '#87CEFA' lw 2 dt 2,'" + compareKutta + "' u 1:3 w l title 'I2' lc rgb '#F08080' lw 2 dt 2,'" + compareKutta + "' u 1:4 w l title 'R2' lc rgb '#90EE90' lw 2 dt 2",
+                "-e", "set xlabel 'Número de Dias' font ',16'",
+                "-e", "set ylabel 'N' font ',16' rotate by 0",
+                "-e", "set grid",
+                "-e", "set key box",
+                "-e", "set key width 1",
+                "-e", "set key height 1",
+                "-e", "set key font ',16'",
+                "-e", "set border 3",
+                "-e", "set tics nomirror",
+                "-e", "set xtics 0,1," + dias,
+                "-e", "set border lw 2",
+                "-p", "-e", "set term wxt size 1200, 800",
+                "-e", "replot"
         };
 
         try {
