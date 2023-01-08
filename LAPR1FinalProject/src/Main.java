@@ -142,13 +142,11 @@ public class Main {
     /*************************************************************************
      *Função de Euler     											         *
      *************************************************************************
-     * @param dias Número de dias             								 *
      * @param h Step            							         		 *
+     * @param n Valor da população  									     *
+     * @param dias Número de dias             								 *
      * @param matrix                                                         *
      * @param linhas Número de linhas 									     *
-     * @param n Valor da população  									     *
-     * @param s n-1 												 	     *
-     * @param sDias Número de dias 										     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param nomes    Lista de nomes									     *
      * @param indexPess Index da pessoa     								 *
@@ -222,16 +220,14 @@ public class Main {
     /*************************************************************************
      *Função de Runge_kutta     											 *
      *************************************************************************
-     * @param dias Número de dias          								     *
-     * @param h Step        							         		     *
+     * @param h Step            							         		 *
+     * @param n Valor da população  									     *
+     * @param dias Número de dias             								 *
      * @param matrix                                                         *
      * @param linhas Número de linhas 									     *
-     * @param n Número da população  								         *
-     * @param s n-1 												 	     *
-     * @param sdias Número de dias 										     *
-     * @param caminhoFinal Caminho de ficheiros de resultados finais         *
-     * @param nomes Lista de nomes	    									 *
-     * @param indexPess Index da pessoa			        					 *
+     * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
+     * @param nomes    Lista de nomes									     *
+     * @param indexPess Index da pessoa     								 *
      *************************************************************************/
     public static void Runge_Kutta(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
@@ -401,6 +397,7 @@ public class Main {
      * @param option Método	            								     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais         *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
+     * @param idMetodo identificador de modoInterativo                       *
      *************************************************************************/
     public static void modoInterativo(float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
@@ -698,6 +695,7 @@ public class Main {
      * @param option Método												     *
      * @param caminhoFinal Caminho de ficheiros de resultados finais      	 *
      * @param caminhoInicial Localização do ficheiros de dados iniciais      *
+     * @param idMetodo identificador de modoInterativo                       *
      *************************************************************************/
     public static void modoNaoInterativo(String[] args, float h, float n, float s, float sDias, int dias, int option, String caminhoFinal, String caminhoInicial, int idMetodo) {
 
@@ -829,7 +827,9 @@ public class Main {
     /*************************************************************************
      *Função gnuplot                                                         *
      *************************************************************************
-     * @param caminhoFinalGnu                                                *             
+     * @param caminhoFinalGnu caminho csv                                    *
+     * @param dias número de dias                                            *
+     * @param idMetodo identificador do modo                                 *              
      *************************************************************************/
 
     public static void gnuplot(String caminhoFinalGnu, int dias, int idMetodo) {
@@ -892,6 +892,15 @@ public class Main {
         }
     }
 
+    /*************************************************************************
+     *Função comparePlot                                                     *
+     *************************************************************************
+     * @param compareEuler caminho csv Euler                                 *
+     * @param compareKutta caminho csv Kutta                                 *
+     * @param dias número de dias                                            *  
+     * @param nome nome da pessoa a comparar                                 *           
+     *************************************************************************/
+
     public static void comparePlot(String compareEuler, String compareKutta, int dias, String nome) {
 
         String caminhoPng = "LAPR1FinalProject/Ficheiros_Resultados/" + nome + "m1&m2";
@@ -936,6 +945,13 @@ public class Main {
         }
     }
 
+    /*************************************************************************
+     *Função printFileValores                                                *
+     *************************************************************************
+     * @param valoresInseridos valores inseridos pelo utilizador             *
+     * @param counter contador (número de valores inseridos)                 *          
+     *************************************************************************/
+
     public static void printFileValores(float[][] valoresInseridos, int counter) throws FileNotFoundException {
 
         PrintWriter pw = new PrintWriter("LAPR1FinalProject/ValoresInseridos.csv");    // Criar o ficheiro tests.csv
@@ -949,6 +965,12 @@ public class Main {
         }
         pw.close();
     }
+
+    /*************************************************************************
+     *Função newReadValores                                                  *
+     *************************************************************************
+     * @param counter contador (número de valores inseridos)                 *          
+     *************************************************************************/
 
     public static float[][] newReadValores(int counter) {
 
