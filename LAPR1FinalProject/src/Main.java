@@ -161,7 +161,7 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função de Euler     											         *
+     *Função de euler     											         *
      *************************************************************************
      * @param h Step            							         		 *
      * @param n Valor da população  									     *
@@ -172,7 +172,7 @@ public class Main {
      * @param nomes    Lista de nomes									     *
      * @param indexPess Index da pessoa     								 *
      *************************************************************************/
-    public static void Euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
+    public static void euler(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
         // Inicialização das variáveis (valores provenientes da matriz)
         float s = n - 1;
@@ -239,7 +239,7 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função de Runge_kutta     											 *
+     *Função de rK4     											         *
      *************************************************************************
      * @param h Step            							         		 *
      * @param n Valor da população  									     *
@@ -250,7 +250,7 @@ public class Main {
      * @param nomes    Lista de nomes									     *
      * @param indexPess Index da pessoa     								 *
      *************************************************************************/
-    public static void Runge_Kutta(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
+    public static void rK4(float h, float n, int dias, float[][] matrix, int linhas, String caminhoFinal, String[] nomes, int indexPess) {
 
         float s = n - 1;
         float sDias = s;
@@ -600,7 +600,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        valoresInseridos = null;
         float[][] valoresMetodos = newReadValores(counterGraficos);
         for (i = 0; i < counterGraficos; i++) {
             indexPess = (int) valoresMetodos[i][0];
@@ -610,11 +610,11 @@ public class Main {
 
             if (valoresMetodos[i][4] == 1 || valoresMetodos[i][4] == 3) {
 
-                Euler(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
+                euler(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
             }
             if (valoresMetodos[i][4] == 2 || valoresMetodos[i][4] == 3) {
 
-                Runge_Kutta(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
+                rK4(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
             }
         }
 
@@ -829,7 +829,7 @@ public class Main {
     }
 
     /*************************************************************************
-     *Função ModoNãoInterativo    										     *
+     *Função modoNãoInterativo    										     *
      *************************************************************************
      * @param args                                                           *
      * @param h Step        							         		     *
@@ -923,10 +923,10 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    Euler(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
+                    euler(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
                     break;
                 case 2:
-                    Runge_Kutta(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
+                    rK4(h, n, dias, matrix, linhas, caminhoFinal, nomes, indexPess);
                     break;
                 default:
                     mensagemErro(3);
