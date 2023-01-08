@@ -12,5 +12,8 @@ programa.jar ficheiroSIR.csv -m X -p Y -t Z -d K").
 
 * [checkNumberOfLines](métodos/checkNumberOfLines.md)
 * [readFile](métodos/readFile.md)
+* [Euler](métodos/Euler.md)
+* [Runge_kutta](métodos/Runge_kutta.md)
+* [gnuplot](métodos/gnuplot.md)
 * [mensagemErro](métodos/mensagemerro.md)
-* [mSwitch](métodos/mSwitch.md)
+
