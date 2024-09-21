@@ -1,0 +1,239 @@
+/* General Style*/
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+/* body Style*/
+html, body{
+    background-color: #eee;
+    height: 100%;
+}
+/* secção central Style*/
+.wrapper {
+    margin: 0 auto;
+    width: 78.125vw;  
+}
+/*Style do navegador*/
+nav{
+    width: 100%;
+    height: 7.8125vw;
+    background-color: #fff;
+}
+/*Style do menu*/
+/*ul{}*/
+/*Style das linhas da tabela*/
+ul li{
+    list-style: none;
+    display: inline-block;
+    float: left;
+    line-height: 7.8125vw;
+}
+/*Style dos hyperlinks*/
+ul li a {
+    display: block;
+    text-decoration: none;
+    font-size: 2.1231422505307855vw;
+    font-weight: 1000;
+    font-family: 'Josefin Sans',sans-serif;
+    padding: 0 6vw;
+    background-color: #fff;
+    box-shadow: inset 0 0 0 0 #c12222;
+    color: #c12222;
+    transition: color .4s ease-in-out, box-shadow .4s ease-in-out;
+}
+button {
+    display: block;
+    text-decoration: none;
+    font-size: 2.1231422505307855vw;
+    font-weight: 1000;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 0 6vw;
+    background-color: #c12222;
+    color: #fff;
+    float: left;
+    line-height: 7.8125vw;
+    border: none;
+}
+/*Style dos hyperlinks*/
+ul li a:hover{
+    box-shadow: inset 78.125vw 0 0 0 #c12222;
+    color: #eee;
+}
+/*Style de texto*/
+h1{   
+    padding: 3.90625vw 0 3.90625vw;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 1000;
+    font-size: 3.175365344467641vw;
+}
+h2 {
+
+    padding: 3.90625vw 0 3.90625vw;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1.3003901170351104vw;
+}
+p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: 2.1315240083507305vw;
+    padding: 2.34375vw;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.3;
+}
+/*Style do video*/
+video {
+    width: 100%;
+}
+/*Style da imagem*/
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.responsive{
+    width: 100%;
+    height: auto;
+}
+.Home_nav{
+    background-color: transparent;
+}
+.Home_a{
+    background-color: transparent;
+}
+/*Home page style*/
+/*imagens*/
+.Home_img{
+   padding: 2.34375vw 0 0;
+   width: 25%;
+   vertical-align: top;
+}
+/*text*/
+.Home_h1 {
+    padding: 1.5625vw 0 0;
+    text-align: center;
+    font-family: 'Syne Mono', monospace;
+    color: #c12222;
+}
+.Home_h2 {
+    padding: 0.79vw 0 0;
+    text-align: center;
+    font-weight: 700;
+    font-family: 'Syne Mono', monospace;
+    color: #c12222;
+}
+.Home_content {
+    position: fixed;
+    background: transparent;
+    color: #f1f1f1;
+    width: 100%;
+    padding: 0;
+}
+.Home_video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+/*Membros page style*/
+.Membros_div{
+    margin: 10px;
+    padding: 0;
+    background-color: #c12222;
+    width: 400px;
+    height: 200px;
+    display: table;
+    border: 5px solid;
+    border-radius: 30px;
+    float: left;
+}
+.Membros_img{
+    display: block;
+    block-size: 200px;
+    height: 100px;
+    width: 100px;
+    margin: 20px;
+    border-radius: 20px;
+    border: 5px double;
+    border-color: black;
+}
+.Membros_h1{
+    font-size:30px;
+    padding: 0 0 10px;
+
+    text-align: left;
+}
+.Membros_span {
+    vertical-align: middle;
+    display: table-cell; 
+}
+.Membros_ul_li{
+    list-style: url(../images/heart.svg);
+    display: list-item;
+    float: none;
+    line-height: 25px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    padding: 0;
+}
+/*Demo page style*/
+.Demo_body{
+    /*overflow: hidden;*/
+}
+.Demo_wrapper{
+    position: relative;
+}
+.Demo_video{
+    margin: 7.8125vw 31.015625vw 0;
+    height: 32.96875vw;
+    width: 15.234375vw;
+    border-radius: 2.34375vw;
+    z-index: 1;
+}
+.Demo_img{
+    margin: 7.8125vw 31.25vw;
+    height: 45.3125vw;
+    width: 26.5625vw;
+    top: 7.8125vw; 
+    left: 7.8125vw; 
+    z-index: 0; 
+    position: absolute;
+}
+.Demo_footerImg{
+    display: block;
+    width: 15.625vw;
+    margin: 1.953125vw 7.8125vw;
+}
+/*cobre a altura do site*/
+#container{
+    min-height: 100%;
+}
+/*criar a scroll bar*/
+#main {
+    overflow: auto;
+    padding-bottom: 7.8125vw;
+}
+/*rodapé*/
+#footer {
+    /*Tornar o footer transparente*/
+    background: transparent;
+    position: relative;
+    height: 7.8125vw;
+    margin-top: -7.8125vw;
+    clear: both;
+}
+
+.footerImg{
+    display: block;
+    width: 15.625vw;
+    margin: 1.953125vw 7.8125vw;
+}
+
+
